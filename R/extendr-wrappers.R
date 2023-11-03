@@ -11,9 +11,6 @@
 #' @useDynLib noder, .registration = TRUE
 NULL
 
-#' Structure that holds a graph with no cycles. You can create
-#' nodes and query the graph for parents, children, leaves and
-#' least common parents.
 AcyclicGraph <- new.env(parent = emptyenv())
 
 AcyclicGraph$new <- function() .Call(wrap__AcyclicGraph__new)

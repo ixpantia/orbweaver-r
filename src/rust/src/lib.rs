@@ -74,9 +74,6 @@ impl AcyclicGraph {
     }
 }
 
-/// Structure that holds a graph with no cycles. You can create
-/// nodes and query the graph for parents, children, leaves and
-/// least common parents.
 #[extendr]
 impl AcyclicGraph {
     /// Creates a new graph with a root node.
