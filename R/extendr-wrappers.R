@@ -14,7 +14,6 @@ NULL
 #' Structure that holds a graph with no cycles. You can create
 #' nodes and query the graph for parents, children, leaves and
 #' least common parents.
-#' @export
 AcyclicGraph <- new.env(parent = emptyenv())
 
 AcyclicGraph$new <- function() .Call(wrap__AcyclicGraph__new)
@@ -37,8 +36,8 @@ AcyclicGraph$as_list <- function() .Call(wrap__AcyclicGraph__as_list, self)
 
 AcyclicGraph$from_df <- function(df) .Call(wrap__AcyclicGraph__from_df, df)
 
-#' @rdname AcyclicGraph
-#' @usage NULL
+AcyclicGraph$graph_clone <- function() .Call(wrap__AcyclicGraph__graph_clone, self)
+
 #' @export
 `$.AcyclicGraph` <- function (self, name) { func <- AcyclicGraph[[name]]; environment(func) <- environment(); func }
 

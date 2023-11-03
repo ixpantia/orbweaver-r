@@ -28,7 +28,7 @@ struct EdgesDFRow {
 
 /// Structure that holds the necessary information to build
 /// a graph with no cycle (including trees).
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct AcyclicGraph {
     nodes: HashMap<Rc<str>, Node>,
 }
@@ -77,7 +77,6 @@ impl AcyclicGraph {
 /// Structure that holds a graph with no cycles. You can create
 /// nodes and query the graph for parents, children, leaves and
 /// least common parents.
-/// @export
 #[extendr]
 impl AcyclicGraph {
     /// Creates a new graph with a root node.
@@ -177,6 +176,10 @@ impl AcyclicGraph {
             .zip(children)
             .for_each(|(parent, child)| graph.add_child(parent, child));
         graph
+    }
+    /// Creates a new copy of the graph.
+    fn graph_clone(&self) -> Self {
+        self.clone()
     }
 }
 
