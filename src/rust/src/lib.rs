@@ -1,118 +1,182 @@
 use extendr_api::prelude::*;
-use std::cell::RefCell;
+use itertools::Itertools;
 use std::collections::{HashMap, HashSet};
 use std::rc::Rc;
 
+#[derive(Debug, Clone)]
+struct Node {
+    id: Rc<str>,
+    children: HashSet<Rc<str>>,
+    parents: HashSet<Rc<str>>,
+}
+
+impl Node {
+    fn new(id: Rc<str>) -> Self {
+        Self {
+            id,
+            children: HashSet::new(),
+            parents: HashSet::new(),
+        }
+    }
+}
+
+#[derive(IntoDataFrameRow)]
+struct EdgesDFRow {
+    parent: String,
+    child: String,
+}
+
+/// Structure that holds the necessary information to build
+/// a graph with no cycle (including trees).
+#[derive(Debug)]
 struct AcyclicGraph {
-    nodes: HashSet<Rc<str>>,
-    parents: HashMap<Rc<str>, Vec<Rc<str>>>,
-    children: HashMap<Rc<str>, Vec<Rc<str>>>,
-    root: Rc<str>,
+    nodes: HashMap<Rc<str>, Node>,
 }
 
 impl AcyclicGraph {
-    fn parents(&self, node: &str) -> &[Rc<str>] {
-        let node = self.nodes.get(node).unwrap();
-        self.parents
+    /// Returns the parents of a node by name.
+    fn parents(&self, node: &str) -> Vec<&str> {
+        self.nodes
             .get(node)
-            .map(|parents| parents.as_slice())
+            .map(|node| node.parents.iter().map(|parent| parent.as_ref()).collect())
             .unwrap_or_default()
     }
-    fn children(&self, node: &str) -> &[Rc<str>] {
-        let node = self.nodes.get(node).unwrap();
-        self.children
+    /// Returns the children of a node by name.
+    fn children(&self, node: &str) -> Vec<&str> {
+        self.nodes
             .get(node)
-            .map(|children| children.as_slice())
+            .map(|node| node.children.iter().map(|child| child.as_ref()).collect())
             .unwrap_or_default()
     }
+    /// Internal function to build an R list from the graph.
+    /// This function is recursive and should not be called directly.
     fn as_list_internal<'a>(&'a self, node: &'a str) -> (&str, Robj) {
+        // We create a temporary hashmap to build the list.
         let mut temp_list = HashMap::new();
+        // We get the children of the current node.
         let children = self.children(node);
+        // If the children vector is empty, we return the current node and an R object
+        // of type character with an empty string.
         if children.is_empty() {
             return (node, Robj::from(""));
         }
+        // Otherwise we iterate over the children and recursively call the function.
         children.iter().for_each(|child| {
+            // We get the name of the child and it's list.
             let (name, child_list) = self.as_list_internal(child);
+            // We insert the child list into the temporary hashmap.
             temp_list.insert(name.to_string(), child_list);
         });
+        // We convert the hashmap into an R list.
         let list = List::from_hashmap(temp_list).unwrap().into_robj();
+        // We return the current node and the list.
         (node, list)
     }
 }
 
+/// Structure that holds a graph with no cycles. You can create
+/// nodes and query the graph for parents, children, leaves and
+/// least common parents.
 /// @export
 #[extendr]
 impl AcyclicGraph {
-    fn new(root: &str) -> Self {
-        let root: Rc<str> = root.into();
-        let mut nodes = HashSet::new();
-        nodes.insert(root.clone());
-        Self {
-            nodes,
-            parents: HashMap::new(),
-            children: HashMap::new(),
-            root,
-        }
+    /// Creates a new graph with a root node.
+    fn new() -> Self {
+        let nodes = HashMap::new();
+        Self { nodes }
     }
-    fn add_node(&mut self, node: &str) {
-        self.nodes.insert(node.into());
+    /// Adds a node to the graph. If the node already exists, it does nothing.
+    fn add_node(&mut self, node_id: &str) {
+        let node_id: Rc<str> = node_id.into();
+        self.nodes
+            .entry(node_id.clone())
+            .or_insert_with(|| Node::new(node_id));
     }
-    fn add_child(&mut self, node: &str, child: &str) {
-        let node = self.nodes.get(node).unwrap();
-        let child = self.nodes.get(child).unwrap();
-        self.children
-            .entry(node.clone())
-            .or_default()
-            .push(child.clone());
-        self.parents
-            .entry(child.clone())
-            .or_default()
-            .push(node.clone());
+    /// Adds a child to a node.
+    fn add_child(&mut self, parent_id: &str, child_id: &str) {
+        self.add_node(parent_id);
+        self.add_node(child_id);
+        self.nodes
+            .get_mut(parent_id)
+            .expect("Parent not found")
+            .children
+            .insert(child_id.into());
+        self.nodes
+            .get_mut(child_id)
+            .expect("Child not found")
+            .parents
+            .insert(parent_id.into());
     }
+    /// Returns the children of a node.
     fn get_children(&self, node: &str) -> Vec<&str> {
         self.children(node)
-            .iter()
-            .map(|child| child.as_ref())
-            .collect()
     }
+    /// Returns the parents of a node.
     fn get_parents(&self, node: &str) -> Vec<&str> {
         self.parents(node)
-            .iter()
-            .map(|parent| parent.as_ref())
-            .collect()
     }
+    /// Returns the leaves of the graph.
     fn find_leaves(&self, node: &str) -> Vec<&str> {
         let node = self.nodes.get(node).unwrap();
-        match self.children.get(node) {
-            None => vec![node.as_ref()],
-            Some(children) => children
-                .iter()
-                .flat_map(|child| self.find_leaves(child))
-                .collect(),
+        if node.children.is_empty() {
+            return vec![node.id.as_ref()];
         }
-    }
-    fn find_least_common_parents(&self, selected: Vec<String>) -> Vec<&str> {
-        let selected: HashSet<_> = selected.into_iter().collect();
-        if selected.contains(self.root.as_ref()) {
-            return vec![self.root.as_ref()];
-        }
-        self.nodes
+        node.children
             .iter()
-            .filter(|node| selected.contains(node.as_ref()))
-            .filter(|node| {
-                let contains_selected_parent = self
-                    .parents(node)
-                    .iter()
-                    .any(|parent| selected.contains(parent.as_ref()));
-                let self_in_selected = selected.contains(node.as_ref());
-                !contains_selected_parent && self_in_selected
-            })
-            .map(|node| node.as_ref())
+            .flat_map(|child| self.find_leaves(child))
+            .unique()
             .collect()
     }
+    /// Returns the least common parents of a set of nodes.
+    fn find_least_common_parents(&self, selected: Vec<String>) -> Vec<&str> {
+        let selected: HashSet<_> = selected.into_iter().collect();
+        self.nodes
+            .iter()
+            .filter(|(id, _)| selected.contains(id.as_ref()))
+            .filter(|(_, node)| {
+                let contains_selected_parent = node
+                    .parents
+                    .iter()
+                    .any(|parent| selected.contains(parent.as_ref()));
+                !contains_selected_parent
+            })
+            .map(|(id, _)| id.as_ref())
+            .unique()
+            .collect()
+    }
+    /// Gets the root of the graph.
+    fn find_roots(&self) -> Vec<&str> {
+        self.nodes
+            .iter()
+            .filter(|(_, node)| node.parents.is_empty())
+            .map(|(id, _)| id.as_ref())
+            .unique()
+            .collect()
+    }
+    /// Returns the graph as an R list. (Useful for libraries like `shinyTree`).
     fn as_list(&self) -> Robj {
-        let list = self.as_list_internal(self.root.as_ref());
-        List::from_pairs([list]).into_robj()
+        let list = self
+            .nodes
+            .iter()
+            .filter(|(_, node)| node.parents.is_empty())
+            .map(|(id, _)| self.as_list_internal(id))
+            .collect::<Vec<_>>();
+        List::from_pairs(list).into_robj()
+    }
+    /// Creates an acyclic graph from a data frame.
+    fn from_df(df: Robj) -> Self {
+        let df: Dataframe<EdgesDFRow> = df.try_into().expect("Invalid data frame");
+        let mut graph = Self::new();
+        let parents = df.index("parent").expect("Column 'parent' not found");
+        let parents = parents.as_str_vector().expect("Invalid parent column");
+        let children = df.index("child").expect("Column 'child' not found");
+        let children = children.as_str_vector().expect("Invalid child column");
+        // Iterate over the parents and children and add them to the graph.
+        parents
+            .iter()
+            .zip(children)
+            .for_each(|(parent, child)| graph.add_child(parent, child));
+        graph
     }
 }
 

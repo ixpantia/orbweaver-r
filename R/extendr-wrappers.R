@@ -11,14 +11,17 @@
 #' @useDynLib noder, .registration = TRUE
 NULL
 
+#' Structure that holds a graph with no cycles. You can create
+#' nodes and query the graph for parents, children, leaves and
+#' least common parents.
 #' @export
 AcyclicGraph <- new.env(parent = emptyenv())
 
-AcyclicGraph$new <- function(root) .Call(wrap__AcyclicGraph__new, root)
+AcyclicGraph$new <- function() .Call(wrap__AcyclicGraph__new)
 
-AcyclicGraph$add_node <- function(node) invisible(.Call(wrap__AcyclicGraph__add_node, self, node))
+AcyclicGraph$add_node <- function(node_id) invisible(.Call(wrap__AcyclicGraph__add_node, self, node_id))
 
-AcyclicGraph$add_child <- function(node, child) invisible(.Call(wrap__AcyclicGraph__add_child, self, node, child))
+AcyclicGraph$add_child <- function(parent_id, child_id) invisible(.Call(wrap__AcyclicGraph__add_child, self, parent_id, child_id))
 
 AcyclicGraph$get_children <- function(node) .Call(wrap__AcyclicGraph__get_children, self, node)
 
@@ -28,7 +31,11 @@ AcyclicGraph$find_leaves <- function(node) .Call(wrap__AcyclicGraph__find_leaves
 
 AcyclicGraph$find_least_common_parents <- function(selected) .Call(wrap__AcyclicGraph__find_least_common_parents, self, selected)
 
+AcyclicGraph$find_roots <- function() .Call(wrap__AcyclicGraph__find_roots, self)
+
 AcyclicGraph$as_list <- function() .Call(wrap__AcyclicGraph__as_list, self)
+
+AcyclicGraph$from_df <- function(df) .Call(wrap__AcyclicGraph__from_df, df)
 
 #' @rdname AcyclicGraph
 #' @usage NULL
