@@ -3,12 +3,11 @@
 \docType{data}
 \name{AcyclicGraph}
 \alias{AcyclicGraph}
-\alias{$.AcyclicGraph}
 \title{Structure that holds a graph with no cycles. You can create
 nodes and query the graph for parents, children, leaves and
 least common parents.}
 \format{
-An object of class \code{environment} of length 10.
+An object of class \code{environment} of length 11.
 }
 \usage{
 AcyclicGraph

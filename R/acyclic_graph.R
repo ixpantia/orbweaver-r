@@ -136,3 +136,14 @@ acyclic_graph_from_df <- function(df) {
   graph <- AcyclicGraph$from_df(df)
   return(graph)
 }
+
+#' @title Clone Graph
+#'
+#' @description
+#' Creates a copy of the graph.
+#' @param graph The graph to clone.
+#' @return A new graph.
+#' @export
+clone_graph <- function(graph) {
+  graph$graph_clone()
+}
