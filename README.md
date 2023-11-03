@@ -1,4 +1,4 @@
-# Nodes
+# Noder
 
 A fast R library for working with Nodes in a graph. This library
 modifies graphs in place, similar to how [data.table](https://github.com/Rdatatable/data.table)
@@ -131,7 +131,7 @@ command in your terminal:
 rustup toolchain install stable-gnu
 ```
 
-If you are on Windows you may been to install `Rtools` as
+If you are on Windows you may need to install `Rtools` as
 well. You can download the installer from
 [here](https://cran.r-project.org/bin/windows/Rtools/).
 
