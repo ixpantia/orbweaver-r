@@ -1,9 +1,9 @@
-Package: noder
-Title: Types for Graph Analysis
-Version: 0.0.0.9000
+Package: orbweaver
+Title: Fast and Efficient Graph Data Structures
+Version: 0.1.0.9000
 Authors@R: 
     person("Andres", "Quintero", , "andres@ixpantia.com", role = c("aut", "cre"))
-Description: Types for graphs.
+Description: Orbweaver is an R packages that optimizes the processing of graph data structures.
 License: ?
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

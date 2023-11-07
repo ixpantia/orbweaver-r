@@ -1,11 +1,48 @@
-#' @title Acyclic Graph
+#' @title Initialize a new graph
 #'
 #' @description
-#' Creates a new acyclic graph. An acyclic graph is a directed graph with no
-#' cycles.
+#' Initializes a new graph with the given type.
+#' @param type The type of graph to create. Currently only `acyclic` is
+#' supported.
 #' @export
-new_acyclic_graph <- function() {
-  AcyclicGraph$new()
+new_graph <- function(type) {
+  switch(
+    type,
+    acyclic = AcyclicGraph$new(),
+    stop("Unknown graph type")
+  )
+}
+
+#' @title As graph
+#'
+#' @description
+#' Attempts to convert the object to a graph.
+#' @param x The object to convert to a graph.
+#' @param type The type of graph to convert to. Currently only `acyclic` is
+#' supported.
+#' @param ... Additional arguments passed to the method.
+#' @return A graph.
+#' @export
+as_graph <- function(x, type, ...) {
+  UseMethod("as_graph")
+}
+
+#' title Data.frame as graph
+#'
+#' @description
+#' Converts a data.frame to a graph.
+#' @param x The data.frame to convert to a graph.
+#' @param type The type of graph to convert to. Currently only `acyclic` is
+#' supported.
+#' @param ... Ignored.
+#' @return A graph.
+#' @export
+as_graph.data.frame <- function(x, type, ...) {
+  switch(
+    type,
+    acyclic = AcyclicGraph$from_dataframe(x),
+    stop("Unknown graph type")
+  )
 }
 
 #' @title Add Node
@@ -80,7 +117,7 @@ find_leaves <- function(graph, node) {
   graph$find_leaves(node)
 }
 
-#' @title Get Least Common Parents
+#' @title Get Least Common Parents from an Acyclic Graph
 #'
 #' @description
 #' Gets the least common parents of a set of nodes.
@@ -120,22 +157,6 @@ find_roots <- function(graph) {
   graph$find_roots()
 }
 
-#' @title From data.frame
-#'
-#' @description
-#' Creates a graph from a data.frame.
-#'
-#' The data.frame must have two columns, one for the parent and one for the
-#' child.
-#'
-#' @param df The data.frame to create the graph from. It must have two columns,
-#' `parent` and `child`.
-#' @return A new graph.
-#' @export
-acyclic_graph_from_df <- function(df) {
-  graph <- AcyclicGraph$from_df(df)
-  return(graph)
-}
 
 #' @title Clone Graph
 #'

@@ -1,4 +1,4 @@
-# Noder
+# OrbWeaver
 
 A fast R library for working with Nodes in a graph. This library
 modifies graphs in place, similar to how [data.table](https://github.com/Rdatatable/data.table)
@@ -14,7 +14,7 @@ graph operations.
    - Get children of a node
    - Get least common ancestor/parents in a set of nodes
    - Convert to a list (for use in libraries like [shinyTree](https://github.com/shinyTree/shinyTree)).
-   - Create from a data.frame
+   - Create from a data.frame / tibble / derivative
 
 ## Usage
 
@@ -23,9 +23,9 @@ graph operations.
 In this example we will build the graph manually.
 
 ```R
-library(noder)
+library(orbweaver)
 
-tree <- new_acyclic_graph() |>
+tree <- new_graph(type = "acyclic") |>
   # Node A has children B and C
   add_child("A", "B") |>
   add_child("A", "C") |>
@@ -51,14 +51,15 @@ tree |>
 ### Create an Acyclic Graph from a data.frame / derivative
 
 ```R
-library(noder)
+library(orbweaver)
 
-df <- data.frame(
+example <- data.frame(
   parent = c("A", "A", "B", "B", "C"),
   child = c("B", "C", "D", "E", "F")
 )
 
-tree <- acyclic_graph_from_df(df)
+tree <- example |>
+  as_graph(type = "acyclic")
 
 tree |>
   find_roots()
@@ -76,9 +77,9 @@ tree |>
 ### Convert to a list
 
 ```R
-library(noder)
+library(orbweaver)
 
-tree <- new_acyclic_graph() |>
+tree <- new_graph(type = "acyclic") |>
   # Node A has children B and C
   add_child("A", "B") |>
   add_child("A", "C") |>
@@ -143,17 +144,23 @@ this package from Git using whatever method you prefer.
 With `remotes`:
 
 ```R
-remotes::install_git("https://secure.ixpantia.com/imasd/noder.git")
+remotes::install_github("ixpantia/orbweaver")
 ```
 
 With `devtools`:
 
 ```R
-devtools::install_git("https://secure.ixpantia.com/imasd/noder.git")
+devtools::install_github("ixpantia/orbweaver")
 ```
 
 With `renv`:
 
 ```R
-renv::install("https://secure.ixpantia.com/imasd/noder.git")
+renv::install("ixpantia/orbweaver")
+```
+
+With `pak`:
+
+```R
+pak::pak("ixpantia/orbweaver")
 ```

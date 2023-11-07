@@ -4,11 +4,11 @@
 
 #
 # This file was created with the following call:
-#   .Call("wrap__make_noder_wrappers", use_symbols = TRUE, package_name = "noder")
+#   .Call("wrap__make_orbweaver_wrappers", use_symbols = TRUE, package_name = "orbweaver")
 
 #' @docType package
 #' @usage NULL
-#' @useDynLib noder, .registration = TRUE
+#' @useDynLib orbweaver, .registration = TRUE
 NULL
 
 AcyclicGraph <- new.env(parent = emptyenv())
@@ -31,7 +31,7 @@ AcyclicGraph$find_roots <- function() .Call(wrap__AcyclicGraph__find_roots, self
 
 AcyclicGraph$as_list <- function() .Call(wrap__AcyclicGraph__as_list, self)
 
-AcyclicGraph$from_df <- function(df) .Call(wrap__AcyclicGraph__from_df, df)
+AcyclicGraph$from_dataframe <- function(dataframe) .Call(wrap__AcyclicGraph__from_dataframe, dataframe)
 
 AcyclicGraph$graph_clone <- function() .Call(wrap__AcyclicGraph__graph_clone, self)
 

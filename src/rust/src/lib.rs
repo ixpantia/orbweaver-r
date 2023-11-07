@@ -160,12 +160,14 @@ impl AcyclicGraph {
         List::from_pairs(list).into_robj()
     }
     /// Creates an acyclic graph from a data frame.
-    fn from_df(df: Robj) -> Self {
-        let df: Dataframe<EdgesDFRow> = df.try_into().expect("Invalid data frame");
+    fn from_dataframe(dataframe: Robj) -> Self {
+        let dataframe: Dataframe<EdgesDFRow> = dataframe.try_into().expect("Invalid data frame");
         let mut graph = Self::new();
-        let parents = df.index("parent").expect("Column 'parent' not found");
+        let parents = dataframe
+            .index("parent")
+            .expect("Column 'parent' not found");
         let parents = parents.as_str_vector().expect("Invalid parent column");
-        let children = df.index("child").expect("Column 'child' not found");
+        let children = dataframe.index("child").expect("Column 'child' not found");
         let children = children.as_str_vector().expect("Invalid child column");
         // Iterate over the parents and children and add them to the graph.
         parents
@@ -181,6 +183,6 @@ impl AcyclicGraph {
 }
 
 extendr_module! {
-    mod noder;
+    mod orbweaver;
     impl AcyclicGraph;
 }
