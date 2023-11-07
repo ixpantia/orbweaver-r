@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph.R
 \name{find_leaves}
 \alias{find_leaves}
-\title{Get Leaves / Máximum Depth}
+\title{Get Leaves / Maximum Depth}
 \usage{
 find_leaves(graph, node)
 }

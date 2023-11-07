@@ -27,7 +27,7 @@ as_graph <- function(x, type, ...) {
   UseMethod("as_graph")
 }
 
-#' title Data.frame as graph
+#' @title Data.frame as graph
 #'
 #' @description
 #' Converts a data.frame to a graph.
@@ -105,7 +105,7 @@ get_children <- function(graph, node) {
   graph$get_children(node)
 }
 
-#' @title Get Leaves / Máximum Depth
+#' @title Get Leaves / Maximum Depth
 #'
 #' @description
 #' Gets the leaves of the graph that descend from a node.
