@@ -11,6 +11,9 @@
 #' @useDynLib orbweaver, .registration = TRUE
 NULL
 
+#' @export
+rs_get_shinytree_selected <- function(selected) .Call(wrap__rs_get_shinytree_selected, selected)
+
 AcyclicGraph <- new.env(parent = emptyenv())
 
 AcyclicGraph$new <- function() .Call(wrap__AcyclicGraph__new)

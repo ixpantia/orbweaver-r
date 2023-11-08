@@ -1,3 +1,5 @@
+mod shiny_tree;
+
 use extendr_api::prelude::*;
 use itertools::Itertools;
 use std::collections::{HashMap, HashSet};
@@ -182,7 +184,16 @@ impl AcyclicGraph {
     }
 }
 
+/// @export
+#[extendr]
+fn rs_get_shinytree_selected(selected: Robj) -> Vec<String> {
+    shiny_tree::get_shinytree_selected(selected)
+        .into_iter()
+        .collect()
+}
+
 extendr_module! {
     mod orbweaver;
     impl AcyclicGraph;
+    fn rs_get_shinytree_selected;
 }
