@@ -168,3 +168,29 @@ find_roots <- function(graph) {
 clone_graph <- function(graph) {
   graph$graph_clone()
 }
+
+#' @title Search for a node inside a graph by name
+#'
+#' @description
+#' Searches for nodes with a name that matches the given string.
+#' @param graph The graph to search in.
+#' @param node_id The string to search for.
+#' @param case_sensitive Whether the search should be case sensitive.
+#' @return A character vector of the nodes that match the search.
+#' @export
+search_for_node <- function(graph, node_id, case_sensitive = TRUE) {
+  graph$search_for_node(node_id, case_sensitive)
+}
+
+#' @title Find all paths between two nodes
+#'
+#' @description
+#' Finds all paths between two nodes.
+#' @param graph The graph to search in.
+#' @param from The ID of the node to start the search from.
+#' @param to The ID of the node to end the search at.
+#' @return A list of character vectors of the paths between the two nodes.
+#' @export
+find_all_paths <- function(graph, from, to) {
+  graph$find_all_paths(from, to)
+}
