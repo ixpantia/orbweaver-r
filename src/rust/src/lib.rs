@@ -210,6 +210,7 @@ impl AcyclicGraph {
                 }
             })
             .map(|id| id.as_ref())
+            .sorted_by_key(|id| id.len())
             .collect()
     }
     /// find_all_paths
