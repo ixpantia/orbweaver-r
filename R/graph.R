@@ -1,4 +1,4 @@
-#' @title Initialize a new graph
+#' @title Initialize a New Graph
 #'
 #' @description
 #' Initializes a new graph with the given type.
@@ -13,7 +13,7 @@ new_graph <- function(type) {
   )
 }
 
-#' @title As graph
+#' @title As Graph
 #'
 #' @description
 #' Attempts to convert the object to a graph.
@@ -27,7 +27,7 @@ as_graph <- function(x, type, ...) {
   UseMethod("as_graph")
 }
 
-#' @title Data.frame as graph
+#' @title Data.frame as Graph
 #'
 #' @description
 #' Converts a data.frame to a graph.
@@ -146,7 +146,7 @@ as.list.AcyclicGraph <- function(x, ...) {
   x$as_list()
 }
 
-#' @title Find roots
+#' @title Find Roots
 #'
 #' @description
 #' Gets the roots of the graph.
