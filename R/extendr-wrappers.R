@@ -35,6 +35,10 @@ AcyclicGraph$from_dataframe <- function(dataframe) .Call(wrap__AcyclicGraph__fro
 
 AcyclicGraph$graph_clone <- function() .Call(wrap__AcyclicGraph__graph_clone, self)
 
+AcyclicGraph$search_for_node <- function(node_id, case_sensitive) .Call(wrap__AcyclicGraph__search_for_node, self, node_id, case_sensitive)
+
+AcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__AcyclicGraph__find_all_paths, self, from, to)
+
 #' @export
 `$.AcyclicGraph` <- function (self, name) { func <- AcyclicGraph[[name]]; environment(func) <- environment(); func }
 

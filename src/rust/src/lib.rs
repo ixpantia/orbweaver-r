@@ -72,6 +72,24 @@ impl AcyclicGraph {
         // We return the current node and the list.
         (node, list)
     }
+    /// FindAllPaths
+    fn internal_find_all_paths(&self, from: &str, to: &str) -> Vec<Vec<String>> {
+        let mut all_paths = Vec::new();
+        let path = vec![from.to_string()];
+        self.dfs(from, to, path, &mut all_paths);
+        all_paths
+    }
+    fn dfs(&self, from: &str, to: &str, mut path: Vec<String>, all_paths: &mut Vec<Vec<String>>) {
+        if from == to {
+            all_paths.push(path)
+        } else {
+            for child in self.children(from) {
+                path.push(child.to_string());
+                self.dfs(child, to, path.clone(), all_paths);
+                path.pop();
+            }
+        }
+    }
 }
 
 #[extendr]
@@ -179,6 +197,26 @@ impl AcyclicGraph {
     /// Creates a new copy of the graph.
     fn graph_clone(&self) -> Self {
         self.clone()
+    }
+    /// Search for similarly named nodes.
+    fn search_for_node(&self, node_id: &str, case_sensitive: bool) -> Vec<&str> {
+        self.nodes
+            .keys()
+            .filter(|id| {
+                if case_sensitive {
+                    id.contains(node_id)
+                } else {
+                    id.to_lowercase().contains(&node_id.to_lowercase())
+                }
+            })
+            .map(|id| id.as_ref())
+            .sorted_by_key(|id| id.len())
+            .collect()
+    }
+    /// find_all_paths
+    fn find_all_paths(&self, from: &str, to: &str) -> List {
+        let paths = self.internal_find_all_paths(from, to).into_iter();
+        List::from_iter(paths)
     }
 }
 
