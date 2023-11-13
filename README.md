@@ -1,4 +1,4 @@
-# OrbWeaver
+# orbweaver
 
 A fast R library for working with Nodes in a graph. This library
 modifies graphs in place, similar to how [data.table](https://github.com/Rdatatable/data.table)
