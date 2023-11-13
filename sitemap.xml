@@ -34,6 +34,9 @@
     <loc>/reference/clone_graph.html</loc>
   </url>
   <url>
+    <loc>/reference/find_all_paths.html</loc>
+  </url>
+  <url>
     <loc>/reference/find_least_common_parents.html</loc>
   </url>
   <url>
@@ -53,5 +56,8 @@
   </url>
   <url>
     <loc>/reference/new_graph.html</loc>
+  </url>
+  <url>
+    <loc>/reference/search_for_node.html</loc>
   </url>
 </urlset>
