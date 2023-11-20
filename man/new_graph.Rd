@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph.R
 \name{new_graph}
 \alias{new_graph}
-\title{Initialize a new graph}
+\title{Initialize a New Graph}
 \usage{
 new_graph(type)
 }

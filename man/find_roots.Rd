@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph.R
 \name{find_roots}
 \alias{find_roots}
-\title{Find roots}
+\title{Find Roots}
 \usage{
 find_roots(graph)
 }

@@ -7,9 +7,9 @@
 \method{as.list}{AcyclicGraph}(x, ...)
 }
 \arguments{
-\item{...}{Ignored.}
+\item{x}{The graph to convert to a list.}
 
-\item{graph}{The graph to convert to a list.}
+\item{...}{Ignored.}
 }
 \value{
 A list representation of the graph.
