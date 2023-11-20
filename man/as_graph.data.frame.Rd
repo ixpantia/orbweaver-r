@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph.R
 \name{as_graph.data.frame}
 \alias{as_graph.data.frame}
-\title{Data.frame as graph}
+\title{Data.frame as Graph}
 \usage{
 \method{as_graph}{data.frame}(x, type, ...)
 }

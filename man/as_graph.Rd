@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph.R
 \name{as_graph}
 \alias{as_graph}
-\title{As graph}
+\title{As Graph}
 \usage{
 as_graph(x, type, ...)
 }

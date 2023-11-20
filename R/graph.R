@@ -138,7 +138,7 @@ find_least_common_parents <- function(graph, nodes) {
 #'
 #' @description
 #' Converts the graph to a list.
-#' @param graph The graph to convert to a list.
+#' @param x The graph to convert to a list.
 #' @param ... Ignored.
 #' @return A list representation of the graph.
 #' @export
