@@ -2,7 +2,10 @@ Package: orbweaver
 Title: Fast and Efficient Graph Data Structures
 Version: 0.1.0.9000
 Authors@R: 
-    c(person("Andres", "Quintero", , "andres@ixpantia.com", role = c("aut", "cre")),
+    c(person(given = "ixpantia, SRL",
+             role = "cph",
+             email = "hola@ixpantia.com"),
+      person("Andres", "Quintero", , "andres@ixpantia.com", role = c("aut", "cre")),
       person(given = "The authors of the dependency Rust crates",
              role = c("ctb"),
              comment = "see inst/AUTHORS file for details"))
