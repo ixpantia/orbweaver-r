@@ -15,7 +15,7 @@ supported.}
 \item{...}{Ignored.}
 }
 \value{
-A graph.
+A graph of the given type.
 }
 \description{
 Converts a data.frame to a graph.

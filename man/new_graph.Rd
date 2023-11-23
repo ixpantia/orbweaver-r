@@ -10,6 +10,9 @@ new_graph(type)
 \item{type}{The type of graph to create. Currently only \code{acyclic} is
 supported.}
 }
+\value{
+A new graph of the given type.
+}
 \description{
 Initializes a new graph with the given type.
 }

@@ -14,7 +14,7 @@ add_child(graph, parent, child)
 \item{child}{The ID of the child node.}
 }
 \value{
-The graph.
+A reference to the graph passed in.
 }
 \description{
 Adds a child to a node. If the child already exists, nothing happens.

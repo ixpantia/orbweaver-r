@@ -12,7 +12,7 @@ add_node(graph, node)
 \item{node}{The ID of the node to add.}
 }
 \value{
-The graph.
+A reference to the graph passed in.
 }
 \description{
 Adds a node to the graph. If the node already exists, nothing happens.

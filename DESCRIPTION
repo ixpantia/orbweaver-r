@@ -9,7 +9,15 @@ Authors@R:
       person(given = "The authors of the dependency Rust crates",
              role = c("ctb"),
              comment = "see inst/AUTHORS file for details"))
-Description: A set of optimized tools and abstractions for processing graph data structures.
+Description: Empower your data analysis with 'orbweaver', an R package
+    designed for effortless construction and analysis of graph data
+    structures. With 'orbweaver', you can seamlessly build and manipulate
+    graph structures, leveraging its high-performance methods for
+    filtering, joining, and mutating data within the R environment.
+    Drawing inspiration from the efficiency of the 'data.table'
+    package, 'orbweaver' ensures that mutations and changes to
+    the graph are performed in place, streamlining your
+    workflow for optimal productivity.
 URL: https://github.com/ixpantia/orbweaver
 BugReports: https://github.com/ixpantia/orbweaver/issues
 License: MIT + file LICENSE
