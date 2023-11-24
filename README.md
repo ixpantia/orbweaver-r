@@ -1,5 +1,12 @@
 # orbweaver
 
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/orbweaver)](https://cran.r-project.org/package=orbweaver)
+[![R-CMD-check](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml/badge.svg)](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml)
+<!-- badges: end -->
+
+## Overview
+
 A fast R library for working with Nodes in a graph. This library
 modifies graphs in place, similar to how [data.table](https://github.com/Rdatatable/data.table)
 modifies data.frames in place. This allows for fast and memory efficient
