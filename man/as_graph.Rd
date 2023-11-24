@@ -15,7 +15,7 @@ supported.}
 \item{...}{Additional arguments passed to the method.}
 }
 \value{
-A graph.
+A graph of the given type.
 }
 \description{
 Attempts to convert the object to a graph.

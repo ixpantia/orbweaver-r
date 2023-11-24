@@ -10,7 +10,7 @@ clone_graph(graph)
 \item{graph}{The graph to clone.}
 }
 \value{
-A new graph.
+A new graph that is a copy of the original.
 }
 \description{
 Creates a copy of the graph.

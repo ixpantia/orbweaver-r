@@ -4,6 +4,7 @@
 #' Initializes a new graph with the given type.
 #' @param type The type of graph to create. Currently only `acyclic` is
 #' supported.
+#' @return A new graph of the given type.
 #' @export
 new_graph <- function(type) {
   switch(
@@ -21,7 +22,7 @@ new_graph <- function(type) {
 #' @param type The type of graph to convert to. Currently only `acyclic` is
 #' supported.
 #' @param ... Additional arguments passed to the method.
-#' @return A graph.
+#' @return A graph of the given type.
 #' @export
 as_graph <- function(x, type, ...) {
   UseMethod("as_graph")
@@ -35,7 +36,7 @@ as_graph <- function(x, type, ...) {
 #' @param type The type of graph to convert to. Currently only `acyclic` is
 #' supported.
 #' @param ... Ignored.
-#' @return A graph.
+#' @return A graph of the given type.
 #' @export
 as_graph.data.frame <- function(x, type, ...) {
   switch(
@@ -55,7 +56,7 @@ as_graph.data.frame <- function(x, type, ...) {
 #' similar way to the `data.table` package.
 #' @param graph The graph to add the node to.
 #' @param node The ID of the node to add.
-#' @return The graph.
+#' @return A reference to the graph passed in.
 #' @export
 add_node <- function(graph, node) {
   graph$add_node(node)
@@ -74,7 +75,7 @@ add_node <- function(graph, node) {
 #' @param graph The graph to add the child to.
 #' @param parent The ID of the parent node.
 #' @param child The ID of the child node.
-#' @return The graph.
+#' @return A reference to the graph passed in.
 #' @export
 add_child <- function(graph, parent, child) {
   graph$add_child(parent, child)
@@ -163,7 +164,7 @@ find_roots <- function(graph) {
 #' @description
 #' Creates a copy of the graph.
 #' @param graph The graph to clone.
-#' @return A new graph.
+#' @return A new graph that is a copy of the original.
 #' @export
 clone_graph <- function(graph) {
   graph$graph_clone()
