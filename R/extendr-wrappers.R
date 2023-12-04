@@ -19,7 +19,7 @@ AcyclicGraph$add_node <- function(node_id) invisible(.Call(wrap__AcyclicGraph__a
 
 AcyclicGraph$add_child <- function(parent_id, child_id) invisible(.Call(wrap__AcyclicGraph__add_child, self, parent_id, child_id))
 
-AcyclicGraph$get_children <- function(node) .Call(wrap__AcyclicGraph__get_children, self, node)
+AcyclicGraph$get_children <- function(node, recursive) .Call(wrap__AcyclicGraph__get_children, self, node, recursive)
 
 AcyclicGraph$get_parents <- function(node) .Call(wrap__AcyclicGraph__get_parents, self, node)
 
@@ -38,6 +38,8 @@ AcyclicGraph$graph_clone <- function() .Call(wrap__AcyclicGraph__graph_clone, se
 AcyclicGraph$search_for_node <- function(node_id, case_sensitive) .Call(wrap__AcyclicGraph__search_for_node, self, node_id, case_sensitive)
 
 AcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__AcyclicGraph__find_all_paths, self, from, to)
+
+AcyclicGraph$subset_r <- function(selected) .Call(wrap__AcyclicGraph__subset_r, self, selected)
 
 #' @export
 `$.AcyclicGraph` <- function (self, name) { func <- AcyclicGraph[[name]]; environment(func) <- environment(); func }

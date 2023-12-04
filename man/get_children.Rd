@@ -4,12 +4,14 @@
 \alias{get_children}
 \title{Get Children}
 \usage{
-get_children(graph, node)
+get_children(graph, node, recursive = FALSE)
 }
 \arguments{
 \item{graph}{The graph to get the children from.}
 
 \item{node}{The ID of the node to get the children of.}
+
+\item{recursive}{Whether to recursively return all childrens id.}
 }
 \value{
 A character vector of the children of the node.

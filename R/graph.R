@@ -100,10 +100,11 @@ get_parents <- function(graph, node) {
 #' Gets the children of a node.
 #' @param graph The graph to get the children from.
 #' @param node The ID of the node to get the children of.
+#' @param recursive Whether to recursively return all childrens id.
 #' @return A character vector of the children of the node.
 #' @export
-get_children <- function(graph, node) {
-  graph$get_children(node)
+get_children <- function(graph, node, recursive = FALSE) {
+  graph$get_children(node, recursive)
 }
 
 #' @title Get Leaves / Maximum Depth
@@ -195,3 +196,13 @@ search_for_node <- function(graph, node_id, case_sensitive = TRUE) {
 find_all_paths <- function(graph, from, to) {
   graph$find_all_paths(from, to)
 }
+
+#' @title Filters of graph
+#'
+#' @param x 
+#' @param selected 
+#' @export
+filter_tree <- function(x, selected) {
+  x$subset_r(selected)
+}
+

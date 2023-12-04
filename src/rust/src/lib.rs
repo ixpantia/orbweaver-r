@@ -42,19 +42,70 @@ impl AcyclicGraph {
             .unwrap_or_default()
     }
     /// Returns the children of a node by name.
-    fn children(&self, node: &str) -> Vec<&str> {
+    fn children(&self, node: &str, recursive: bool) -> Vec<&str> {
+        if recursive {
+            if let Some(current_node) = self.nodes.get(node) {
+                let mut children: Vec<&str> = current_node
+                    .children
+                    .iter()
+                    .map(|child| child.as_ref())
+                    .collect();
+                let mut grand_children = children
+                    .iter()
+                    .flat_map(|child| self.children(child, true))
+                    .collect();
+                children.append(&mut grand_children);
+                children.push(current_node.id.as_ref());
+                children.sort();
+                children.dedup();
+
+                return children;
+            }
+            return Vec::new();
+        }
         self.nodes
             .get(node)
             .map(|node| node.children.iter().map(|child| child.as_ref()).collect())
             .unwrap_or_default()
     }
+
+    fn subset(&self, selected: &[&str]) -> AcyclicGraph {
+        let new_nodes = self
+            .nodes
+            .iter()
+            .filter(|(id, node)| selected.contains(&id.as_ref()))
+            .map(|(id, node)| {
+                let new_parents = node
+                    .parents
+                    .iter()
+                    .cloned()
+                    .filter(|id| selected.contains(&id.as_ref()))
+                    .collect();
+                let new_children = node
+                    .children
+                    .iter()
+                    .cloned()
+                    .filter(|id| selected.contains(&id.as_ref()))
+                    .collect();
+                let new_node = Node {
+                    id: id.clone(),
+                    parents: new_parents,
+                    children: new_children,
+                };
+
+                return (id.clone(), new_node);
+            })
+            .collect();
+        AcyclicGraph { nodes: new_nodes }
+    }
+
     /// Internal function to build an R list from the graph.
     /// This function is recursive and should not be called directly.
     fn as_list_internal<'a>(&'a self, node: &'a str) -> (&str, Robj) {
         // We create a temporary hashmap to build the list.
         let mut temp_list = HashMap::new();
         // We get the children of the current node.
-        let children = self.children(node);
+        let children = self.children(node, false);
         // If the children vector is empty, we return the current node and an R object
         // of type character with an empty string.
         if children.is_empty() {
@@ -83,7 +134,7 @@ impl AcyclicGraph {
         if from == to {
             all_paths.push(path)
         } else {
-            for child in self.children(from) {
+            for child in self.children(from, false) {
                 path.push(child.to_string());
                 self.dfs(child, to, path.clone(), all_paths);
                 path.pop();
@@ -122,8 +173,8 @@ impl AcyclicGraph {
             .insert(parent_id.into());
     }
     /// Returns the children of a node.
-    fn get_children(&self, node: &str) -> Vec<&str> {
-        self.children(node)
+    fn get_children(&self, node: &str, recursive: bool) -> Vec<&str> {
+        self.children(node, recursive)
     }
     /// Returns the parents of a node.
     fn get_parents(&self, node: &str) -> Vec<&str> {
@@ -217,6 +268,11 @@ impl AcyclicGraph {
     fn find_all_paths(&self, from: &str, to: &str) -> List {
         let paths = self.internal_find_all_paths(from, to).into_iter();
         List::from_iter(paths)
+    }
+
+    fn subset_r(&self, selected: StrIter) -> AcyclicGraph {
+        let selected: Vec<&str> = selected.collect();
+        self.subset(&selected)
     }
 }
 
