@@ -2,15 +2,18 @@
 % Please edit documentation in R/graph.R
 \name{filter_tree}
 \alias{filter_tree}
-\title{Filters of graph}
+\title{Filters graph with selected children}
 \usage{
 filter_tree(x, selected)
 }
 \arguments{
-\item{x}{}
+\item{x}{The graph to search in.}
 
-\item{selected}{}
+\item{selected}{Children selected for filter.}
+}
+\value{
+A graph with the selected children.
 }
 \description{
-Filters of graph
+Filters graph with selected children
 }

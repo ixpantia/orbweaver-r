@@ -197,10 +197,11 @@ find_all_paths <- function(graph, from, to) {
   graph$find_all_paths(from, to)
 }
 
-#' @title Filters of graph
+#' @title Filters graph with selected children
 #'
-#' @param x 
-#' @param selected 
+#' @param x The graph to search in. 
+#' @param selected Children selected for filter.
+#' @return A graph with the selected children.
 #' @export
 filter_tree <- function(x, selected) {
   x$subset_r(selected)
