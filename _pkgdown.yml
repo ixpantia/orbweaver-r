@@ -20,6 +20,7 @@ reference:
   - find_least_common_parents
   - find_all_paths
   - search_for_node
+  - filter_tree
 - title: Conversions
   desc: Helps convert from a graph to other data types
 - contents:

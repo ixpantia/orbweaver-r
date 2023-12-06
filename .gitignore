@@ -55,3 +55,4 @@ src/rust/.cargo
 src/rust/vendor/
 
 docs
+.vscode
