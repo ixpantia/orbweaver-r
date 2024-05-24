@@ -11,6 +11,10 @@
 #' @useDynLib orbweaver, .registration = TRUE
 NULL
 
+rs_populate_edges_directed_graph <- function(graph, dataframe, parent_col, child_col) .Call(wrap__rs_populate_edges_directed_graph, graph, dataframe, parent_col, child_col)
+
+rs_populate_nodes_directed_graph <- function(graph, dataframe, node_id_col, data_col) .Call(wrap__rs_populate_nodes_directed_graph, graph, dataframe, node_id_col, data_col)
+
 Node <- new.env(parent = emptyenv())
 
 Node$get_data <- function() .Call(wrap__Node__get_data, self)
@@ -72,6 +76,42 @@ DirectedGraph$into_dag <- function() .Call(wrap__DirectedGraph__into_dag, self)
 
 #' @export
 `[[.DirectedGraph` <- `$.DirectedGraph`
+
+DirectedAcyclicGraph <- new.env(parent = emptyenv())
+
+DirectedAcyclicGraph$get_node <- function(node_id) .Call(wrap__DirectedAcyclicGraph__get_node, self, node_id)
+
+DirectedAcyclicGraph$get_nodes <- function(ids) .Call(wrap__DirectedAcyclicGraph__get_nodes, self, ids)
+
+DirectedAcyclicGraph$edge_exists <- function(from, to) .Call(wrap__DirectedAcyclicGraph__edge_exists, self, from, to)
+
+DirectedAcyclicGraph$deep_clone <- function() .Call(wrap__DirectedAcyclicGraph__deep_clone, self)
+
+DirectedAcyclicGraph$find_path <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_path, self, from, to)
+
+DirectedAcyclicGraph$children <- function(node) .Call(wrap__DirectedAcyclicGraph__children, self, node)
+
+DirectedAcyclicGraph$parents <- function(node) .Call(wrap__DirectedAcyclicGraph__parents, self, node)
+
+DirectedAcyclicGraph$has_parents <- function(node_id) .Call(wrap__DirectedAcyclicGraph__has_parents, self, node_id)
+
+DirectedAcyclicGraph$has_children <- function(node_id) .Call(wrap__DirectedAcyclicGraph__has_children, self, node_id)
+
+DirectedAcyclicGraph$nodes <- function() .Call(wrap__DirectedAcyclicGraph__nodes, self)
+
+DirectedAcyclicGraph$least_common_parents <- function(selected) .Call(wrap__DirectedAcyclicGraph__least_common_parents, self, selected)
+
+DirectedAcyclicGraph$get_leaves <- function() .Call(wrap__DirectedAcyclicGraph__get_leaves, self)
+
+DirectedAcyclicGraph$get_leaves_under <- function(node_ids) .Call(wrap__DirectedAcyclicGraph__get_leaves_under, self, node_ids)
+
+DirectedAcyclicGraph$into_directed <- function() .Call(wrap__DirectedAcyclicGraph__into_directed, self)
+
+#' @export
+`$.DirectedAcyclicGraph` <- function (self, name) { func <- DirectedAcyclicGraph[[name]]; environment(func) <- environment(); func }
+
+#' @export
+`[[.DirectedAcyclicGraph` <- `$.DirectedAcyclicGraph`
 
 
 # nolint end
