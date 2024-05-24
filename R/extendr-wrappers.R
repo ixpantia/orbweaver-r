@@ -77,6 +77,12 @@ DirectedGraph$get_leaves <- function() .Call(wrap__DirectedGraph__get_leaves, se
 
 DirectedGraph$get_leaves_under <- function(node_ids) .Call(wrap__DirectedGraph__get_leaves_under, self, node_ids)
 
+DirectedGraph$subset <- function(node_id) .Call(wrap__DirectedGraph__subset, self, node_id)
+
+DirectedGraph$get_roots <- function() .Call(wrap__DirectedGraph__get_roots, self)
+
+DirectedGraph$get_roots_over <- function(node_ids) .Call(wrap__DirectedGraph__get_roots_over, self, node_ids)
+
 DirectedGraph$clear_edges <- function() invisible(.Call(wrap__DirectedGraph__clear_edges, self))
 
 DirectedGraph$into_dag <- function() .Call(wrap__DirectedGraph__into_dag, self)
@@ -118,6 +124,12 @@ DirectedAcyclicGraph$least_common_parents <- function(selected) .Call(wrap__Dire
 DirectedAcyclicGraph$get_leaves <- function() .Call(wrap__DirectedAcyclicGraph__get_leaves, self)
 
 DirectedAcyclicGraph$get_leaves_under <- function(node_ids) .Call(wrap__DirectedAcyclicGraph__get_leaves_under, self, node_ids)
+
+DirectedAcyclicGraph$subset <- function(node_id) .Call(wrap__DirectedAcyclicGraph__subset, self, node_id)
+
+DirectedAcyclicGraph$get_roots <- function() .Call(wrap__DirectedAcyclicGraph__get_roots, self)
+
+DirectedAcyclicGraph$get_roots_over <- function(node_ids) .Call(wrap__DirectedAcyclicGraph__get_roots_over, self, node_ids)
 
 DirectedAcyclicGraph$into_directed <- function() .Call(wrap__DirectedAcyclicGraph__into_directed, self)
 
