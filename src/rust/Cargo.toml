@@ -1,5 +1,5 @@
 [package]
-name = 'orbweaver'
+name = 'orbweaver_r'
 version = '0.1.0'
 edition = '2021'
 
@@ -8,5 +8,6 @@ crate-type = [ 'staticlib' ]
 name = 'orbweaver'
 
 [dependencies]
-extendr-api = '*'
-itertools = "0.11.0"
+extendr-api = { version = "0.6", features = ["serde"] }
+orbweaver = { version = "0.2.1" }
+serde_json = "1.0.117"

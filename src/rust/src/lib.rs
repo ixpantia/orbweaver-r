@@ -1,282 +1,296 @@
 use extendr_api::prelude::*;
-use itertools::Itertools;
-use std::collections::{HashMap, HashSet};
-use std::rc::Rc;
+use orbweaver::prelude as ow;
 
-#[derive(Debug, Clone)]
-struct Node {
-    id: Rc<str>,
-    children: HashSet<Rc<str>>,
-    parents: HashSet<Rc<str>>,
-}
+pub mod from_dataframe;
+pub mod to_json;
 
-impl Node {
-    fn new(id: Rc<str>) -> Self {
-        Self {
-            id,
-            children: HashSet::new(),
-            parents: HashSet::new(),
-        }
+struct Node(ow::Node<Robj>);
+
+impl From<ow::Node<Robj>> for Node {
+    fn from(value: ow::Node<Robj>) -> Self {
+        Node(value)
     }
 }
 
-#[derive(IntoDataFrameRow)]
-struct EdgesDFRow {
-    parent: String,
-    child: String,
-}
-
-/// Structure that holds the necessary information to build
-/// a graph with no cycle (including trees).
-#[derive(Debug, Clone)]
-struct AcyclicGraph {
-    nodes: HashMap<Rc<str>, Node>,
-}
-
-impl AcyclicGraph {
-    /// Returns the parents of a node by name.
-    fn parents(&self, node: &str) -> Vec<&str> {
-        self.nodes
-            .get(node)
-            .map(|node| node.parents.iter().map(|parent| parent.as_ref()).collect())
-            .unwrap_or_default()
-    }
-    /// Returns the children of a node by name.
-    fn children(&self, node: &str, recursive: bool) -> Vec<&str> {
-        if recursive {
-            if let Some(current_node) = self.nodes.get(node) {
-                let mut children: Vec<&str> = current_node
-                    .children
-                    .iter()
-                    .map(|child| child.as_ref())
-                    .collect();
-                let mut grand_children = children
-                    .iter()
-                    .flat_map(|child| self.children(child, true))
-                    .collect();
-                children.append(&mut grand_children);
-                children.push(current_node.id.as_ref());
-                children.sort();
-                children.dedup();
-
-                return children;
-            }
-            return Vec::new();
-        }
-        self.nodes
-            .get(node)
-            .map(|node| node.children.iter().map(|child| child.as_ref()).collect())
-            .unwrap_or_default()
-    }
-
-    fn subset(&self, selected: &[&str]) -> AcyclicGraph {
-        let new_nodes = self
-            .nodes
-            .iter()
-            .filter(|(id, node)| selected.contains(&id.as_ref()))
-            .map(|(id, node)| {
-                let new_parents = node
-                    .parents
-                    .iter()
-                    .cloned()
-                    .filter(|id| selected.contains(&id.as_ref()))
-                    .collect();
-                let new_children = node
-                    .children
-                    .iter()
-                    .cloned()
-                    .filter(|id| selected.contains(&id.as_ref()))
-                    .collect();
-                let new_node = Node {
-                    id: id.clone(),
-                    parents: new_parents,
-                    children: new_children,
-                };
-
-                return (id.clone(), new_node);
-            })
-            .collect();
-        AcyclicGraph { nodes: new_nodes }
-    }
-
-    /// Internal function to build an R list from the graph.
-    /// This function is recursive and should not be called directly.
-    fn as_list_internal<'a>(&'a self, node: &'a str) -> (&str, Robj) {
-        // We create a temporary hashmap to build the list.
-        let mut temp_list = HashMap::new();
-        // We get the children of the current node.
-        let children = self.children(node, false);
-        // If the children vector is empty, we return the current node and an R object
-        // of type character with an empty string.
-        if children.is_empty() {
-            return (node, Robj::from(""));
-        }
-        // Otherwise we iterate over the children and recursively call the function.
-        children.iter().for_each(|child| {
-            // We get the name of the child and it's list.
-            let (name, child_list) = self.as_list_internal(child);
-            // We insert the child list into the temporary hashmap.
-            temp_list.insert(name.to_string(), child_list);
-        });
-        // We convert the hashmap into an R list.
-        let list = List::from_hashmap(temp_list).unwrap().into_robj();
-        // We return the current node and the list.
-        (node, list)
-    }
-    /// FindAllPaths
-    fn internal_find_all_paths(&self, from: &str, to: &str) -> Vec<Vec<String>> {
-        let mut all_paths = Vec::new();
-        let path = vec![from.to_string()];
-        self.dfs(from, to, path, &mut all_paths);
-        all_paths
-    }
-    fn dfs(&self, from: &str, to: &str, mut path: Vec<String>, all_paths: &mut Vec<Vec<String>>) {
-        if from == to {
-            all_paths.push(path)
-        } else {
-            for child in self.children(from, false) {
-                path.push(child.to_string());
-                self.dfs(child, to, path.clone(), all_paths);
-                path.pop();
-            }
-        }
+impl From<ow::Node<&Robj>> for Node {
+    fn from(value: ow::Node<&Robj>) -> Self {
+        Node(value.cloned())
     }
 }
 
 #[extendr]
-impl AcyclicGraph {
-    /// Creates a new graph with a root node.
-    fn new() -> Self {
-        let nodes = HashMap::new();
-        Self { nodes }
+impl Node {
+    fn get_data(&self) -> Robj {
+        self.0.data().clone()
     }
-    /// Adds a node to the graph. If the node already exists, it does nothing.
-    fn add_node(&mut self, node_id: &str) {
-        let node_id: Rc<str> = node_id.into();
-        self.nodes
-            .entry(node_id.clone())
-            .or_insert_with(|| Node::new(node_id));
-    }
-    /// Adds a child to a node.
-    fn add_child(&mut self, parent_id: &str, child_id: &str) {
-        self.add_node(parent_id);
-        self.add_node(child_id);
-        self.nodes
-            .get_mut(parent_id)
-            .expect("Parent not found")
-            .children
-            .insert(child_id.into());
-        self.nodes
-            .get_mut(child_id)
-            .expect("Child not found")
-            .parents
-            .insert(parent_id.into());
-    }
-    /// Returns the children of a node.
-    fn get_children(&self, node: &str, recursive: bool) -> Vec<&str> {
-        self.children(node, recursive)
-    }
-    /// Returns the parents of a node.
-    fn get_parents(&self, node: &str) -> Vec<&str> {
-        self.parents(node)
-    }
-    /// Returns the leaves of the graph.
-    fn find_leaves(&self, node: &str) -> Vec<&str> {
-        let node = self.nodes.get(node).unwrap();
-        if node.children.is_empty() {
-            return vec![node.id.as_ref()];
-        }
-        node.children
-            .iter()
-            .flat_map(|child| self.find_leaves(child))
-            .unique()
-            .collect()
-    }
-    /// Returns the least common parents of a set of nodes.
-    fn find_least_common_parents(&self, selected: Vec<String>) -> Vec<&str> {
-        let selected: HashSet<_> = selected.into_iter().collect();
-        self.nodes
-            .iter()
-            .filter(|(id, _)| selected.contains(id.as_ref()))
-            .filter(|(_, node)| {
-                let contains_selected_parent = node
-                    .parents
-                    .iter()
-                    .any(|parent| selected.contains(parent.as_ref()));
-                !contains_selected_parent
-            })
-            .map(|(id, _)| id.as_ref())
-            .unique()
-            .collect()
-    }
-    /// Gets the root of the graph.
-    fn find_roots(&self) -> Vec<&str> {
-        self.nodes
-            .iter()
-            .filter(|(_, node)| node.parents.is_empty())
-            .map(|(id, _)| id.as_ref())
-            .unique()
-            .collect()
-    }
-    /// Returns the graph as an R list. (Useful for libraries like `shinyTree`).
-    fn as_list(&self) -> Robj {
-        let list = self
-            .nodes
-            .iter()
-            .filter(|(_, node)| node.parents.is_empty())
-            .map(|(id, _)| self.as_list_internal(id))
-            .collect::<Vec<_>>();
-        List::from_pairs(list).into_robj()
-    }
-    /// Creates an acyclic graph from a data frame.
-    fn from_dataframe(dataframe: Robj) -> Self {
-        let dataframe: Dataframe<EdgesDFRow> = dataframe.try_into().expect("Invalid data frame");
-        let mut graph = Self::new();
-        let parents = dataframe
-            .index("parent")
-            .expect("Column 'parent' not found");
-        let parents = parents.as_str_vector().expect("Invalid parent column");
-        let children = dataframe.index("child").expect("Column 'child' not found");
-        let children = children.as_str_vector().expect("Invalid child column");
-        // Iterate over the parents and children and add them to the graph.
-        parents
-            .iter()
-            .zip(children)
-            .for_each(|(parent, child)| graph.add_child(parent, child));
-        graph
-    }
-    /// Creates a new copy of the graph.
-    fn graph_clone(&self) -> Self {
-        self.clone()
-    }
-    /// Search for similarly named nodes.
-    fn search_for_node(&self, node_id: &str, case_sensitive: bool) -> Vec<&str> {
-        self.nodes
-            .keys()
-            .filter(|id| {
-                if case_sensitive {
-                    id.contains(node_id)
-                } else {
-                    id.to_lowercase().contains(&node_id.to_lowercase())
-                }
-            })
-            .map(|id| id.as_ref())
-            .sorted_by_key(|id| id.len())
-            .collect()
-    }
-    /// find_all_paths
-    fn find_all_paths(&self, from: &str, to: &str) -> List {
-        let paths = self.internal_find_all_paths(from, to).into_iter();
-        List::from_iter(paths)
-    }
-
-    fn subset_r(&self, selected: StrIter) -> AcyclicGraph {
-        let selected: Vec<&str> = selected.collect();
-        self.subset(&selected)
+    fn set_data(&mut self, data: Robj) {
+        *self.0.data_mut() = data;
     }
 }
 
+pub struct DirectedGraph(ow::DirectedGraph<Robj>);
+pub struct DirectedAcyclicGraph(ow::DirectedAcyclicGraph<Robj>);
+
+pub fn to_r_error(err: impl std::error::Error) -> String {
+    err.to_string()
+}
+
+#[extendr]
+impl DirectedGraph {
+    fn new() -> Self {
+        DirectedGraph(ow::DirectedGraph::new())
+    }
+
+    fn add_node(&mut self, node_id: &str, data: Robj) -> Result<()> {
+        self.0.add_node(node_id, data).map_err(to_r_error)?;
+        Ok(())
+    }
+
+    fn get_node(&self, node_id: &str) -> Result<Node> {
+        Ok(self
+            .0
+            .get_node(node_id)
+            .map_err(to_r_error)?
+            .cloned()
+            .into())
+    }
+
+    pub fn get_nodes(&self, ids: StrIter) -> Result<List> {
+        Ok(self
+            .0
+            .get_nodes(ids)
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(ow::Node::cloned)
+            .map(Node::from)
+            .collect())
+    }
+
+    pub fn add_edge(&mut self, from: &str, to: &str) -> Result<()> {
+        self.0.add_edge(from, to).map_err(to_r_error)?;
+        Ok(())
+    }
+
+    pub fn add_path(&mut self, path: StrIter) -> Result<()> {
+        let path: Vec<&str> = path.collect();
+        self.0.add_path(&path).map_err(to_r_error)?;
+        Ok(())
+    }
+
+    pub fn edge_exists(&self, from: &str, to: &str) -> bool {
+        self.0.edge_exists(from, to)
+    }
+
+    pub fn deep_clone(&self) -> Self {
+        DirectedGraph(self.0.clone())
+    }
+
+    pub fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>> {
+        Ok(self
+            .0
+            .find_path(from, to)
+            .map_err(to_r_error)?
+            .map(|path| path.into_iter().map(String::from).collect())
+            .unwrap_or_default())
+    }
+
+    pub fn children(&self, node: &str) -> Vec<String> {
+        self.0
+            .children(node)
+            .map(|children| children.iter().map(String::from).collect())
+            .unwrap_or_default()
+    }
+
+    pub fn parents(&self, node: &str) -> Vec<String> {
+        self.0
+            .parents(node)
+            .map(|parents| {
+                parents
+                    .iter()
+                    .map(ow::NodeId::as_ref)
+                    .map(String::from)
+                    .collect()
+            })
+            .unwrap_or_default()
+    }
+
+    pub fn remove_edge(&mut self, from: &str, to: &str) {
+        self.0.remove_edge(from, to);
+    }
+
+    pub fn remove_node(&mut self, node_id: &str) {
+        self.0.remove_node(node_id);
+    }
+
+    pub fn has_parents(&self, node_id: &str) -> Result<bool> {
+        Ok(self.0.has_parents(node_id).map_err(to_r_error)?)
+    }
+
+    pub fn has_children(&self, node_id: &str) -> Result<bool> {
+        Ok(self.0.has_children(node_id).map_err(to_r_error)?)
+    }
+
+    pub fn nodes(&self) -> List {
+        self.0.nodes().map(Node::from).collect()
+    }
+
+    pub fn node_ids(&self) -> Vec<String> {
+        self.0.node_ids().map(String::from).collect()
+    }
+
+    pub fn least_common_parents(&self, selected: Vec<String>) -> Result<Vec<String>> {
+        Ok(self
+            .0
+            .least_common_parents(&selected)
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(String::from)
+            .collect())
+    }
+
+    pub fn get_leaves(&self) -> Vec<String> {
+        self.0.get_leaves().into_iter().map(String::from).collect()
+    }
+
+    pub fn get_leaves_under(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
+        Ok(self
+            .0
+            .get_leaves_under(node_ids.as_slice())
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(String::from)
+            .collect())
+    }
+
+    pub fn clear_edges(&mut self) {
+        self.0.clear_edges();
+    }
+
+    #[allow(clippy::wrong_self_convention)]
+    pub fn into_dag(&self) -> Result<DirectedAcyclicGraph> {
+        Ok(DirectedAcyclicGraph(
+            ow::DirectedAcyclicGraph::build(self.0.clone()).map_err(to_r_error)?,
+        ))
+    }
+}
+
+#[extendr]
+impl DirectedAcyclicGraph {
+    fn get_node(&self, node_id: &str) -> Result<Node> {
+        Ok(self.0.get_node(node_id).map_err(to_r_error)?.into())
+    }
+
+    pub fn get_nodes(&self, ids: StrIter) -> Result<List> {
+        Ok(self
+            .0
+            .get_nodes(ids)
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(Node::from)
+            .collect())
+    }
+
+    pub fn edge_exists(&self, from: &str, to: &str) -> bool {
+        self.0.edge_exists(from, to)
+    }
+
+    pub fn deep_clone(&self) -> Self {
+        DirectedAcyclicGraph(self.0.clone())
+    }
+
+    pub fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>> {
+        Ok(self
+            .0
+            .find_path(from, to)
+            .map_err(to_r_error)?
+            .map(|path| path.into_iter().map(String::from).collect())
+            .unwrap_or_default())
+    }
+
+    pub fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
+        Ok(self
+            .0
+            .find_all_paths(from, to)
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(|path| path.into_iter().map(String::from).collect::<Vec<_>>())
+            .collect::<List>())
+    }
+
+    pub fn children(&self, node: &str) -> Vec<String> {
+        self.0
+            .children(node)
+            .map(|children| children.iter().map(String::from).collect())
+            .unwrap_or_default()
+    }
+
+    pub fn parents(&self, node: &str) -> Vec<String> {
+        self.0
+            .parents(node)
+            .map(|parents| {
+                parents
+                    .iter()
+                    .map(ow::NodeId::as_ref)
+                    .map(String::from)
+                    .collect()
+            })
+            .unwrap_or_default()
+    }
+
+    pub fn has_parents(&self, node_id: &str) -> Result<bool> {
+        Ok(self.0.has_parents(node_id).map_err(to_r_error)?)
+    }
+
+    pub fn has_children(&self, node_id: &str) -> Result<bool> {
+        Ok(self.0.has_children(node_id).map_err(to_r_error)?)
+    }
+
+    pub fn nodes(&self) -> List {
+        self.0.nodes().map(Node::from).collect()
+    }
+
+    pub fn node_ids(&self) -> Vec<String> {
+        self.0.node_ids().map(String::from).collect()
+    }
+
+    pub fn least_common_parents(&self, selected: Vec<String>) -> Result<Vec<String>> {
+        Ok(self
+            .0
+            .least_common_parents(&selected)
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(String::from)
+            .collect())
+    }
+
+    pub fn get_leaves(&self) -> Vec<String> {
+        self.0.get_leaves().into_iter().map(String::from).collect()
+    }
+
+    pub fn get_leaves_under(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
+        Ok(self
+            .0
+            .get_leaves_under(node_ids.as_slice())
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(String::from)
+            .collect())
+    }
+
+    #[allow(clippy::wrong_self_convention)]
+    pub fn into_directed(&self) -> DirectedGraph {
+        DirectedGraph(self.0.clone().into_inner())
+    }
+}
+
+// Macro to generate exports.
+// This ensures exported functions are registered with R.
+// See corresponding C code in `entrypoint.c`.
 extendr_module! {
     mod orbweaver;
-    impl AcyclicGraph;
+    impl Node;
+    impl DirectedGraph;
+    impl DirectedAcyclicGraph;
+    use from_dataframe;
+    use to_json;
 }

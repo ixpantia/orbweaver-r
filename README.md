@@ -15,103 +15,11 @@ graph operations.
 
 ## Features
 
- - Acyclic directed graph
-   - Get root nodes
-   - Get leaf nodes
-   - Get parents of a node
-   - Get children of a node
-   - Get least common ancestor/parents in a set of nodes
-   - Convert to a list (for use in libraries like [shinyTree](https://github.com/shinyTree/shinyTree)).
-   - Create from a data.frame / tibble / derivative
-
-## Usage
-
-### Create an Acyclic Graph manually
-
-In this example we will build the graph manually.
-
-```R
-library(orbweaver)
-
-tree <- new_graph(type = "acyclic") |>
-  # Node A has children B and C
-  add_child("A", "B") |>
-  add_child("A", "C") |>
-  # Node B has children D and E
-  add_child("B", "D") |>
-  add_child("B", "E") |>
-  # Node C has child F
-  add_child("C", "F")
-
-tree |>
-  find_roots()
-# [1] "A"
-
-tree |>
-  find_leaves("A")
-# [1] "F" "E" "D"
-
-tree |>
-  find_least_common_parents(c("B", "D", "E"))
-# [1] "B"
-```
-
-### Create an Acyclic Graph from a data.frame / derivative
-
-```R
-library(orbweaver)
-
-example <- data.frame(
-  parent = c("A", "A", "B", "B", "C"),
-  child = c("B", "C", "D", "E", "F")
-)
-
-tree <- example |>
-  as_graph(type = "acyclic")
-
-tree |>
-  find_roots()
-# [1] "A"
-
-tree |>
-  find_leaves("A")
-# [1] "F" "E" "D"
-
-tree |>
-  find_least_common_parents(c("B", "D", "E"))
-# [1] "B"
-```
-
-### Convert to a list
-
-```R
-library(orbweaver)
-
-tree <- new_graph(type = "acyclic") |>
-  # Node A has children B and C
-  add_child("A", "B") |>
-  add_child("A", "C") |>
-  # Node B has children D and E
-  add_child("B", "D") |>
-  add_child("B", "E") |>
-  # Node C has child F
-  add_child("C", "F")
-
-tree |>
-  as.list()
-# $A
-# $A$C
-# $A$C$F
-# [1] ""
-# 
-# 
-# $A$B
-# $A$B$D
-# [1] ""
-# 
-# $A$B$E
-# [1] ""
-```
+ - Nodes can store arbitrary data
+ - Find the common parents between selected nodes
+ - Modify graphs in place
+ - Directed Graph
+ - Directed Acyclic Graph
 
 ## Installation
 

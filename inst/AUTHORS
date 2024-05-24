@@ -1,8 +1,5 @@
 The authors of the dependency Rust crates:
 
-either (version 1.9.0):
-  bluss
-
 extendr-api (version 0.6.0):
   andy-thomason
   Thomas Down
@@ -20,8 +17,8 @@ extendr-macros (version 0.6.0):
   Hiroaki Yutani
   Ilia A. Kosenkov
 
-itertools (version 0.11.0):
-  bluss
+itoa (version 1.0.11):
+  David Tolnay
 
 libR-sys (version 0.6.0):
   andy-thomason
@@ -31,20 +28,39 @@ libR-sys (version 0.6.0):
   Ilia A. Kosenkov
   Hiroaki Yutani
 
-once_cell (version 1.18.0):
+once_cell (version 1.19.0):
   Aleksey Kladov
 
-paste (version 1.0.14):
+orbweaver (version 0.2.1):
+  ixpantia
+  Andrés F. Quintero
+
+paste (version 1.0.15):
   David Tolnay
 
-proc-macro2 (version 1.0.69):
+proc-macro2 (version 1.0.83):
   David Tolnay
   Alex Crichton
 
-quote (version 1.0.33):
+quote (version 1.0.36):
   David Tolnay
 
-syn (version 2.0.39):
+ryu (version 1.0.18):
+  David Tolnay
+
+serde_derive (version 1.0.202):
+  Erick Tryzelaar
+  David Tolnay
+
+serde_json (version 1.0.117):
+  Erick Tryzelaar
+  David Tolnay
+
+serde (version 1.0.202):
+  Erick Tryzelaar
+  David Tolnay
+
+syn (version 2.0.66):
   David Tolnay
 
 unicode-ident (version 1.0.12):
