@@ -162,6 +162,26 @@ impl DirectedGraph {
             .collect())
     }
 
+    pub fn subset(&self, node_id: &str) -> Result<DirectedGraph> {
+        Ok(DirectedGraph(
+            self.0.subset(node_id).map_err(to_r_error)?.cloned(),
+        ))
+    }
+
+    pub fn get_roots(&self) -> Vec<String> {
+        self.0.get_roots().into_iter().map(String::from).collect()
+    }
+
+    pub fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
+        Ok(self
+            .0
+            .get_roots_over(&node_ids)
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(String::from)
+            .collect())
+    }
+
     pub fn clear_edges(&mut self) {
         self.0.clear_edges();
     }
@@ -271,6 +291,26 @@ impl DirectedAcyclicGraph {
         Ok(self
             .0
             .get_leaves_under(node_ids.as_slice())
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(String::from)
+            .collect())
+    }
+
+    pub fn subset(&self, node_id: &str) -> Result<DirectedAcyclicGraph> {
+        Ok(DirectedAcyclicGraph(
+            self.0.subset(node_id).map_err(to_r_error)?.cloned(),
+        ))
+    }
+
+    pub fn get_roots(&self) -> Vec<String> {
+        self.0.get_roots().into_iter().map(String::from).collect()
+    }
+
+    pub fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
+        Ok(self
+            .0
+            .get_roots_over(&node_ids)
             .map_err(to_r_error)?
             .into_iter()
             .map(String::from)

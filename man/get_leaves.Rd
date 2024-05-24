@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_leaves.R
 \name{get_leaves}
 \alias{get_leaves}
-\title{Get the leave node of a graph}
+\title{Get the leave nodes of a graph}
 \usage{
 get_leaves(graph, node_ids)
 }

@@ -1,4 +1,4 @@
-#' @title Get the leave node of a graph
+#' @title Get the leave nodes of a graph
 #'
 #' @description
 #' Retrieves the nodes in a graph that have no children.
