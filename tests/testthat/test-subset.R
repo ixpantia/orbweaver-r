@@ -40,6 +40,6 @@ test_that("can find least common parents between selected nodes", {
     get_nodes()
 
   expect_equal(length(nodes), 4)
-  expect_equal(find_path(graph_under_c, "B", "E"), c("B", "C", "E"))
+  expect_equal(find_path(graph_under_b, "B", "E"), c("B", "C", "E"))
 
 })
