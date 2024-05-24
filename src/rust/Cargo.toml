@@ -8,5 +8,6 @@ crate-type = [ 'staticlib' ]
 name = 'orbweaver'
 
 [dependencies]
-extendr-api = '*'
+extendr-api = { version = "0.6", features = ["serde"] }
 orbweaver = { version = "0.2.1" }
+serde_json = "1.0.117"

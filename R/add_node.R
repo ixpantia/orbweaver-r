@@ -16,12 +16,12 @@ add_node <- function(graph, node_id, data = NULL) {
 }
 
 #' @export
-add_node.DirectedGraph <- function(graph, node_id, data) {
+add_node.DirectedGraph <- function(graph, node_id, data = NULL) {
   graph$add_node(node_id, data)
   return(graph)
 }
 
 #' @export
-add_node.DirectedAcyclicGraph <- function(graph, node_id, data) {
+add_node.DirectedAcyclicGraph <- function(graph, node_id, data = NULL) {
   rlang::abort(err_unable_to_modify_dag)
 }

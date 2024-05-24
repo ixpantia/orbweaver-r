@@ -15,6 +15,14 @@ rs_populate_edges_directed_graph <- function(graph, parent_iter, child_iter) .Ca
 
 rs_populate_nodes_directed_graph <- function(graph, node_ids, data_iter) .Call(wrap__rs_populate_nodes_directed_graph, graph, node_ids, data_iter)
 
+rs_directed_graph_from_json <- function(text) .Call(wrap__rs_directed_graph_from_json, text)
+
+rs_directed_graph_to_json <- function(directed_graph, pretty) .Call(wrap__rs_directed_graph_to_json, directed_graph, pretty)
+
+rs_dag_to_json <- function(dag, pretty) .Call(wrap__rs_dag_to_json, dag, pretty)
+
+rs_dag_from_json <- function(text) .Call(wrap__rs_dag_from_json, text)
+
 Node <- new.env(parent = emptyenv())
 
 Node$get_data <- function() .Call(wrap__Node__get_data, self)
