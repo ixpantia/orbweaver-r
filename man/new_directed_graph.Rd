@@ -4,7 +4,7 @@
 \alias{new_directed_graph}
 \title{Initialize a New Directed Graph}
 \usage{
-new_directed_graph(type)
+new_directed_graph()
 }
 \value{
 A new Directed Graph object.
