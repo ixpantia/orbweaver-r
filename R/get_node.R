@@ -46,7 +46,7 @@ get_nodes.DirectedGraph <- function(graph, node_ids) {
 }
 
 #' @export
-get_node.DirectedAcyclicGraph <- function(graph, node_ids) {
+get_nodes.DirectedAcyclicGraph <- function(graph, node_ids) {
   if (missing(node_ids)) {
     return(graph$nodes())
   }

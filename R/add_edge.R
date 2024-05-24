@@ -22,6 +22,6 @@ add_edge.DirectedGraph <- function(graph, from, to) {
 }
 
 #' @export
-add_edge.DirectedAcyclicGraph <- function(graph, node_id, data) {
+add_edge.DirectedAcyclicGraph <- function(graph, from, to) {
   rlang::abort(err_unable_to_modify_dag)
 }
