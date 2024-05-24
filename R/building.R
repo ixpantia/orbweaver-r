@@ -12,7 +12,18 @@ populate_edges <- function(graph, edges_df, parent_col, child_col) {
 
 #' @export
 populate_edges.DirectedGraph <- function(graph, edges_df, parent_col, child_col) {
-  rs_populate_edges_directed_graph(graph, edges_df, parent_col, child_col)
+
+  parent_iter <- edges_df[[parent_col]]
+  if (!is.character(parent_iter)) {
+    rlang::abort(glue::glue("Column {parent_col} is not of class `character`"))
+  }
+
+  child_iter <- edges_df[[child_col]]
+  if (!is.character(child_iter)) {
+    rlang::abort(glue::glue("Column {child_col} is not of class `character`"))
+  }
+
+  rs_populate_edges_directed_graph(graph, parent_iter, child_iter)
   return(graph)
 }
 
@@ -35,7 +46,19 @@ populate_nodes <- function(graph, nodes_df, node_id_col, data_col = NULL) {
 
 #' @export
 populate_nodes.DirectedGraph <- function(graph, nodes_df, node_id_col, data_col = NULL) {
-  rs_populate_nodes_directed_graph(graph, nodes_df, node_id_col, data_col)
+
+  node_ids <- nodes_df[[node_id_col]]
+  if (!is.character(node_ids)) {
+    rlang::abort(glue::glue("Column {node_id_col} is not of class `character`"))
+  }
+
+  data_iter <- NULL
+
+  if (!is.null(data_col)) {
+    data_iter <- as.list(nodes_df[[data_col]])
+  }
+
+  rs_populate_nodes_directed_graph(graph, node_ids, data_iter)
   return(graph)
 }
 

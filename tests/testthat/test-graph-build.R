@@ -30,3 +30,52 @@ test_that("add a edge to a directed graph", {
 
   expect_equal(edge_exists(graph, "A", "B"), TRUE)
 })
+
+test_that("populate data and edges from data.frame", {
+  graph <- new_directed_graph()
+
+  graph_edges <- tibble::tibble(
+    parent = c("A", "B", "C", "C", "F"),
+    child = c("B", "C", "D", "E", "D")
+  )
+
+  graph_nodes <- tibble::tibble(
+    node_id = c("A", "B", "C", "D", "E", "F"),
+    data = c(1:6)
+  )
+
+  graph |>
+    populate_nodes(graph_nodes, "node_id", "data") |>
+    populate_edges(graph_edges, "parent", "child")
+
+  graph |>
+    get_node("C") |>
+    get_node_data() |>
+    expect_equal(3)
+
+})
+
+test_that("populate data and edges from tibble with list column", {
+  graph <- new_directed_graph()
+
+  graph_edges <- tibble::tibble(
+    parent = c("A", "B", "C", "C", "F"),
+    child = c("B", "C", "D", "E", "D")
+  )
+
+  graph_nodes <- tibble::tibble(
+    node_id = c("A", "B", "C", "D", "E", "F"),
+    data = lapply(1:6, \(x) letters)
+  )
+
+  graph |>
+    populate_nodes(graph_nodes, "node_id", "data") |>
+    populate_edges(graph_edges, "parent", "child")
+
+  graph |>
+    get_node("C") |>
+    get_node_data() |>
+    expect_equal(letters)
+
+})
+

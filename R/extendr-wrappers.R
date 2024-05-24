@@ -11,9 +11,9 @@
 #' @useDynLib orbweaver, .registration = TRUE
 NULL
 
-rs_populate_edges_directed_graph <- function(graph, dataframe, parent_col, child_col) .Call(wrap__rs_populate_edges_directed_graph, graph, dataframe, parent_col, child_col)
+rs_populate_edges_directed_graph <- function(graph, parent_iter, child_iter) .Call(wrap__rs_populate_edges_directed_graph, graph, parent_iter, child_iter)
 
-rs_populate_nodes_directed_graph <- function(graph, dataframe, node_id_col, data_col) .Call(wrap__rs_populate_nodes_directed_graph, graph, dataframe, node_id_col, data_col)
+rs_populate_nodes_directed_graph <- function(graph, node_ids, data_iter) .Call(wrap__rs_populate_nodes_directed_graph, graph, node_ids, data_iter)
 
 Node <- new.env(parent = emptyenv())
 
