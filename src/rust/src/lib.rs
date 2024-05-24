@@ -202,6 +202,16 @@ impl DirectedAcyclicGraph {
             .unwrap_or_default())
     }
 
+    pub fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
+        Ok(self
+            .0
+            .find_all_paths(from, to)
+            .map_err(to_r_error)?
+            .into_iter()
+            .map(|path| path.into_iter().map(String::from).collect::<Vec<_>>())
+            .collect::<List>())
+    }
+
     pub fn children(&self, node: &str) -> Vec<String> {
         self.0
             .children(node)

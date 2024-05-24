@@ -89,6 +89,8 @@ DirectedAcyclicGraph$deep_clone <- function() .Call(wrap__DirectedAcyclicGraph__
 
 DirectedAcyclicGraph$find_path <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_path, self, from, to)
 
+DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
+
 DirectedAcyclicGraph$children <- function(node) .Call(wrap__DirectedAcyclicGraph__children, self, node)
 
 DirectedAcyclicGraph$parents <- function(node) .Call(wrap__DirectedAcyclicGraph__parents, self, node)
