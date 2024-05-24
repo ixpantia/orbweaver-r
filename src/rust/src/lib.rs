@@ -11,6 +11,12 @@ impl From<ow::Node<Robj>> for Node {
     }
 }
 
+impl From<ow::Node<&Robj>> for Node {
+    fn from(value: ow::Node<&Robj>) -> Self {
+        Node(value.cloned())
+    }
+}
+
 #[extendr]
 impl Node {
     fn get_data(&self) -> Robj {
@@ -123,7 +129,11 @@ impl DirectedGraph {
         Ok(self.0.has_children(node_id).map_err(to_r_error)?)
     }
 
-    pub fn nodes(&self) -> Vec<String> {
+    pub fn nodes(&self) -> List {
+        self.0.nodes().map(Node::from).collect()
+    }
+
+    pub fn node_ids(&self) -> Vec<String> {
         self.0.node_ids().map(String::from).collect()
     }
 
@@ -166,12 +176,7 @@ impl DirectedGraph {
 #[extendr]
 impl DirectedAcyclicGraph {
     fn get_node(&self, node_id: &str) -> Result<Node> {
-        Ok(self
-            .0
-            .get_node(node_id)
-            .map_err(to_r_error)?
-            .cloned()
-            .into())
+        Ok(self.0.get_node(node_id).map_err(to_r_error)?.into())
     }
 
     pub fn get_nodes(&self, ids: StrIter) -> Result<List> {
@@ -180,7 +185,6 @@ impl DirectedAcyclicGraph {
             .get_nodes(ids)
             .map_err(to_r_error)?
             .into_iter()
-            .map(ow::Node::cloned)
             .map(Node::from)
             .collect())
     }
@@ -240,7 +244,11 @@ impl DirectedAcyclicGraph {
         Ok(self.0.has_children(node_id).map_err(to_r_error)?)
     }
 
-    pub fn nodes(&self) -> Vec<String> {
+    pub fn nodes(&self) -> List {
+        self.0.nodes().map(Node::from).collect()
+    }
+
+    pub fn node_ids(&self) -> Vec<String> {
         self.0.node_ids().map(String::from).collect()
     }
 

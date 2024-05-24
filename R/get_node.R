@@ -26,6 +26,9 @@ get_node.DirectedAcyclicGraph <- function(graph, node_id) {
 #' @description
 #' Retrieves a list of nodes with their data from
 #' a graph object.
+#'
+#' If no `node_ids` argument is supplied then all of
+#' the nodes in the graph a returned in a list.
 #' @param graph A graph object
 #' @param node_ids The unique ids of the nodes to be retrieved
 #' @return A list of node objects
@@ -36,10 +39,16 @@ get_nodes <- function(graph, node_ids) {
 
 #' @export
 get_nodes.DirectedGraph <- function(graph, node_ids) {
+  if (missing(node_ids)) {
+    return(graph$nodes())
+  }
   graph$get_nodes(node_ids)
 }
 
 #' @export
 get_node.DirectedAcyclicGraph <- function(graph, node_ids) {
+  if (missing(node_ids)) {
+    return(graph$nodes())
+  }
   graph$get_nodes(node_ids)
 }

@@ -61,6 +61,8 @@ DirectedGraph$has_children <- function(node_id) .Call(wrap__DirectedGraph__has_c
 
 DirectedGraph$nodes <- function() .Call(wrap__DirectedGraph__nodes, self)
 
+DirectedGraph$node_ids <- function() .Call(wrap__DirectedGraph__node_ids, self)
+
 DirectedGraph$least_common_parents <- function(selected) .Call(wrap__DirectedGraph__least_common_parents, self, selected)
 
 DirectedGraph$get_leaves <- function() .Call(wrap__DirectedGraph__get_leaves, self)
@@ -100,6 +102,8 @@ DirectedAcyclicGraph$has_parents <- function(node_id) .Call(wrap__DirectedAcycli
 DirectedAcyclicGraph$has_children <- function(node_id) .Call(wrap__DirectedAcyclicGraph__has_children, self, node_id)
 
 DirectedAcyclicGraph$nodes <- function() .Call(wrap__DirectedAcyclicGraph__nodes, self)
+
+DirectedAcyclicGraph$node_ids <- function() .Call(wrap__DirectedAcyclicGraph__node_ids, self)
 
 DirectedAcyclicGraph$least_common_parents <- function(selected) .Call(wrap__DirectedAcyclicGraph__least_common_parents, self, selected)
 
