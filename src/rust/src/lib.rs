@@ -1,6 +1,8 @@
 use extendr_api::prelude::*;
 use orbweaver::prelude as ow;
 
+pub mod from_dataframe;
+
 struct Node(ow::Node<Robj>);
 
 impl From<ow::Node<Robj>> for Node {
@@ -19,8 +21,8 @@ impl Node {
     }
 }
 
-struct DirectedGraph(ow::DirectedGraph<Robj>);
-struct DirectedAcyclicGraph(ow::DirectedAcyclicGraph<Robj>);
+pub struct DirectedGraph(ow::DirectedGraph<Robj>);
+pub struct DirectedAcyclicGraph(ow::DirectedAcyclicGraph<Robj>);
 
 fn to_r_error(err: impl std::error::Error) -> String {
     err.to_string()
@@ -269,4 +271,6 @@ extendr_module! {
     mod orbweaver;
     impl Node;
     impl DirectedGraph;
+    impl DirectedAcyclicGraph;
+    use from_dataframe;
 }
