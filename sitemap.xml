@@ -58,6 +58,9 @@
     <loc>/reference/get_parents.html</loc>
   </url>
   <url>
+    <loc>/reference/get_roots.html</loc>
+  </url>
+  <url>
     <loc>/reference/graph_from_json.html</loc>
   </url>
   <url>
@@ -101,5 +104,8 @@
   </url>
   <url>
     <loc>/reference/set_node_data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/subset_graph.html</loc>
   </url>
 </urlset>
