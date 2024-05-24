@@ -33,7 +33,7 @@ pub fn rs_populate_nodes_directed_graph(
     graph: &mut DirectedGraph,
     dataframe: Robj,
     node_id_col: &str,
-    data_col: &str,
+    data_col: Nullable<&str>,
 ) -> Result<()> {
     let dataframe: List = dataframe.try_into().expect("Invalid data frame");
     let node_ids = dataframe
@@ -41,11 +41,14 @@ pub fn rs_populate_nodes_directed_graph(
         .map_err(|_| format!("Column `{node_id_col}` not found in data.frame"))?
         .as_str_iter()
         .ok_or_else(|| format!("Column `{node_id_col}` is not of type `character`"))?;
-    let data_list = dataframe
-        .index(data_col)
-        .map_err(|_| format!("Column `{data_col}` not found in data.frame"))?
-        .as_list()
-        .ok_or_else(|| format!("Unable to convert `{data_col}` into a list"))?;
+    let data_list = match data_col {
+        NotNull(data_col) => dataframe
+            .index(data_col)
+            .map_err(|_| format!("Column `{data_col}` not found in data.frame"))?
+            .as_list()
+            .ok_or_else(|| format!("Unable to convert `{data_col}` into a list"))?,
+        Null => List::new(node_ids.len()),
+    };
 
     // Iterate over the parents and children and add them to the graph.
     for (node_id, (_, data)) in node_ids.zip(data_list) {

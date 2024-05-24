@@ -17,4 +17,7 @@ A list of node objects
 \description{
 Retrieves a list of nodes with their data from
 a graph object.
+
+If no \code{node_ids} argument is supplied then all of
+the nodes in the graph a returned in a list.
 }

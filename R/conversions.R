@@ -10,10 +10,12 @@ into_dag <- function(directed_graph) {
   UseMethod("into_dag")
 }
 
+#' @export
 into_dag.DirectedGraph <- function(directed_graph) {
   directed_graph$into_dag()
 }
 
+#' @export
 into_dag.DirectedAcyclicGraph <- function(directed_graph) {
   rlang::abort("This graph is already an DirectedAcyclicGraph")
 }
@@ -33,10 +35,12 @@ into_directed <- function(directed_acyclic_graph) {
   UseMethod("into_directed")
 }
 
+#' @export
 into_directed.DirectedGraph <- function(directed_acyclic_graph) {
   rlang::abort("This graph is already a DirectedGraph")
 }
 
+#' @export
 into_directed.DirectedAcyclicGraph <- function(directed_acyclic_graph) {
   directed_acyclic_graph$into_directed()
 }

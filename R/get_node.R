@@ -52,3 +52,32 @@ get_node.DirectedAcyclicGraph <- function(graph, node_ids) {
   }
   graph$get_nodes(node_ids)
 }
+
+#' @title Retrieve the data out of a node
+#' @description Gets the data from a node object
+#' @param node The node to retrieve the data from
+#' @return R object in the node
+#' @export
+get_node_data <- function(node) {
+  UseMethod("get_node_data")
+}
+
+#' @export
+get_node_data.Node <- function(node) {
+  node$get_data()
+}
+
+#' @title Update the data of a node
+#' @description Updates the data of a node in-place
+#' @param node The node to set the data into
+#' @param data An arbitrary R object
+#' @return The updated node object
+#' @export
+set_node_data <- function(node, data) {
+  UseMethod("set_node_data")
+}
+
+#' @export
+set_node_data.Node <- function(node, data) {
+  node$set_data(data)
+}
