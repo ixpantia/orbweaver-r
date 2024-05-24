@@ -1,5 +1,5 @@
 [package]
-name = 'orbweaver'
+name = 'orbweaver_r'
 version = '0.1.0'
 edition = '2021'
 
@@ -9,4 +9,4 @@ name = 'orbweaver'
 
 [dependencies]
 extendr-api = '*'
-itertools = "0.11.0"
+orbweaver = { version = "0.2.1" }
