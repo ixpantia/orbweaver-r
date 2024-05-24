@@ -23,10 +23,5 @@ add_node.DirectedGraph <- function(graph, node_id, data) {
 
 #' @export
 add_node.DirectedAcyclicGraph <- function(graph, node_id, data) {
-  rlang::abort(
-    c(
-      "You may not modify an DAG.",
-      "Convert it to a Directed Graph first"
-    )
-  )
+  rlang::abort(err_unable_to_modify_dag)
 }
