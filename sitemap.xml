@@ -49,7 +49,7 @@
     <loc>/reference/get_node.html</loc>
   </url>
   <url>
-    <loc>/reference/get_node_data.html</loc>
+    <loc>/reference/get_node_ids.html</loc>
   </url>
   <url>
     <loc>/reference/get_nodes.html</loc>
@@ -103,9 +103,9 @@
     <loc>/reference/remove_node.html</loc>
   </url>
   <url>
-    <loc>/reference/set_node_data.html</loc>
+    <loc>/reference/subset_graph.html</loc>
   </url>
   <url>
-    <loc>/reference/subset_graph.html</loc>
+    <loc>/reference/update_node_data.html</loc>
   </url>
 </urlset>
