@@ -20,11 +20,11 @@ impl From<ow::Node<&Robj>> for Node {
 
 #[extendr]
 impl Node {
-    fn get_data(&self) -> Robj {
+    fn data(&self) -> Robj {
         self.0.data().clone()
     }
-    fn set_data(&mut self, data: Robj) {
-        *self.0.data_mut() = data;
+    fn id(&self) -> String {
+        self.0.id().into()
     }
 }
 
@@ -39,6 +39,14 @@ pub fn to_r_error(err: impl std::error::Error) -> String {
 impl DirectedGraph {
     fn new() -> Self {
         DirectedGraph(ow::DirectedGraph::new())
+    }
+
+    fn update_node_data(&mut self, node_id: &str, data: Robj) -> Result<Robj> {
+        Ok(self.0.update_node_data(node_id, data).map_err(to_r_error)?)
+    }
+
+    fn n_nodes(&self) -> Result<i32> {
+        Ok(self.0.n_nodes().try_into().map_err(to_r_error)?)
     }
 
     fn add_node(&mut self, node_id: &str, data: Robj) -> Result<()> {
@@ -198,6 +206,14 @@ impl DirectedGraph {
 impl DirectedAcyclicGraph {
     fn get_node(&self, node_id: &str) -> Result<Node> {
         Ok(self.0.get_node(node_id).map_err(to_r_error)?.into())
+    }
+
+    fn update_node_data(&mut self, node_id: &str, data: Robj) -> Result<Robj> {
+        Ok(self.0.update_node_data(node_id, data).map_err(to_r_error)?)
+    }
+
+    fn n_nodes(&self) -> Result<i32> {
+        Ok(self.0.n_nodes().try_into().map_err(to_r_error)?)
     }
 
     pub fn get_nodes(&self, ids: StrIter) -> Result<List> {

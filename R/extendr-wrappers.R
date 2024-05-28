@@ -25,9 +25,9 @@ rs_dag_from_json <- function(text) .Call(wrap__rs_dag_from_json, text)
 
 Node <- new.env(parent = emptyenv())
 
-Node$get_data <- function() .Call(wrap__Node__get_data, self)
+Node$data <- function() .Call(wrap__Node__data, self)
 
-Node$set_data <- function(data) invisible(.Call(wrap__Node__set_data, self, data))
+Node$id <- function() .Call(wrap__Node__id, self)
 
 #' @export
 `$.Node` <- function (self, name) { func <- Node[[name]]; environment(func) <- environment(); func }
@@ -38,6 +38,10 @@ Node$set_data <- function(data) invisible(.Call(wrap__Node__set_data, self, data
 DirectedGraph <- new.env(parent = emptyenv())
 
 DirectedGraph$new <- function() .Call(wrap__DirectedGraph__new)
+
+DirectedGraph$update_node_data <- function(node_id, data) .Call(wrap__DirectedGraph__update_node_data, self, node_id, data)
+
+DirectedGraph$n_nodes <- function() .Call(wrap__DirectedGraph__n_nodes, self)
 
 DirectedGraph$add_node <- function(node_id, data) .Call(wrap__DirectedGraph__add_node, self, node_id, data)
 
@@ -96,6 +100,10 @@ DirectedGraph$into_dag <- function() .Call(wrap__DirectedGraph__into_dag, self)
 DirectedAcyclicGraph <- new.env(parent = emptyenv())
 
 DirectedAcyclicGraph$get_node <- function(node_id) .Call(wrap__DirectedAcyclicGraph__get_node, self, node_id)
+
+DirectedAcyclicGraph$update_node_data <- function(node_id, data) .Call(wrap__DirectedAcyclicGraph__update_node_data, self, node_id, data)
+
+DirectedAcyclicGraph$n_nodes <- function() .Call(wrap__DirectedAcyclicGraph__n_nodes, self)
 
 DirectedAcyclicGraph$get_nodes <- function(ids) .Call(wrap__DirectedAcyclicGraph__get_nodes, self, ids)
 

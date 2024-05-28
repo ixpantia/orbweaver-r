@@ -53,19 +53,29 @@ get_nodes.DirectedAcyclicGraph <- function(graph, node_ids) {
   graph$get_nodes(node_ids)
 }
 
-#' @title Retrieve the data out of a node
-#' @description Gets the data from a node object
-#' @param node The node to retrieve the data from
-#' @return R object in the node
+#' @title Get the ids of a group of nodes from a graph object
+#'
+#' @description
+#' Retrieves a character vector with the ids of nodes
+#' in a graph
+#'
+#' @param graph A graph object
+#' @return A character vector containing the node ids
 #' @export
-get_node_data <- function(node) {
-  UseMethod("get_node_data")
+get_node_ids <- function(graph) {
+  UseMethod("get_node_ids")
 }
 
 #' @export
-get_node_data.Node <- function(node) {
-  node$get_data()
+get_node_ids.DirectedGraph <- function(graph) {
+  return(graph$node_ids())
 }
+
+#' @export
+get_node_ids.DirectedAcyclicGraph <- function(graph) {
+  return(graph$node_ids())
+}
+
 
 #' @title Update the data of a node
 #' @description Updates the data of a node in-place
@@ -73,11 +83,16 @@ get_node_data.Node <- function(node) {
 #' @param data An arbitrary R object
 #' @return The updated node object
 #' @export
-set_node_data <- function(node, data) {
-  UseMethod("set_node_data")
+update_node_data <- function(graph, node_id, data) {
+  UseMethod("update_node_data")
 }
 
 #' @export
-set_node_data.Node <- function(node, data) {
-  node$set_data(data)
+update_node_data.DirectedGraph <- function(graph, node_id, data) {
+  graph$update_node_data(node_id, data)
+}
+
+#' @export
+update_node_data.DirectedAcyclicGraph <- function(graph, node_id, data) {
+  graph$update_node_data(node_id, data)
 }
