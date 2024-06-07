@@ -4,19 +4,19 @@
 #' Get a list of the node ids of the parents of
 #' the provided node.
 #' @param graph A graph object
-#' @param node_id The id of the node
+#' @param nodes A character vector of nodes to find parents for
 #' @return A character vector
 #' @export
-get_parents <- function(graph, node_id) {
-  UseMethod("get_parents")
+parents <- function(graph, nodes) {
+  UseMethod("parents")
 }
 
 #' @export
-get_parents.DirectedGraph <- function(graph, node_id) {
-  graph$parents(node_id)
+parents.DirectedGraph <- function(graph, nodes) {
+  graph$parents(nodes)
 }
 
 #' @export
-get_parents.DirectedAcyclicGraph <- function(graph, node_id) {
-  graph$parents(node_id)
+parents.DirectedAcyclicGraph <- function(graph, nodes) {
+  graph$parents(nodes)
 }

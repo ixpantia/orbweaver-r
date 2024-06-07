@@ -11,9 +11,7 @@
 #' @useDynLib orbweaver, .registration = TRUE
 NULL
 
-rs_populate_edges_directed_graph <- function(graph, parent_iter, child_iter) .Call(wrap__rs_populate_edges_directed_graph, graph, parent_iter, child_iter)
-
-rs_populate_nodes_directed_graph <- function(graph, node_ids, data_iter) .Call(wrap__rs_populate_nodes_directed_graph, graph, node_ids, data_iter)
+rs_populate_edges_builder <- function(graph, parent_iter, child_iter) .Call(wrap__rs_populate_edges_builder, graph, parent_iter, child_iter)
 
 rs_directed_graph_from_json <- function(text) .Call(wrap__rs_directed_graph_from_json, text)
 
@@ -23,73 +21,31 @@ rs_dag_to_json <- function(dag, pretty) .Call(wrap__rs_dag_to_json, dag, pretty)
 
 rs_dag_from_json <- function(text) .Call(wrap__rs_dag_from_json, text)
 
-Node <- new.env(parent = emptyenv())
-
-Node$data <- function() .Call(wrap__Node__data, self)
-
-Node$id <- function() .Call(wrap__Node__id, self)
-
-#' @export
-`$.Node` <- function (self, name) { func <- Node[[name]]; environment(func) <- environment(); func }
-
-#' @export
-`[[.Node` <- `$.Node`
-
 DirectedGraph <- new.env(parent = emptyenv())
-
-DirectedGraph$new <- function() .Call(wrap__DirectedGraph__new)
-
-DirectedGraph$update_node_data <- function(node_id, data) .Call(wrap__DirectedGraph__update_node_data, self, node_id, data)
-
-DirectedGraph$n_nodes <- function() .Call(wrap__DirectedGraph__n_nodes, self)
-
-DirectedGraph$add_node <- function(node_id, data) .Call(wrap__DirectedGraph__add_node, self, node_id, data)
-
-DirectedGraph$get_node <- function(node_id) .Call(wrap__DirectedGraph__get_node, self, node_id)
-
-DirectedGraph$get_nodes <- function(ids) .Call(wrap__DirectedGraph__get_nodes, self, ids)
-
-DirectedGraph$add_edge <- function(from, to) .Call(wrap__DirectedGraph__add_edge, self, from, to)
-
-DirectedGraph$add_path <- function(path) .Call(wrap__DirectedGraph__add_path, self, path)
-
-DirectedGraph$edge_exists <- function(from, to) .Call(wrap__DirectedGraph__edge_exists, self, from, to)
-
-DirectedGraph$deep_clone <- function() .Call(wrap__DirectedGraph__deep_clone, self)
 
 DirectedGraph$find_path <- function(from, to) .Call(wrap__DirectedGraph__find_path, self, from, to)
 
-DirectedGraph$children <- function(node) .Call(wrap__DirectedGraph__children, self, node)
+DirectedGraph$children <- function(nodes) .Call(wrap__DirectedGraph__children, self, nodes)
 
-DirectedGraph$parents <- function(node) .Call(wrap__DirectedGraph__parents, self, node)
+DirectedGraph$parents <- function(nodes) .Call(wrap__DirectedGraph__parents, self, nodes)
 
-DirectedGraph$remove_edge <- function(from, to) invisible(.Call(wrap__DirectedGraph__remove_edge, self, from, to))
+DirectedGraph$has_parents <- function(nodes) .Call(wrap__DirectedGraph__has_parents, self, nodes)
 
-DirectedGraph$remove_node <- function(node_id) invisible(.Call(wrap__DirectedGraph__remove_node, self, node_id))
-
-DirectedGraph$has_parents <- function(node_id) .Call(wrap__DirectedGraph__has_parents, self, node_id)
-
-DirectedGraph$has_children <- function(node_id) .Call(wrap__DirectedGraph__has_children, self, node_id)
-
-DirectedGraph$nodes <- function() .Call(wrap__DirectedGraph__nodes, self)
-
-DirectedGraph$node_ids <- function() .Call(wrap__DirectedGraph__node_ids, self)
+DirectedGraph$has_children <- function(nodes) .Call(wrap__DirectedGraph__has_children, self, nodes)
 
 DirectedGraph$least_common_parents <- function(selected) .Call(wrap__DirectedGraph__least_common_parents, self, selected)
 
-DirectedGraph$get_leaves <- function() .Call(wrap__DirectedGraph__get_leaves, self)
+DirectedGraph$get_all_leaves <- function() .Call(wrap__DirectedGraph__get_all_leaves, self)
 
-DirectedGraph$get_leaves_under <- function(node_ids) .Call(wrap__DirectedGraph__get_leaves_under, self, node_ids)
+DirectedGraph$get_leaves_under <- function(nodes) .Call(wrap__DirectedGraph__get_leaves_under, self, nodes)
 
-DirectedGraph$subset <- function(node_id) .Call(wrap__DirectedGraph__subset, self, node_id)
-
-DirectedGraph$get_roots <- function() .Call(wrap__DirectedGraph__get_roots, self)
+DirectedGraph$get_all_roots <- function() .Call(wrap__DirectedGraph__get_all_roots, self)
 
 DirectedGraph$get_roots_over <- function(node_ids) .Call(wrap__DirectedGraph__get_roots_over, self, node_ids)
 
-DirectedGraph$clear_edges <- function() invisible(.Call(wrap__DirectedGraph__clear_edges, self))
+DirectedGraph$subset <- function(node_id) .Call(wrap__DirectedGraph__subset, self, node_id)
 
-DirectedGraph$into_dag <- function() .Call(wrap__DirectedGraph__into_dag, self)
+DirectedGraph$print <- function() invisible(.Call(wrap__DirectedGraph__print, self))
 
 #' @export
 `$.DirectedGraph` <- function (self, name) { func <- DirectedGraph[[name]]; environment(func) <- environment(); func }
@@ -99,53 +55,55 @@ DirectedGraph$into_dag <- function() .Call(wrap__DirectedGraph__into_dag, self)
 
 DirectedAcyclicGraph <- new.env(parent = emptyenv())
 
-DirectedAcyclicGraph$get_node <- function(node_id) .Call(wrap__DirectedAcyclicGraph__get_node, self, node_id)
-
-DirectedAcyclicGraph$update_node_data <- function(node_id, data) .Call(wrap__DirectedAcyclicGraph__update_node_data, self, node_id, data)
-
-DirectedAcyclicGraph$n_nodes <- function() .Call(wrap__DirectedAcyclicGraph__n_nodes, self)
-
-DirectedAcyclicGraph$get_nodes <- function(ids) .Call(wrap__DirectedAcyclicGraph__get_nodes, self, ids)
-
-DirectedAcyclicGraph$edge_exists <- function(from, to) .Call(wrap__DirectedAcyclicGraph__edge_exists, self, from, to)
-
-DirectedAcyclicGraph$deep_clone <- function() .Call(wrap__DirectedAcyclicGraph__deep_clone, self)
-
 DirectedAcyclicGraph$find_path <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_path, self, from, to)
 
-DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
+DirectedAcyclicGraph$children <- function(nodes) .Call(wrap__DirectedAcyclicGraph__children, self, nodes)
 
-DirectedAcyclicGraph$children <- function(node) .Call(wrap__DirectedAcyclicGraph__children, self, node)
+DirectedAcyclicGraph$parents <- function(nodes) .Call(wrap__DirectedAcyclicGraph__parents, self, nodes)
 
-DirectedAcyclicGraph$parents <- function(node) .Call(wrap__DirectedAcyclicGraph__parents, self, node)
+DirectedAcyclicGraph$has_parents <- function(nodes) .Call(wrap__DirectedAcyclicGraph__has_parents, self, nodes)
 
-DirectedAcyclicGraph$has_parents <- function(node_id) .Call(wrap__DirectedAcyclicGraph__has_parents, self, node_id)
-
-DirectedAcyclicGraph$has_children <- function(node_id) .Call(wrap__DirectedAcyclicGraph__has_children, self, node_id)
-
-DirectedAcyclicGraph$nodes <- function() .Call(wrap__DirectedAcyclicGraph__nodes, self)
-
-DirectedAcyclicGraph$node_ids <- function() .Call(wrap__DirectedAcyclicGraph__node_ids, self)
+DirectedAcyclicGraph$has_children <- function(nodes) .Call(wrap__DirectedAcyclicGraph__has_children, self, nodes)
 
 DirectedAcyclicGraph$least_common_parents <- function(selected) .Call(wrap__DirectedAcyclicGraph__least_common_parents, self, selected)
 
-DirectedAcyclicGraph$get_leaves <- function() .Call(wrap__DirectedAcyclicGraph__get_leaves, self)
+DirectedAcyclicGraph$get_all_leaves <- function() .Call(wrap__DirectedAcyclicGraph__get_all_leaves, self)
 
-DirectedAcyclicGraph$get_leaves_under <- function(node_ids) .Call(wrap__DirectedAcyclicGraph__get_leaves_under, self, node_ids)
+DirectedAcyclicGraph$get_leaves_under <- function(nodes) .Call(wrap__DirectedAcyclicGraph__get_leaves_under, self, nodes)
 
-DirectedAcyclicGraph$subset <- function(node_id) .Call(wrap__DirectedAcyclicGraph__subset, self, node_id)
-
-DirectedAcyclicGraph$get_roots <- function() .Call(wrap__DirectedAcyclicGraph__get_roots, self)
+DirectedAcyclicGraph$get_all_roots <- function() .Call(wrap__DirectedAcyclicGraph__get_all_roots, self)
 
 DirectedAcyclicGraph$get_roots_over <- function(node_ids) .Call(wrap__DirectedAcyclicGraph__get_roots_over, self, node_ids)
 
-DirectedAcyclicGraph$into_directed <- function() .Call(wrap__DirectedAcyclicGraph__into_directed, self)
+DirectedAcyclicGraph$subset <- function(node_id) .Call(wrap__DirectedAcyclicGraph__subset, self, node_id)
+
+DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
+
+DirectedAcyclicGraph$print <- function() invisible(.Call(wrap__DirectedAcyclicGraph__print, self))
 
 #' @export
 `$.DirectedAcyclicGraph` <- function (self, name) { func <- DirectedAcyclicGraph[[name]]; environment(func) <- environment(); func }
 
 #' @export
 `[[.DirectedAcyclicGraph` <- `$.DirectedAcyclicGraph`
+
+DirectedGraphBuilder <- new.env(parent = emptyenv())
+
+DirectedGraphBuilder$new <- function() .Call(wrap__DirectedGraphBuilder__new)
+
+DirectedGraphBuilder$add_edge <- function(from, to) invisible(.Call(wrap__DirectedGraphBuilder__add_edge, self, from, to))
+
+DirectedGraphBuilder$add_path <- function(path) invisible(.Call(wrap__DirectedGraphBuilder__add_path, self, path))
+
+DirectedGraphBuilder$build_directed <- function() .Call(wrap__DirectedGraphBuilder__build_directed, self)
+
+DirectedGraphBuilder$build_acyclic <- function() .Call(wrap__DirectedGraphBuilder__build_acyclic, self)
+
+#' @export
+`$.DirectedGraphBuilder` <- function (self, name) { func <- DirectedGraphBuilder[[name]]; environment(func) <- environment(); func }
+
+#' @export
+`[[.DirectedGraphBuilder` <- `$.DirectedGraphBuilder`
 
 
 # nolint end

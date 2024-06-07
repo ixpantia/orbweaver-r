@@ -1,30 +1,52 @@
-#' @title Get the root nodes of a graph
+#' @title Get the root nodes of a graph over some nodes
+#'
+#' @description
+#' Retrieves the nodes in a graph that have no parents
+#' over a certain node or group of nodes
+#'
+#' @param graph A graph object
+#' @param nodes A character vector of nodes to find roots for
+#' @return A character vector of nodes
+#' @export
+get_roots_over <- function(graph, nodes) {
+  UseMethod("get_roots_over")
+}
+
+#' @export
+get_roots_over.DirectedGraph <- function(graph, nodes) {
+  if (missing(nodes)) {
+    return(graph$get_roots_over())
+  }
+  graph$get_roots_over(nodes)
+}
+
+#' @export
+get_roots_over.DirectedAcyclicGraph <- function(graph, nodes) {
+  if (missing(nodes)) {
+    return(graph$get_roots_over())
+  }
+  graph$get_roots_over(nodes)
+}
+
+#' @title Get the all the root nodes of a graph
 #'
 #' @description
 #' Retrieves the nodes in a graph that have no parents
 #'
-#' If no `node_ids` argument is supplied then all of
-#' the roots in the graph are returned.
 #' @param graph A graph object
-#' @param node_ids The node ids of which the roots must be descendants of
-#' @return A character vector of node ids
+#' @param ... Unused
+#' @return A character vector of nodes
 #' @export
-get_roots <- function(graph, node_ids) {
-  UseMethod("get_roots")
+get_all_roots <- function(graph, ...) {
+  UseMethod("get_all_roots")
 }
 
 #' @export
-get_roots.DirectedGraph <- function(graph, node_ids) {
-  if (missing(node_ids)) {
-    return(graph$get_roots())
-  }
-  graph$get_roots_over(node_ids)
+get_all_roots.DirectedGraph <- function(graph, ...) {
+  graph$get_all_roots()
 }
 
 #' @export
-get_roots.DirectedAcyclicGraph <- function(graph, node_ids) {
-  if (missing(node_ids)) {
-    return(graph$get_roots())
-  }
-  graph$get_roots_over(node_ids)
+get_all_roots.DirectedAcyclicGraph <- function(graph, ...) {
+  graph$get_all_roots()
 }

@@ -1,30 +1,47 @@
-#' @title Get the leave nodes of a graph
+#' @title Get the leaf nodes of a graph under some nodes
 #'
 #' @description
-#' Retrieves the nodes in a graph that have no children.
+#' Retrieves the nodes in a graph that have no children
+#' under a certain node or group of nodes
 #'
-#' If no `node_ids` argument is supplied then all of
-#' the leaves in the graph are returned.
 #' @param graph A graph object
-#' @param node_ids The node ids of which the leaves must be descendants of
-#' @return A character vector of node ids
+#' @param nodes A character vector of nodes to find leaves for
+#' @return A character vector of nodes
 #' @export
-get_leaves <- function(graph, node_ids) {
-  UseMethod("get_leaves")
+get_leaves_under <- function(graph, nodes) {
+  UseMethod("get_leaves_under")
 }
 
 #' @export
-get_leaves.DirectedGraph <- function(graph, node_ids) {
-  if (missing(node_ids)) {
-    return(graph$get_leaves())
-  }
-  graph$get_leaves_under(node_ids)
+get_leaves_under.DirectedGraph <- function(graph, nodes) {
+  graph$get_leaves_under(nodes)
 }
 
 #' @export
-get_node.DirectedAcyclicGraph <- function(graph, node_ids) {
-  if (missing(node_ids)) {
-    return(graph$get_leaves())
-  }
-  graph$get_leaves_under(node_ids)
+get_leaves_under.DirectedAcyclicGraph <- function(graph, nodes) {
+  graph$get_leaves_under(nodes)
 }
+
+#' @title Get all the leaf nodes of a graph
+#'
+#' @description
+#' Retrieves the nodes in a graph that have no children
+#'
+#' @param graph A graph object
+#' @param ... Unused
+#' @return A character vector of nodes
+#' @export
+get_all_leaves <- function(graph, ...) {
+  UseMethod("get_all_leaves")
+}
+
+#' @export
+get_all_leaves.DirectedGraph <- function(graph, ...) {
+  graph$get_all_leaves()
+}
+
+#' @export
+get_all_leaves.DirectedAcyclicGraph <- function(graph, ...) {
+  graph$get_all_leaves()
+}
+

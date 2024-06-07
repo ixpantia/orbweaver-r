@@ -3,19 +3,19 @@
 #' This function validates if any edge points to the
 #' given node.
 #' @param graph A graph object
-#' @param node_id The id of the node to check
-#' @return A logical describing if the node has parents
+#' @param nodes A character vector of nodes to determine
+#' @return A logical vector with the same length as `nodes`
 #' @export
-has_parents <- function(graph, node_id) {
+has_parents <- function(graph, nodes) {
   UseMethod("has_parents")
 }
 
 #' @export
-has_parents.DirectedGraph <- function(graph, node_id) {
-  graph$has_parents(node_id)
+has_parents.DirectedGraph <- function(graph, nodes) {
+  graph$has_parents(nodes)
 }
 
 #' @export
-has_parents.DirectedAcyclicGraph <- function(graph, node_id) {
-  graph$has_parents(node_id)
+has_parents.DirectedAcyclicGraph <- function(graph, nodes) {
+  graph$has_parents(nodes)
 }
