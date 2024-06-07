@@ -13,7 +13,7 @@ fn rs_directed_graph_to_json(directed_graph: &DirectedGraph, pretty: bool) -> Re
 
 #[extendr]
 fn rs_directed_graph_from_json(text: &str) -> Result<DirectedGraph> {
-    let dg: ow::DirectedGraph<Robj> = serde_json::from_str(text).map_err(|e| e.to_string())?;
+    let dg: ow::DirectedGraph = serde_json::from_str(text).map_err(|e| e.to_string())?;
     Ok(DirectedGraph(dg))
 }
 
@@ -28,8 +28,7 @@ fn rs_dag_to_json(dag: &DirectedAcyclicGraph, pretty: bool) -> Result<String> {
 
 #[extendr]
 fn rs_dag_from_json(text: &str) -> Result<DirectedAcyclicGraph> {
-    let dag: ow::DirectedAcyclicGraph<Robj> =
-        serde_json::from_str(text).map_err(|e| e.to_string())?;
+    let dag: ow::DirectedAcyclicGraph = serde_json::from_str(text).map_err(|e| e.to_string())?;
     Ok(DirectedAcyclicGraph(dag))
 }
 

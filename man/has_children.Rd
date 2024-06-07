@@ -4,15 +4,15 @@
 \alias{has_children}
 \title{Checks if a node in a graph has children}
 \usage{
-has_children(graph, node_id)
+has_children(graph, nodes)
 }
 \arguments{
 \item{graph}{A graph object}
 
-\item{node_id}{The id of the node to check}
+\item{nodes}{A character vector of nodes to determine}
 }
 \value{
-A logical describing if the node has children
+A logical vector with the same length as \code{nodes}
 }
 \description{
 This function validates if the node has an edge pointing

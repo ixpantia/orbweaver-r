@@ -4,15 +4,15 @@
 \alias{has_parents}
 \title{Checks if a node in a graph has parents}
 \usage{
-has_parents(graph, node_id)
+has_parents(graph, nodes)
 }
 \arguments{
 \item{graph}{A graph object}
 
-\item{node_id}{The id of the node to check}
+\item{nodes}{A character vector of nodes to determine}
 }
 \value{
-A logical describing if the node has parents
+A logical vector with the same length as \code{nodes}
 }
 \description{
 This function validates if any edge points to the
