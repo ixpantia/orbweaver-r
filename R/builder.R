@@ -1,3 +1,6 @@
+#' @title A new builder for a graph based on the type
+#' @description Object used to build graphs
+#' @param type The type of graph
 #' @export
 graph_builder <- function(type = "directed") {
   DirectedGraphBuilder$new()
@@ -34,6 +37,7 @@ add_path <- function(graph_builder, path) {
   graph_builder$add_path(path)
 }
 
+#' @title Build a DirectedGraph from a builder
 #' @title Builder into a Directed Graph
 
 #' @description
@@ -49,6 +53,7 @@ build_directed <- function(graph_builder) {
   graph_builder$build_directed()
 }
 
+#' @title Build a DirectedAcyclicGraph from a builder
 #' @description
 #' Builds a graph builder into a new DirectedAcyclicGraph
 #' object.
