@@ -19,19 +19,13 @@
     <loc>/reference/add_edge.html</loc>
   </url>
   <url>
-    <loc>/reference/add_node.html</loc>
-  </url>
-  <url>
     <loc>/reference/add_path.html</loc>
   </url>
   <url>
-    <loc>/reference/clear_edges.html</loc>
+    <loc>/reference/build_directed.html</loc>
   </url>
   <url>
-    <loc>/reference/deep_clone.html</loc>
-  </url>
-  <url>
-    <loc>/reference/edge_exists.html</loc>
+    <loc>/reference/children.html</loc>
   </url>
   <url>
     <loc>/reference/find_all_paths.html</loc>
@@ -40,25 +34,16 @@
     <loc>/reference/find_path.html</loc>
   </url>
   <url>
-    <loc>/reference/get_children.html</loc>
+    <loc>/reference/get_all_leaves.html</loc>
   </url>
   <url>
-    <loc>/reference/get_leaves.html</loc>
+    <loc>/reference/get_all_roots.html</loc>
   </url>
   <url>
-    <loc>/reference/get_node.html</loc>
+    <loc>/reference/get_leaves_under.html</loc>
   </url>
   <url>
-    <loc>/reference/get_node_ids.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_nodes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_parents.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_roots.html</loc>
+    <loc>/reference/get_roots_over.html</loc>
   </url>
   <url>
     <loc>/reference/graph_from_json.html</loc>
@@ -76,12 +61,6 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/into_dag.html</loc>
-  </url>
-  <url>
-    <loc>/reference/into_directed.html</loc>
-  </url>
-  <url>
     <loc>/reference/least_common_parents.html</loc>
   </url>
   <url>
@@ -91,21 +70,9 @@
     <loc>/reference/orbweaver-package.html</loc>
   </url>
   <url>
+    <loc>/reference/parents.html</loc>
+  </url>
+  <url>
     <loc>/reference/populate_edges.html</loc>
-  </url>
-  <url>
-    <loc>/reference/populate_nodes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/remove_edge.html</loc>
-  </url>
-  <url>
-    <loc>/reference/remove_node.html</loc>
-  </url>
-  <url>
-    <loc>/reference/subset_graph.html</loc>
-  </url>
-  <url>
-    <loc>/reference/update_node_data.html</loc>
   </url>
 </urlset>

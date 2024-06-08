@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">orbweaver</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,12 +55,7 @@
           
           <code><a href="add_edge.html">add_edge()</a></code> 
         </dt>
-        <dd>Add an edge to a graph</dd>
-      </dl><dl><dt>
-          
-          <code><a href="add_node.html">add_node()</a></code> 
-        </dt>
-        <dd>Add a new node to a graph</dd>
+        <dd>Add an edge to a graph builder</dd>
       </dl><dl><dt>
           
           <code><a href="add_path.html">add_path()</a></code> 
@@ -68,19 +63,14 @@
         <dd>Add a path to a graph</dd>
       </dl><dl><dt>
           
-          <code><a href="clear_edges.html">clear_edges()</a></code> 
+          <code><a href="build_directed.html">build_directed()</a></code> 
         </dt>
-        <dd>Remove all edges from a graph</dd>
+        <dd>Builder into a Directed Graph</dd>
       </dl><dl><dt>
           
-          <code><a href="deep_clone.html">deep_clone()</a></code> 
+          <code><a href="children.html">children()</a></code> 
         </dt>
-        <dd>Get a deep clone of a graph</dd>
-      </dl><dl><dt>
-          
-          <code><a href="edge_exists.html">edge_exists()</a></code> 
-        </dt>
-        <dd>Validate if an edge exists</dd>
+        <dd>Get the children on a node</dd>
       </dl><dl><dt>
           
           <code><a href="find_all_paths.html">find_all_paths()</a></code> 
@@ -93,39 +83,24 @@
         <dd>Find a path between two nodes</dd>
       </dl><dl><dt>
           
-          <code><a href="get_children.html">get_children()</a></code> 
+          <code><a href="get_all_leaves.html">get_all_leaves()</a></code> 
         </dt>
-        <dd>Get the children on a node</dd>
+        <dd>Get all the leaf nodes of a graph</dd>
       </dl><dl><dt>
           
-          <code><a href="get_leaves.html">get_leaves()</a></code> 
+          <code><a href="get_all_roots.html">get_all_roots()</a></code> 
         </dt>
-        <dd>Get the leave nodes of a graph</dd>
+        <dd>Get the all the root nodes of a graph</dd>
       </dl><dl><dt>
           
-          <code><a href="get_node.html">get_node()</a></code> 
+          <code><a href="get_leaves_under.html">get_leaves_under()</a></code> 
         </dt>
-        <dd>Get the node from a graph object</dd>
+        <dd>Get the leaf nodes of a graph under some nodes</dd>
       </dl><dl><dt>
           
-          <code><a href="get_node_ids.html">get_node_ids()</a></code> 
+          <code><a href="get_roots_over.html">get_roots_over()</a></code> 
         </dt>
-        <dd>Get the ids of a group of nodes from a graph object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_nodes.html">get_nodes()</a></code> 
-        </dt>
-        <dd>Get a group of nodes from a graph object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_parents.html">get_parents()</a></code> 
-        </dt>
-        <dd>Get the parents on a node</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_roots.html">get_roots()</a></code> 
-        </dt>
-        <dd>Get the root nodes of a graph</dd>
+        <dd>Get the root nodes of a graph over some nodes</dd>
       </dl><dl><dt>
           
           <code><a href="graph_from_json.html">graph_from_json()</a></code> 
@@ -148,16 +123,6 @@
         <dd>Checks if a node in a graph has parents</dd>
       </dl><dl><dt>
           
-          <code><a href="into_dag.html">into_dag()</a></code> 
-        </dt>
-        <dd>Convert a Directed Graph into a Directed Acyclic Graph</dd>
-      </dl><dl><dt>
-          
-          <code><a href="into_directed.html">into_directed()</a></code> 
-        </dt>
-        <dd>Convert an Directed Acyclic Graph into a Directed Graph</dd>
-      </dl><dl><dt>
-          
           <code><a href="least_common_parents.html">least_common_parents()</a></code> 
         </dt>
         <dd>Find the least common parents in a graph</dd>
@@ -173,34 +138,14 @@
         <dd>orbweaver: Fast and Efficient Graph Data Structures</dd>
       </dl><dl><dt>
           
+          <code><a href="parents.html">parents()</a></code> 
+        </dt>
+        <dd>Get the parents on a node</dd>
+      </dl><dl><dt>
+          
           <code><a href="populate_edges.html">populate_edges()</a></code> 
         </dt>
         <dd>Populates the edges of a graph from a <code>tibble</code></dd>
-      </dl><dl><dt>
-          
-          <code><a href="populate_nodes.html">populate_nodes()</a></code> 
-        </dt>
-        <dd>Populates the nodes of a graph from a <code>tibble</code></dd>
-      </dl><dl><dt>
-          
-          <code><a href="remove_edge.html">remove_edge()</a></code> 
-        </dt>
-        <dd>Remove an edge from a graph</dd>
-      </dl><dl><dt>
-          
-          <code><a href="remove_node.html">remove_node()</a></code> 
-        </dt>
-        <dd>Remove a node from a graph</dd>
-      </dl><dl><dt>
-          
-          <code><a href="subset_graph.html">subset_graph()</a></code> 
-        </dt>
-        <dd>Get a subset or a graph</dd>
-      </dl><dl><dt>
-          
-          <code><a href="update_node_data.html">update_node_data()</a></code> 
-        </dt>
-        <dd>Update the data of a node</dd>
       </dl></div>
   </main></div>
 
