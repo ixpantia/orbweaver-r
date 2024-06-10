@@ -12,7 +12,7 @@ Empower your data analysis with 'orbweaver', an R package designed for effortles
 Useful links:
 \itemize{
   \item \url{https://github.com/ixpantia/orbweaver}
-  \item Report bugs at \url{https://github.com/ixpantia/orbweaver/issues}
+  \item Report bugs at \url{https://github.com/ixpantia/orbweaver-r/issues}
 }
 
 }
