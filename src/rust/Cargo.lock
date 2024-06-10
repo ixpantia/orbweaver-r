@@ -119,9 +119,9 @@ checksum = "3fdb12b2476b595f9358c5161aa467c2438859caa136dec86c26fdd2efe17b92"
 
 [[package]]
 name = "orbweaver"
-version = "0.5.4"
+version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "105e9faf19f77bc90cbfd5e88fc0967dd3e0895ac496e4fec59db7a6d2020e27"
+checksum = "efe82ff2bcf237ee9efece130c275316fc3545f4430b73713cfba4b7baef7775"
 dependencies = [
  "fxhash",
  "rayon",
