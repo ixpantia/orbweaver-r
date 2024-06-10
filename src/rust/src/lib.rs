@@ -2,6 +2,7 @@ use extendr_api::prelude::*;
 use orbweaver::prelude as ow;
 
 pub mod from_dataframe;
+mod macros;
 pub mod to_json;
 
 pub struct DirectedGraphBuilder(ow::DirectedGraphBuilder);
@@ -39,9 +40,25 @@ impl DirectedGraphBuilder {
     }
 }
 
+trait ImplDirectedGraph: Sized {
+    fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>>;
+    fn children(&self, nodes: Strings) -> Vec<String>;
+    fn parents(&self, nodes: Strings) -> Vec<String>;
+    fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>>;
+    fn has_children(&self, nodes: Strings) -> Result<Vec<bool>>;
+    fn least_common_parents(&self, selected: Strings) -> Result<Vec<String>>;
+    fn get_all_leaves(&self) -> Vec<String>;
+    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<String>>;
+    fn get_all_roots(&self) -> Vec<String>;
+    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>>;
+    fn subset(&self, node_id: &str) -> Result<Self>;
+    fn print(&self);
+    fn find_all_paths(&self, from: &str, to: &str) -> Result<List>;
+}
+
 #[extendr]
-impl DirectedGraph {
-    pub fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>> {
+impl ImplDirectedGraph for DirectedGraph {
+    fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>> {
         Ok(self
             .0
             .find_path(from, to)
@@ -50,66 +67,57 @@ impl DirectedGraph {
             .map(String::from)
             .collect())
     }
-
-    pub fn children(&self, nodes: Strings) -> Vec<String> {
+    fn children(&self, nodes: Strings) -> Vec<String> {
         self.0
-            .children(nodes.into_iter())
+            .children(nodes.iter())
             .map(|children| children.into_iter().map(String::from).collect())
             .unwrap_or_default()
     }
-
-    pub fn parents(&self, nodes: Strings) -> Vec<String> {
+    fn parents(&self, nodes: Strings) -> Vec<String> {
         self.0
-            .parents(nodes.into_iter())
+            .parents(nodes.iter())
             .map(|children| children.into_iter().map(String::from).collect())
             .unwrap_or_default()
     }
-
-    pub fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>> {
-        self.0.has_parents(nodes.into_iter()).map_err(to_r_error)
+    fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>> {
+        self.0.has_parents(nodes.iter()).map_err(to_r_error)
     }
-
-    pub fn has_children(&self, nodes: Strings) -> Result<Vec<bool>> {
-        self.0.has_children(nodes.into_iter()).map_err(to_r_error)
+    fn has_children(&self, nodes: Strings) -> Result<Vec<bool>> {
+        self.0.has_children(nodes.iter()).map_err(to_r_error)
     }
-
-    pub fn least_common_parents(&self, selected: Strings) -> Result<Vec<String>> {
+    fn least_common_parents(&self, selected: Strings) -> Result<Vec<String>> {
         Ok(self
             .0
-            .least_common_parents(selected.into_iter())
+            .least_common_parents(selected.iter())
             .map_err(to_r_error)?
             .into_iter()
             .map(String::from)
             .collect())
     }
-
-    pub fn get_all_leaves(&self) -> Vec<String> {
+    fn get_all_leaves(&self) -> Vec<String> {
         self.0
             .get_all_leaves()
             .into_iter()
             .map(String::from)
             .collect()
     }
-
-    pub fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<String>> {
+    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<String>> {
         Ok(self
             .0
-            .get_leaves_under(nodes.into_iter())
+            .get_leaves_under(nodes.iter())
             .map_err(to_r_error)?
             .into_iter()
             .map(String::from)
             .collect())
     }
-
-    pub fn get_all_roots(&self) -> Vec<String> {
+    fn get_all_roots(&self) -> Vec<String> {
         self.0
             .get_all_roots()
             .into_iter()
             .map(String::from)
             .collect()
     }
-
-    pub fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
+    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
         Ok(self
             .0
             .get_roots_over(&node_ids)
@@ -118,19 +126,20 @@ impl DirectedGraph {
             .map(String::from)
             .collect())
     }
-
-    pub fn subset(&self, node_id: &str) -> Result<Self> {
+    fn subset(&self, node_id: &str) -> Result<Self> {
         Ok(Self(self.0.subset(node_id).map_err(to_r_error)?))
     }
-
     fn print(&self) {
         println!("{:?}", self.0)
+    }
+    fn find_all_paths(&self, _from: &str, _to: &str) -> Result<List> {
+        todo!("Find all paths is not implemented for DirectedGraph")
     }
 }
 
 #[extendr]
-impl DirectedAcyclicGraph {
-    pub fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>> {
+impl ImplDirectedGraph for DirectedAcyclicGraph {
+    fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>> {
         Ok(self
             .0
             .find_path(from, to)
@@ -139,66 +148,57 @@ impl DirectedAcyclicGraph {
             .map(String::from)
             .collect())
     }
-
-    pub fn children(&self, nodes: Strings) -> Vec<String> {
+    fn children(&self, nodes: Strings) -> Vec<String> {
         self.0
-            .children(nodes.into_iter())
+            .children(nodes.iter())
             .map(|children| children.into_iter().map(String::from).collect())
             .unwrap_or_default()
     }
-
-    pub fn parents(&self, nodes: Strings) -> Vec<String> {
+    fn parents(&self, nodes: Strings) -> Vec<String> {
         self.0
-            .parents(nodes.into_iter())
+            .parents(nodes.iter())
             .map(|children| children.into_iter().map(String::from).collect())
             .unwrap_or_default()
     }
-
-    pub fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>> {
-        self.0.has_parents(nodes.into_iter()).map_err(to_r_error)
+    fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>> {
+        self.0.has_parents(nodes.iter()).map_err(to_r_error)
     }
-
-    pub fn has_children(&self, nodes: Strings) -> Result<Vec<bool>> {
-        self.0.has_children(nodes.into_iter()).map_err(to_r_error)
+    fn has_children(&self, nodes: Strings) -> Result<Vec<bool>> {
+        self.0.has_children(nodes.iter()).map_err(to_r_error)
     }
-
-    pub fn least_common_parents(&self, selected: Strings) -> Result<Vec<String>> {
+    fn least_common_parents(&self, selected: Strings) -> Result<Vec<String>> {
         Ok(self
             .0
-            .least_common_parents(selected.into_iter())
+            .least_common_parents(selected.iter())
             .map_err(to_r_error)?
             .into_iter()
             .map(String::from)
             .collect())
     }
-
-    pub fn get_all_leaves(&self) -> Vec<String> {
+    fn get_all_leaves(&self) -> Vec<String> {
         self.0
             .get_all_leaves()
             .into_iter()
             .map(String::from)
             .collect()
     }
-
-    pub fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<String>> {
+    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<String>> {
         Ok(self
             .0
-            .get_leaves_under(nodes.into_iter())
+            .get_leaves_under(nodes.iter())
             .map_err(to_r_error)?
             .into_iter()
             .map(String::from)
             .collect())
     }
-
-    pub fn get_all_roots(&self) -> Vec<String> {
+    fn get_all_roots(&self) -> Vec<String> {
         self.0
             .get_all_roots()
             .into_iter()
             .map(String::from)
             .collect()
     }
-
-    pub fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
+    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
         Ok(self
             .0
             .get_roots_over(&node_ids)
@@ -207,22 +207,20 @@ impl DirectedAcyclicGraph {
             .map(String::from)
             .collect())
     }
-
-    pub fn subset(&self, node_id: &str) -> Result<Self> {
+    fn subset(&self, node_id: &str) -> Result<Self> {
         Ok(Self(self.0.subset(node_id).map_err(to_r_error)?))
     }
+    fn print(&self) {
+        println!("{:?}", self.0)
+    }
 
-    pub fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
+    fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
         Ok(self
             .0
             .find_all_paths(from, to)
             .map_err(to_r_error)?
             .into_iter()
             .collect())
-    }
-
-    fn print(&self) {
-        println!("{:?}", self.0)
     }
 }
 

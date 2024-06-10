@@ -47,6 +47,8 @@ DirectedGraph$subset <- function(node_id) .Call(wrap__DirectedGraph__subset, sel
 
 DirectedGraph$print <- function() invisible(.Call(wrap__DirectedGraph__print, self))
 
+DirectedGraph$find_all_paths <- function(`_from`, `_to`) .Call(wrap__DirectedGraph__find_all_paths, self, `_from`, `_to`)
+
 #' @export
 `$.DirectedGraph` <- function (self, name) { func <- DirectedGraph[[name]]; environment(func) <- environment(); func }
 
@@ -77,9 +79,9 @@ DirectedAcyclicGraph$get_roots_over <- function(node_ids) .Call(wrap__DirectedAc
 
 DirectedAcyclicGraph$subset <- function(node_id) .Call(wrap__DirectedAcyclicGraph__subset, self, node_id)
 
-DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
-
 DirectedAcyclicGraph$print <- function() invisible(.Call(wrap__DirectedAcyclicGraph__print, self))
+
+DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
 
 #' @export
 `$.DirectedAcyclicGraph` <- function (self, name) { func <- DirectedAcyclicGraph[[name]]; environment(func) <- environment(); func }
