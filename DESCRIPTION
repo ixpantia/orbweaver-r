@@ -19,7 +19,7 @@ Description: Empower your data analysis with 'orbweaver', an R package
     the graph are performed in place, streamlining your
     workflow for optimal productivity.
 URL: https://github.com/ixpantia/orbweaver
-BugReports: https://github.com/ixpantia/orbweaver/issues
+BugReports: https://github.com/ixpantia/orbweaver-r/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
