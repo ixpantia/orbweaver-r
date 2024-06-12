@@ -52,10 +52,10 @@
     <loc>/reference/graph_builder.html</loc>
   </url>
   <url>
-    <loc>/reference/graph_from_json.html</loc>
+    <loc>/reference/graph_from_bin.html</loc>
   </url>
   <url>
-    <loc>/reference/graph_to_json.html</loc>
+    <loc>/reference/graph_to_bin.html</loc>
   </url>
   <url>
     <loc>/reference/has_children.html</loc>
@@ -70,7 +70,7 @@
     <loc>/reference/least_common_parents.html</loc>
   </url>
   <url>
-    <loc>/reference/new_directed_graph.html</loc>
+    <loc>/reference/nodes.html</loc>
   </url>
   <url>
     <loc>/reference/orbweaver-package.html</loc>
