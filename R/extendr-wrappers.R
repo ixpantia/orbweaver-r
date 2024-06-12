@@ -6,7 +6,6 @@
 # This file was created with the following call:
 #   .Call("wrap__make_orbweaver_wrappers", use_symbols = TRUE, package_name = "orbweaver")
 
-#' @docType package
 #' @usage NULL
 #' @useDynLib orbweaver, .registration = TRUE
 NULL
