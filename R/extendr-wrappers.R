@@ -13,14 +13,6 @@ NULL
 
 rs_populate_edges_builder <- function(graph, parent_iter, child_iter) .Call(wrap__rs_populate_edges_builder, graph, parent_iter, child_iter)
 
-rs_directed_graph_from_json <- function(text) .Call(wrap__rs_directed_graph_from_json, text)
-
-rs_directed_graph_to_json <- function(directed_graph, pretty) .Call(wrap__rs_directed_graph_to_json, directed_graph, pretty)
-
-rs_dag_to_json <- function(dag, pretty) .Call(wrap__rs_dag_to_json, dag, pretty)
-
-rs_dag_from_json <- function(text) .Call(wrap__rs_dag_from_json, text)
-
 DirectedGraph <- new.env(parent = emptyenv())
 
 DirectedGraph$find_path <- function(from, to) .Call(wrap__DirectedGraph__find_path, self, from, to)
@@ -48,6 +40,14 @@ DirectedGraph$subset <- function(node_id) .Call(wrap__DirectedGraph__subset, sel
 DirectedGraph$print <- function() invisible(.Call(wrap__DirectedGraph__print, self))
 
 DirectedGraph$find_all_paths <- function(`_from`, `_to`) .Call(wrap__DirectedGraph__find_all_paths, self, `_from`, `_to`)
+
+DirectedGraph$to_bin_disk <- function(path) .Call(wrap__DirectedGraph__to_bin_disk, self, path)
+
+DirectedGraph$to_bin_mem <- function() .Call(wrap__DirectedGraph__to_bin_mem, self)
+
+DirectedGraph$from_bin_disk <- function(path) .Call(wrap__DirectedGraph__from_bin_disk, path)
+
+DirectedGraph$from_bin_mem <- function(bin) .Call(wrap__DirectedGraph__from_bin_mem, bin)
 
 #' @export
 `$.DirectedGraph` <- function (self, name) { func <- DirectedGraph[[name]]; environment(func) <- environment(); func }
@@ -82,6 +82,14 @@ DirectedAcyclicGraph$subset <- function(node_id) .Call(wrap__DirectedAcyclicGrap
 DirectedAcyclicGraph$print <- function() invisible(.Call(wrap__DirectedAcyclicGraph__print, self))
 
 DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
+
+DirectedAcyclicGraph$to_bin_disk <- function(path) .Call(wrap__DirectedAcyclicGraph__to_bin_disk, self, path)
+
+DirectedAcyclicGraph$to_bin_mem <- function() .Call(wrap__DirectedAcyclicGraph__to_bin_mem, self)
+
+DirectedAcyclicGraph$from_bin_disk <- function(path) .Call(wrap__DirectedAcyclicGraph__from_bin_disk, path)
+
+DirectedAcyclicGraph$from_bin_mem <- function(bin) .Call(wrap__DirectedAcyclicGraph__from_bin_mem, bin)
 
 #' @export
 `$.DirectedAcyclicGraph` <- function (self, name) { func <- DirectedAcyclicGraph[[name]]; environment(func) <- environment(); func }

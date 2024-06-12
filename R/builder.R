@@ -19,6 +19,7 @@ graph_builder <- function(type = "directed") {
 #' @export
 add_edge <- function(graph_builder, from, to) {
   graph_builder$add_edge(from, to)
+  return(graph_builder)
 }
 
 #' @title Add a path to a graph
@@ -27,14 +28,13 @@ add_edge <- function(graph_builder, from, to) {
 #' Adds all of the edges that make up the given
 #' path to the graph.
 #'
-#' NOTE: Not all graphs are able to be modified.
-#'
 #' @param graph_builder A graph builder_object
 #' @param path A character vector that describes the path
 #' @return The updated graph builder object
 #' @export
 add_path <- function(graph_builder, path) {
   graph_builder$add_path(path)
+  return(graph_builder)
 }
 
 #' @title Build a DirectedGraph from a builder

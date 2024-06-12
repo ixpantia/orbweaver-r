@@ -1,9 +1,9 @@
 use extendr_api::prelude::*;
 use orbweaver::prelude as ow;
+use std::io::{BufReader, BufWriter, Cursor};
 
 pub mod from_dataframe;
 mod macros;
-pub mod to_json;
 
 pub struct DirectedGraphBuilder(ow::DirectedGraphBuilder);
 pub struct DirectedGraph(ow::DirectedGraph);
@@ -54,6 +54,10 @@ trait ImplDirectedGraph: Sized {
     fn subset(&self, node_id: &str) -> Result<Self>;
     fn print(&self);
     fn find_all_paths(&self, from: &str, to: &str) -> Result<List>;
+    fn to_bin_disk(&self, path: &str) -> Result<()>;
+    fn to_bin_mem(&self) -> Result<Vec<u8>>;
+    fn from_bin_disk(path: &str) -> Result<Self>;
+    fn from_bin_mem(bin: &[u8]) -> Result<Self>;
 }
 
 #[extendr]
@@ -134,6 +138,37 @@ impl ImplDirectedGraph for DirectedGraph {
     }
     fn find_all_paths(&self, _from: &str, _to: &str) -> Result<List> {
         todo!("Find all paths is not implemented for DirectedGraph")
+    }
+
+    fn to_bin_disk(&self, path: &str) -> Result<()> {
+        let writer = BufWriter::new(
+            std::fs::File::options()
+                .write(true)
+                .create(true)
+                .truncate(true)
+                .open(path)
+                .map_err(to_r_error)?,
+        );
+        self.0.to_binary(writer).map_err(to_r_error)
+    }
+
+    fn to_bin_mem(&self) -> Result<Vec<u8>> {
+        let mut writer = Vec::new();
+        self.0.to_binary(&mut writer).map_err(to_r_error)?;
+        Ok(writer)
+    }
+
+    fn from_bin_disk(path: &str) -> Result<Self> {
+        let file = BufReader::new(std::fs::File::open(path).map_err(to_r_error)?);
+        ow::DirectedGraph::from_binary(file)
+            .map(DirectedGraph)
+            .map_err(to_r_error)
+    }
+
+    fn from_bin_mem(bin: &[u8]) -> Result<Self> {
+        ow::DirectedGraph::from_binary(bin)
+            .map(DirectedGraph)
+            .map_err(to_r_error)
     }
 }
 
@@ -222,6 +257,37 @@ impl ImplDirectedGraph for DirectedAcyclicGraph {
             .into_iter()
             .collect())
     }
+
+    fn to_bin_disk(&self, path: &str) -> Result<()> {
+        let writer = BufWriter::new(
+            std::fs::File::options()
+                .write(true)
+                .create(true)
+                .truncate(true)
+                .open(path)
+                .map_err(to_r_error)?,
+        );
+        self.0.to_binary(writer).map_err(to_r_error)
+    }
+
+    fn to_bin_mem(&self) -> Result<Vec<u8>> {
+        let mut writer = Vec::new();
+        self.0.to_binary(&mut writer).map_err(to_r_error)?;
+        Ok(writer)
+    }
+
+    fn from_bin_disk(path: &str) -> Result<Self> {
+        let file = BufReader::new(std::fs::File::open(path).map_err(to_r_error)?);
+        ow::DirectedAcyclicGraph::from_binary(file)
+            .map(DirectedAcyclicGraph)
+            .map_err(to_r_error)
+    }
+
+    fn from_bin_mem(bin: &[u8]) -> Result<Self> {
+        ow::DirectedAcyclicGraph::from_binary(bin)
+            .map(DirectedAcyclicGraph)
+            .map_err(to_r_error)
+    }
 }
 
 // Macro to generate exports.
@@ -233,5 +299,4 @@ extendr_module! {
     impl DirectedAcyclicGraph;
     impl DirectedGraphBuilder;
     use from_dataframe;
-    use to_json;
 }

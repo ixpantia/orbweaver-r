@@ -17,6 +17,4 @@ The updated graph builder object
 \description{
 Adds all of the edges that make up the given
 path to the graph.
-
-NOTE: Not all graphs are able to be modified.
 }
