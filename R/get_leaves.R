@@ -44,4 +44,3 @@ get_all_leaves.DirectedGraph <- function(graph, ...) {
 get_all_leaves.DirectedAcyclicGraph <- function(graph, ...) {
   graph$get_all_leaves()
 }
-

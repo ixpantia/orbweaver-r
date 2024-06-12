@@ -7,7 +7,9 @@
 graph_from_bin(path, bin, type = c("directed", "dag"))
 }
 \arguments{
-\item{path}{Path to a file containing a graph binary}
+\item{path}{(Optional) Path to a file containing a graph binary}
+
+\item{bin}{(Optional) The raw binary of the graph}
 
 \item{type}{The type of graph the JSON represents}
 }

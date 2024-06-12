@@ -1,4 +1,4 @@
-.PHONY: vendor document
+.PHONY: vendor document covr
 
 vendor:
 	$(MAKE) -C src/rust vendor
@@ -12,3 +12,5 @@ install: document
 test:
 	Rscript -e "devtools::test()"
 
+covr:
+	Rscript -e "covr::report()"

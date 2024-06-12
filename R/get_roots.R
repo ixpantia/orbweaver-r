@@ -14,17 +14,11 @@ get_roots_over <- function(graph, nodes) {
 
 #' @export
 get_roots_over.DirectedGraph <- function(graph, nodes) {
-  if (missing(nodes)) {
-    return(graph$get_roots_over())
-  }
   graph$get_roots_over(nodes)
 }
 
 #' @export
 get_roots_over.DirectedAcyclicGraph <- function(graph, nodes) {
-  if (missing(nodes)) {
-    return(graph$get_roots_over())
-  }
   graph$get_roots_over(nodes)
 }
 

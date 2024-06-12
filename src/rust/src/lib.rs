@@ -1,6 +1,6 @@
 use extendr_api::prelude::*;
 use orbweaver::prelude as ow;
-use std::io::{BufReader, BufWriter, Cursor};
+use std::io::{BufReader, BufWriter};
 
 pub mod from_dataframe;
 mod macros;
@@ -41,16 +41,16 @@ impl DirectedGraphBuilder {
 }
 
 trait ImplDirectedGraph: Sized {
-    fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>>;
-    fn children(&self, nodes: Strings) -> Vec<String>;
-    fn parents(&self, nodes: Strings) -> Vec<String>;
+    fn find_path(&self, from: &str, to: &str) -> Result<Vec<&str>>;
+    fn children(&self, nodes: Strings) -> Vec<&str>;
+    fn parents(&self, nodes: Strings) -> Vec<&str>;
     fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>>;
     fn has_children(&self, nodes: Strings) -> Result<Vec<bool>>;
-    fn least_common_parents(&self, selected: Strings) -> Result<Vec<String>>;
-    fn get_all_leaves(&self) -> Vec<String>;
-    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<String>>;
+    fn least_common_parents(&self, selected: Strings) -> Result<Vec<&str>>;
+    fn get_all_leaves(&self) -> Vec<&str>;
+    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<&str>>;
     fn get_all_roots(&self) -> Vec<String>;
-    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>>;
+    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<&str>>;
     fn subset(&self, node_id: &str) -> Result<Self>;
     fn print(&self);
     fn find_all_paths(&self, from: &str, to: &str) -> Result<List>;
@@ -58,30 +58,20 @@ trait ImplDirectedGraph: Sized {
     fn to_bin_mem(&self) -> Result<Vec<u8>>;
     fn from_bin_disk(path: &str) -> Result<Self>;
     fn from_bin_mem(bin: &[u8]) -> Result<Self>;
+    fn nodes(&self) -> Vec<&str>;
+    fn length(&self) -> i32;
 }
 
 #[extendr]
 impl ImplDirectedGraph for DirectedGraph {
-    fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>> {
-        Ok(self
-            .0
-            .find_path(from, to)
-            .map_err(to_r_error)?
-            .into_iter()
-            .map(String::from)
-            .collect())
+    fn find_path(&self, from: &str, to: &str) -> Result<Vec<&str>> {
+        self.0.find_path(from, to).map_err(to_r_error)
     }
-    fn children(&self, nodes: Strings) -> Vec<String> {
-        self.0
-            .children(nodes.iter())
-            .map(|children| children.into_iter().map(String::from).collect())
-            .unwrap_or_default()
+    fn children(&self, nodes: Strings) -> Vec<&str> {
+        self.0.children(nodes.iter()).unwrap_or_default()
     }
-    fn parents(&self, nodes: Strings) -> Vec<String> {
-        self.0
-            .parents(nodes.iter())
-            .map(|children| children.into_iter().map(String::from).collect())
-            .unwrap_or_default()
+    fn parents(&self, nodes: Strings) -> Vec<&str> {
+        self.0.parents(nodes.iter()).unwrap_or_default()
     }
     fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>> {
         self.0.has_parents(nodes.iter()).map_err(to_r_error)
@@ -89,29 +79,20 @@ impl ImplDirectedGraph for DirectedGraph {
     fn has_children(&self, nodes: Strings) -> Result<Vec<bool>> {
         self.0.has_children(nodes.iter()).map_err(to_r_error)
     }
-    fn least_common_parents(&self, selected: Strings) -> Result<Vec<String>> {
-        Ok(self
-            .0
-            .least_common_parents(selected.iter())
-            .map_err(to_r_error)?
-            .into_iter()
-            .map(String::from)
-            .collect())
-    }
-    fn get_all_leaves(&self) -> Vec<String> {
+    fn least_common_parents(&self, selected: Strings) -> Result<Vec<&str>> {
         self.0
-            .get_all_leaves()
-            .into_iter()
-            .map(String::from)
-            .collect()
+            .least_common_parents(selected.iter())
+            .map_err(to_r_error)
     }
-    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<String>> {
+    fn get_all_leaves(&self) -> Vec<&str> {
+        self.0.get_all_leaves().into_iter().collect()
+    }
+    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<&str>> {
         Ok(self
             .0
             .get_leaves_under(nodes.iter())
             .map_err(to_r_error)?
             .into_iter()
-            .map(String::from)
             .collect())
     }
     fn get_all_roots(&self) -> Vec<String> {
@@ -121,23 +102,14 @@ impl ImplDirectedGraph for DirectedGraph {
             .map(String::from)
             .collect()
     }
-    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
-        Ok(self
-            .0
-            .get_roots_over(&node_ids)
-            .map_err(to_r_error)?
-            .into_iter()
-            .map(String::from)
-            .collect())
+    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<&str>> {
+        self.0.get_roots_over(&node_ids).map_err(to_r_error)
     }
     fn subset(&self, node_id: &str) -> Result<Self> {
         Ok(Self(self.0.subset(node_id).map_err(to_r_error)?))
     }
     fn print(&self) {
         println!("{:?}", self.0)
-    }
-    fn find_all_paths(&self, _from: &str, _to: &str) -> Result<List> {
-        todo!("Find all paths is not implemented for DirectedGraph")
     }
 
     fn to_bin_disk(&self, path: &str) -> Result<()> {
@@ -170,30 +142,30 @@ impl ImplDirectedGraph for DirectedGraph {
             .map(DirectedGraph)
             .map_err(to_r_error)
     }
+
+    fn nodes(&self) -> Vec<&str> {
+        self.0.nodes()
+    }
+
+    fn length(&self) -> i32 {
+        self.0.len() as i32
+    }
+
+    fn find_all_paths(&self, _from: &str, _to: &str) -> Result<List> {
+        todo!("Find all paths is not implemented for DirectedGraph")
+    }
 }
 
 #[extendr]
 impl ImplDirectedGraph for DirectedAcyclicGraph {
-    fn find_path(&self, from: &str, to: &str) -> Result<Vec<String>> {
-        Ok(self
-            .0
-            .find_path(from, to)
-            .map_err(to_r_error)?
-            .into_iter()
-            .map(String::from)
-            .collect())
+    fn find_path(&self, from: &str, to: &str) -> Result<Vec<&str>> {
+        self.0.find_path(from, to).map_err(to_r_error)
     }
-    fn children(&self, nodes: Strings) -> Vec<String> {
-        self.0
-            .children(nodes.iter())
-            .map(|children| children.into_iter().map(String::from).collect())
-            .unwrap_or_default()
+    fn children(&self, nodes: Strings) -> Vec<&str> {
+        self.0.children(nodes.iter()).unwrap_or_default()
     }
-    fn parents(&self, nodes: Strings) -> Vec<String> {
-        self.0
-            .parents(nodes.iter())
-            .map(|children| children.into_iter().map(String::from).collect())
-            .unwrap_or_default()
+    fn parents(&self, nodes: Strings) -> Vec<&str> {
+        self.0.parents(nodes.iter()).unwrap_or_default()
     }
     fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>> {
         self.0.has_parents(nodes.iter()).map_err(to_r_error)
@@ -201,29 +173,20 @@ impl ImplDirectedGraph for DirectedAcyclicGraph {
     fn has_children(&self, nodes: Strings) -> Result<Vec<bool>> {
         self.0.has_children(nodes.iter()).map_err(to_r_error)
     }
-    fn least_common_parents(&self, selected: Strings) -> Result<Vec<String>> {
-        Ok(self
-            .0
-            .least_common_parents(selected.iter())
-            .map_err(to_r_error)?
-            .into_iter()
-            .map(String::from)
-            .collect())
-    }
-    fn get_all_leaves(&self) -> Vec<String> {
+    fn least_common_parents(&self, selected: Strings) -> Result<Vec<&str>> {
         self.0
-            .get_all_leaves()
-            .into_iter()
-            .map(String::from)
-            .collect()
+            .least_common_parents(selected.iter())
+            .map_err(to_r_error)
     }
-    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<String>> {
+    fn get_all_leaves(&self) -> Vec<&str> {
+        self.0.get_all_leaves().into_iter().collect()
+    }
+    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<&str>> {
         Ok(self
             .0
             .get_leaves_under(nodes.iter())
             .map_err(to_r_error)?
             .into_iter()
-            .map(String::from)
             .collect())
     }
     fn get_all_roots(&self) -> Vec<String> {
@@ -233,29 +196,14 @@ impl ImplDirectedGraph for DirectedAcyclicGraph {
             .map(String::from)
             .collect()
     }
-    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<String>> {
-        Ok(self
-            .0
-            .get_roots_over(&node_ids)
-            .map_err(to_r_error)?
-            .into_iter()
-            .map(String::from)
-            .collect())
+    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<&str>> {
+        self.0.get_roots_over(&node_ids).map_err(to_r_error)
     }
     fn subset(&self, node_id: &str) -> Result<Self> {
         Ok(Self(self.0.subset(node_id).map_err(to_r_error)?))
     }
     fn print(&self) {
         println!("{:?}", self.0)
-    }
-
-    fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
-        Ok(self
-            .0
-            .find_all_paths(from, to)
-            .map_err(to_r_error)?
-            .into_iter()
-            .collect())
     }
 
     fn to_bin_disk(&self, path: &str) -> Result<()> {
@@ -287,6 +235,23 @@ impl ImplDirectedGraph for DirectedAcyclicGraph {
         ow::DirectedAcyclicGraph::from_binary(bin)
             .map(DirectedAcyclicGraph)
             .map_err(to_r_error)
+    }
+
+    fn nodes(&self) -> Vec<&str> {
+        self.0.nodes()
+    }
+
+    fn length(&self) -> i32 {
+        self.0.len() as i32
+    }
+
+    fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
+        Ok(self
+            .0
+            .find_all_paths(from, to)
+            .map_err(to_r_error)?
+            .into_iter()
+            .collect())
     }
 }
 

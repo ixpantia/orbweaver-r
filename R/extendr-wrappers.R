@@ -39,8 +39,6 @@ DirectedGraph$subset <- function(node_id) .Call(wrap__DirectedGraph__subset, sel
 
 DirectedGraph$print <- function() invisible(.Call(wrap__DirectedGraph__print, self))
 
-DirectedGraph$find_all_paths <- function(`_from`, `_to`) .Call(wrap__DirectedGraph__find_all_paths, self, `_from`, `_to`)
-
 DirectedGraph$to_bin_disk <- function(path) .Call(wrap__DirectedGraph__to_bin_disk, self, path)
 
 DirectedGraph$to_bin_mem <- function() .Call(wrap__DirectedGraph__to_bin_mem, self)
@@ -48,6 +46,12 @@ DirectedGraph$to_bin_mem <- function() .Call(wrap__DirectedGraph__to_bin_mem, se
 DirectedGraph$from_bin_disk <- function(path) .Call(wrap__DirectedGraph__from_bin_disk, path)
 
 DirectedGraph$from_bin_mem <- function(bin) .Call(wrap__DirectedGraph__from_bin_mem, bin)
+
+DirectedGraph$nodes <- function() .Call(wrap__DirectedGraph__nodes, self)
+
+DirectedGraph$length <- function() .Call(wrap__DirectedGraph__length, self)
+
+DirectedGraph$find_all_paths <- function(`_from`, `_to`) .Call(wrap__DirectedGraph__find_all_paths, self, `_from`, `_to`)
 
 #' @export
 `$.DirectedGraph` <- function (self, name) { func <- DirectedGraph[[name]]; environment(func) <- environment(); func }
@@ -81,8 +85,6 @@ DirectedAcyclicGraph$subset <- function(node_id) .Call(wrap__DirectedAcyclicGrap
 
 DirectedAcyclicGraph$print <- function() invisible(.Call(wrap__DirectedAcyclicGraph__print, self))
 
-DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
-
 DirectedAcyclicGraph$to_bin_disk <- function(path) .Call(wrap__DirectedAcyclicGraph__to_bin_disk, self, path)
 
 DirectedAcyclicGraph$to_bin_mem <- function() .Call(wrap__DirectedAcyclicGraph__to_bin_mem, self)
@@ -90,6 +92,12 @@ DirectedAcyclicGraph$to_bin_mem <- function() .Call(wrap__DirectedAcyclicGraph__
 DirectedAcyclicGraph$from_bin_disk <- function(path) .Call(wrap__DirectedAcyclicGraph__from_bin_disk, path)
 
 DirectedAcyclicGraph$from_bin_mem <- function(bin) .Call(wrap__DirectedAcyclicGraph__from_bin_mem, bin)
+
+DirectedAcyclicGraph$nodes <- function() .Call(wrap__DirectedAcyclicGraph__nodes, self)
+
+DirectedAcyclicGraph$length <- function() .Call(wrap__DirectedAcyclicGraph__length, self)
+
+DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
 
 #' @export
 `$.DirectedAcyclicGraph` <- function (self, name) { func <- DirectedAcyclicGraph[[name]]; environment(func) <- environment(); func }

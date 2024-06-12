@@ -1,6 +1,6 @@
 Package: orbweaver
 Title: Fast and Efficient Graph Data Structures
-Version: 0.6.1
+Version: 0.10.1
 Authors@R: 
     c(person(given = "ixpantia, SRL",
              role = "cph",
@@ -18,7 +18,7 @@ Description: Empower your data analysis with 'orbweaver', an R package
     package, 'orbweaver' ensures that mutations and changes to
     the graph are performed in place, streamlining your
     workflow for optimal productivity.
-URL: https://github.com/ixpantia/orbweaver
+URL: https://github.com/ixpantia/orbweaver-r
 BugReports: https://github.com/ixpantia/orbweaver-r/issues
 License: MIT + file LICENSE
 Encoding: UTF-8

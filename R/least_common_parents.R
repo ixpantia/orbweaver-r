@@ -16,6 +16,6 @@ least_common_parents.DirectedGraph <- function(graph, selected) {
 }
 
 #' @export
-least_common_parents.AcyclicDirectedGraph <- function(graph, selected) {
+least_common_parents.DirectedAcyclicGraph <- function(graph, selected) {
   graph$least_common_parents(selected)
 }

@@ -9,4 +9,4 @@ name = 'orbweaver'
 
 [dependencies]
 extendr-api = { version = "0.6", features = ["serde"] }
-orbweaver = { version = "0.9.0" }
+orbweaver = { version = "0.10.1" }

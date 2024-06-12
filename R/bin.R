@@ -11,7 +11,8 @@ graph_to_bin <- function(graph, path) {
 }
 
 #' @title Read the graph from a binary blob
-#' @param path Path to a file containing a graph binary
+#' @param path (Optional) Path to a file containing a graph binary
+#' @param bin (Optional) The raw binary of the graph
 #' @param type The type of graph the JSON represents
 #' @return A graph object
 #' @export
@@ -20,10 +21,12 @@ graph_from_bin <- function(path, bin, type = c("directed", "dag")) {
     rlang::abort("Invalid argument `type`")
   }
   if (!missing(bin)) {
-    switch(
-      type[1],
-      "directed" = DirectedGraph$from_bin_mem(bin),
-      "dag" = DirectedAcyclicGraph$from_bin_mem(bin)
+    return(
+      switch(
+        type[1],
+        "directed" = DirectedGraph$from_bin_mem(bin),
+        "dag" = DirectedAcyclicGraph$from_bin_mem(bin)
+      )
     )
   }
   if (missing(path)) {
