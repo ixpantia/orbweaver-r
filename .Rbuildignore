@@ -12,6 +12,7 @@
 ^src/rust/.vscode$
 ^src/rust/vendor$
 ^src/rust/target$
+^src/orbweaver.so$
 
 ^_pkgdown\.yml$
 ^docs$
@@ -25,4 +26,6 @@
 
 ^update_authors\.R$
 ^src/\.cargo$
+^src/rust/\.cargo$
+^src/orbweaver\.so$
 ^Makefile
