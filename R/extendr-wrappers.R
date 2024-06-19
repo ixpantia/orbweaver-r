@@ -50,7 +50,7 @@ DirectedGraph$nodes <- function() .Call(wrap__DirectedGraph__nodes, self)
 
 DirectedGraph$length <- function() .Call(wrap__DirectedGraph__length, self)
 
-DirectedGraph$find_all_paths <- function(`_from`, `_to`) .Call(wrap__DirectedGraph__find_all_paths, self, `_from`, `_to`)
+DirectedGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedGraph__find_all_paths, self, from, to)
 
 #' @export
 `$.DirectedGraph` <- function (self, name) { func <- DirectedGraph[[name]]; environment(func) <- environment(); func }

@@ -151,8 +151,13 @@ impl ImplDirectedGraph for DirectedGraph {
         self.0.len() as i32
     }
 
-    fn find_all_paths(&self, _from: &str, _to: &str) -> Result<List> {
-        todo!("Find all paths is not implemented for DirectedGraph")
+    fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
+        Ok(self
+            .0
+            .find_all_paths(from, to)
+            .map_err(to_r_error)?
+            .into_iter()
+            .collect())
     }
 }
 
