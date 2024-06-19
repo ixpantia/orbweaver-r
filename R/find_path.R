@@ -46,7 +46,7 @@ find_all_paths <- function(graph, from, to) {
 
 #' @export
 find_all_paths.DirectedGraph <- function(graph, from, to) {
-  rlang::abort("DirectedGraph does not support `find_all_paths`")
+  graph$find_all_paths(from, to)
 }
 
 #' @export
