@@ -122,5 +122,19 @@ DirectedGraphBuilder$build_acyclic <- function() .Call(wrap__DirectedGraphBuilde
 #' @export
 `[[.DirectedGraphBuilder` <- `$.DirectedGraphBuilder`
 
+NodeVec <- new.env(parent = emptyenv())
+
+NodeVec$print <- function() invisible(.Call(wrap__NodeVec__print, self))
+
+NodeVec$as_character <- function() .Call(wrap__NodeVec__as_character, self)
+
+NodeVec$len <- function() .Call(wrap__NodeVec__len, self)
+
+#' @export
+`$.NodeVec` <- function (self, name) { func <- NodeVec[[name]]; environment(func) <- environment(); func }
+
+#' @export
+`[[.NodeVec` <- `$.NodeVec`
+
 
 # nolint end

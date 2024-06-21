@@ -1,7 +1,5 @@
 test_that("can initialize a builder", {
-
   expect_no_error(graph_builder())
-
 })
 
 test_that("can add edge to a builder", {
@@ -40,8 +38,8 @@ test_that("can build into a directed graph", {
     build_directed()
 
   expect_s3_class(graph, "DirectedGraph")
-  expect_equal(children(graph, "1"), "2")
-  expect_equal(parents(graph, "2"), "1")
+  expect_equal(as.character(children(graph, "1")), "2")
+  expect_equal(as.character(parents(graph, "2")), "1")
 })
 
 test_that("can build into a directed acyclic graph", {
@@ -50,8 +48,8 @@ test_that("can build into a directed acyclic graph", {
     build_acyclic()
 
   expect_s3_class(graph, "DirectedAcyclicGraph")
-  expect_equal(children(graph, "1"), "2")
-  expect_equal(parents(graph, "2"), "1")
+  expect_equal(as.character(children(graph, "1")), "2")
+  expect_equal(as.character(parents(graph, "2")), "1")
 })
 
 test_that("can populate edges", {
@@ -65,7 +63,7 @@ test_that("can populate edges", {
     build_directed()
 
   expect_s3_class(graph, "DirectedGraph")
-  expect_equal(children(graph, "A"), "B")
+  expect_equal(as.character(children(graph, "A")), "B")
 })
 
 test_that("can populate edges error when not char col1", {
@@ -80,7 +78,6 @@ test_that("can populate edges error when not char col1", {
     graph |>
       populate_edges(graph_edges, "parent", "child")
   })
-
 })
 
 test_that("can populate edges error when not char col2", {
@@ -95,5 +92,4 @@ test_that("can populate edges error when not char col2", {
     graph |>
       populate_edges(graph_edges, "parent", "child")
   })
-
 })

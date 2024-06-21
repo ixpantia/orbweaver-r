@@ -8,6 +8,68 @@ mod macros;
 pub struct DirectedGraphBuilder(ow::DirectedGraphBuilder);
 pub struct DirectedGraph(ow::DirectedGraph);
 pub struct DirectedAcyclicGraph(ow::DirectedAcyclicGraph);
+pub struct NodeVec(ow::NodeVec);
+
+pub enum NodesIn {
+    NodeVec(ow::NodeVec),
+    Strings(Strings),
+}
+
+impl NodesIn {
+    fn iter(&self) -> NodesInIter<'_> {
+        NodesInIter { vars: self, i: 0 }
+    }
+}
+
+impl TryFrom<Robj> for NodesIn {
+    type Error = &'static str;
+    fn try_from(value: Robj) -> std::prelude::v1::Result<Self, Self::Error> {
+        if let Ok(node_vec) = <&NodeVec>::try_from(value.clone()) {
+            return Ok(NodesIn::NodeVec(node_vec.0.clone()));
+        }
+        if let Ok(strings) = Strings::try_from(value) {
+            return Ok(NodesIn::Strings(strings));
+        }
+        Err("The nodes must be a NodeVec or a character vector")
+    }
+}
+
+struct NodesInIter<'a> {
+    vars: &'a NodesIn,
+    i: usize,
+}
+
+impl<'a> Iterator for NodesInIter<'a> {
+    type Item = &'a str;
+    fn next(&mut self) -> Option<Self::Item> {
+        let val = match &self.vars {
+            NodesIn::NodeVec(nv) => nv.get(self.i),
+            NodesIn::Strings(strs) => <[Rstr]>::get(strs, self.i).map(AsRef::as_ref),
+        };
+        self.i += 1;
+        val
+    }
+}
+
+impl From<ow::NodeVec> for NodeVec {
+    #[inline]
+    fn from(value: ow::NodeVec) -> Self {
+        NodeVec(value)
+    }
+}
+
+#[extendr]
+impl NodeVec {
+    fn print(&self) {
+        println!("{:?}", self.0);
+    }
+    fn as_character(&self) -> Robj {
+        self.0.into_iter().collect_robj()
+    }
+    fn len(&self) -> i32 {
+        self.0.len() as i32
+    }
+}
 
 pub fn to_r_error(err: impl std::error::Error) -> Error {
     err.to_string().into()
@@ -41,16 +103,16 @@ impl DirectedGraphBuilder {
 }
 
 trait ImplDirectedGraph: Sized {
-    fn find_path(&self, from: &str, to: &str) -> Result<Vec<&str>>;
-    fn children(&self, nodes: Strings) -> Vec<&str>;
-    fn parents(&self, nodes: Strings) -> Vec<&str>;
-    fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>>;
-    fn has_children(&self, nodes: Strings) -> Result<Vec<bool>>;
-    fn least_common_parents(&self, selected: Strings) -> Result<Vec<&str>>;
-    fn get_all_leaves(&self) -> Vec<&str>;
-    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<&str>>;
-    fn get_all_roots(&self) -> Vec<String>;
-    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<&str>>;
+    fn find_path(&self, from: &str, to: &str) -> Result<NodeVec>;
+    fn children(&self, nodes: NodesIn) -> Result<NodeVec>;
+    fn parents(&self, nodes: NodesIn) -> Result<NodeVec>;
+    fn has_parents(&self, nodes: NodesIn) -> Result<Vec<bool>>;
+    fn has_children(&self, nodes: NodesIn) -> Result<Vec<bool>>;
+    fn least_common_parents(&self, selected: NodesIn) -> Result<NodeVec>;
+    fn get_all_leaves(&self) -> NodeVec;
+    fn get_leaves_under(&self, nodes: NodesIn) -> Result<NodeVec>;
+    fn get_all_roots(&self) -> NodeVec;
+    fn get_roots_over(&self, node_ids: NodesIn) -> Result<NodeVec>;
     fn subset(&self, node_id: &str) -> Result<Self>;
     fn print(&self);
     fn find_all_paths(&self, from: &str, to: &str) -> Result<List>;
@@ -58,207 +120,12 @@ trait ImplDirectedGraph: Sized {
     fn to_bin_mem(&self) -> Result<Vec<u8>>;
     fn from_bin_disk(path: &str) -> Result<Self>;
     fn from_bin_mem(bin: &[u8]) -> Result<Self>;
-    fn nodes(&self) -> Vec<&str>;
+    fn nodes(&self) -> NodeVec;
     fn length(&self) -> i32;
 }
 
-#[extendr]
-impl ImplDirectedGraph for DirectedGraph {
-    fn find_path(&self, from: &str, to: &str) -> Result<Vec<&str>> {
-        self.0.find_path(from, to).map_err(to_r_error)
-    }
-    fn children(&self, nodes: Strings) -> Vec<&str> {
-        self.0.children(nodes.iter()).unwrap_or_default()
-    }
-    fn parents(&self, nodes: Strings) -> Vec<&str> {
-        self.0.parents(nodes.iter()).unwrap_or_default()
-    }
-    fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>> {
-        self.0.has_parents(nodes.iter()).map_err(to_r_error)
-    }
-    fn has_children(&self, nodes: Strings) -> Result<Vec<bool>> {
-        self.0.has_children(nodes.iter()).map_err(to_r_error)
-    }
-    fn least_common_parents(&self, selected: Strings) -> Result<Vec<&str>> {
-        self.0
-            .least_common_parents(selected.iter())
-            .map_err(to_r_error)
-    }
-    fn get_all_leaves(&self) -> Vec<&str> {
-        self.0.get_all_leaves().into_iter().collect()
-    }
-    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<&str>> {
-        Ok(self
-            .0
-            .get_leaves_under(nodes.iter())
-            .map_err(to_r_error)?
-            .into_iter()
-            .collect())
-    }
-    fn get_all_roots(&self) -> Vec<String> {
-        self.0
-            .get_all_roots()
-            .into_iter()
-            .map(String::from)
-            .collect()
-    }
-    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<&str>> {
-        self.0.get_roots_over(&node_ids).map_err(to_r_error)
-    }
-    fn subset(&self, node_id: &str) -> Result<Self> {
-        Ok(Self(self.0.subset(node_id).map_err(to_r_error)?))
-    }
-    fn print(&self) {
-        println!("{:?}", self.0)
-    }
-
-    fn to_bin_disk(&self, path: &str) -> Result<()> {
-        let writer = BufWriter::new(
-            std::fs::File::options()
-                .write(true)
-                .create(true)
-                .truncate(true)
-                .open(path)
-                .map_err(to_r_error)?,
-        );
-        self.0.to_binary(writer).map_err(to_r_error)
-    }
-
-    fn to_bin_mem(&self) -> Result<Vec<u8>> {
-        let mut writer = Vec::new();
-        self.0.to_binary(&mut writer).map_err(to_r_error)?;
-        Ok(writer)
-    }
-
-    fn from_bin_disk(path: &str) -> Result<Self> {
-        let file = BufReader::new(std::fs::File::open(path).map_err(to_r_error)?);
-        ow::DirectedGraph::from_binary(file)
-            .map(DirectedGraph)
-            .map_err(to_r_error)
-    }
-
-    fn from_bin_mem(bin: &[u8]) -> Result<Self> {
-        ow::DirectedGraph::from_binary(bin)
-            .map(DirectedGraph)
-            .map_err(to_r_error)
-    }
-
-    fn nodes(&self) -> Vec<&str> {
-        self.0.nodes()
-    }
-
-    fn length(&self) -> i32 {
-        self.0.len() as i32
-    }
-
-    fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
-        Ok(self
-            .0
-            .find_all_paths(from, to)
-            .map_err(to_r_error)?
-            .into_iter()
-            .collect())
-    }
-}
-
-#[extendr]
-impl ImplDirectedGraph for DirectedAcyclicGraph {
-    fn find_path(&self, from: &str, to: &str) -> Result<Vec<&str>> {
-        self.0.find_path(from, to).map_err(to_r_error)
-    }
-    fn children(&self, nodes: Strings) -> Vec<&str> {
-        self.0.children(nodes.iter()).unwrap_or_default()
-    }
-    fn parents(&self, nodes: Strings) -> Vec<&str> {
-        self.0.parents(nodes.iter()).unwrap_or_default()
-    }
-    fn has_parents(&self, nodes: Strings) -> Result<Vec<bool>> {
-        self.0.has_parents(nodes.iter()).map_err(to_r_error)
-    }
-    fn has_children(&self, nodes: Strings) -> Result<Vec<bool>> {
-        self.0.has_children(nodes.iter()).map_err(to_r_error)
-    }
-    fn least_common_parents(&self, selected: Strings) -> Result<Vec<&str>> {
-        self.0
-            .least_common_parents(selected.iter())
-            .map_err(to_r_error)
-    }
-    fn get_all_leaves(&self) -> Vec<&str> {
-        self.0.get_all_leaves().into_iter().collect()
-    }
-    fn get_leaves_under(&self, nodes: Strings) -> Result<Vec<&str>> {
-        Ok(self
-            .0
-            .get_leaves_under(nodes.iter())
-            .map_err(to_r_error)?
-            .into_iter()
-            .collect())
-    }
-    fn get_all_roots(&self) -> Vec<String> {
-        self.0
-            .get_all_roots()
-            .into_iter()
-            .map(String::from)
-            .collect()
-    }
-    fn get_roots_over(&self, node_ids: Vec<String>) -> Result<Vec<&str>> {
-        self.0.get_roots_over(&node_ids).map_err(to_r_error)
-    }
-    fn subset(&self, node_id: &str) -> Result<Self> {
-        Ok(Self(self.0.subset(node_id).map_err(to_r_error)?))
-    }
-    fn print(&self) {
-        println!("{:?}", self.0)
-    }
-
-    fn to_bin_disk(&self, path: &str) -> Result<()> {
-        let writer = BufWriter::new(
-            std::fs::File::options()
-                .write(true)
-                .create(true)
-                .truncate(true)
-                .open(path)
-                .map_err(to_r_error)?,
-        );
-        self.0.to_binary(writer).map_err(to_r_error)
-    }
-
-    fn to_bin_mem(&self) -> Result<Vec<u8>> {
-        let mut writer = Vec::new();
-        self.0.to_binary(&mut writer).map_err(to_r_error)?;
-        Ok(writer)
-    }
-
-    fn from_bin_disk(path: &str) -> Result<Self> {
-        let file = BufReader::new(std::fs::File::open(path).map_err(to_r_error)?);
-        ow::DirectedAcyclicGraph::from_binary(file)
-            .map(DirectedAcyclicGraph)
-            .map_err(to_r_error)
-    }
-
-    fn from_bin_mem(bin: &[u8]) -> Result<Self> {
-        ow::DirectedAcyclicGraph::from_binary(bin)
-            .map(DirectedAcyclicGraph)
-            .map_err(to_r_error)
-    }
-
-    fn nodes(&self) -> Vec<&str> {
-        self.0.nodes()
-    }
-
-    fn length(&self) -> i32 {
-        self.0.len() as i32
-    }
-
-    fn find_all_paths(&self, from: &str, to: &str) -> Result<List> {
-        Ok(self
-            .0
-            .find_all_paths(from, to)
-            .map_err(to_r_error)?
-            .into_iter()
-            .collect())
-    }
-}
+impl_directed_graph!(DirectedAcyclicGraph, ow::DirectedAcyclicGraph);
+impl_directed_graph!(DirectedGraph, ow::DirectedGraph);
 
 // Macro to generate exports.
 // This ensures exported functions are registered with R.
@@ -268,5 +135,6 @@ extendr_module! {
     impl DirectedGraph;
     impl DirectedAcyclicGraph;
     impl DirectedGraphBuilder;
+    impl NodeVec;
     use from_dataframe;
 }

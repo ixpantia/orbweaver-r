@@ -10,7 +10,8 @@ name = 'orbweaver'
 [dependencies]
 # extendr-api = { version = "0.6", features = ["serde"] }
 extendr-api = { git = "https://github.com/extendr/extendr.git", rev = "cb85a21a90c3fcb538a40fcea03058454edb3dac" }
-orbweaver = { version = "0.11.0" }
+orbweaver = { version = "0.12.0" }
+#orbweaver = { git = "https://github.com/ixpantia/orbweaver-rs.git", branch = "main" }
 
 # This will help us filter the platforms
 # we support to make the final bundle size

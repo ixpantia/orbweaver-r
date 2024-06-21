@@ -8,18 +8,27 @@
 
 ## Overview
 
-A fast R library for working with Nodes in a graph. This library
-modifies graphs in place, similar to how [data.table](https://github.com/Rdatatable/data.table)
-modifies data.frames in place. This allows for fast and memory efficient
-graph operations.
+A fast R library for working with Nodes in a graph.
 
 ## Features
 
- - Nodes can store arbitrary data
+ - Find shortest paths between nodes in a graph
  - Find the common parents between selected nodes
- - Modify graphs in place
  - Directed Graph
  - Directed Acyclic Graph
+ - It is quite fast
+
+## Why not igraph?
+
+[igraph](https://igraph.org/) is an amazing network analysis package.
+igraph is much more mature and orbweaver focuses on extreme performance
+and low latency operations. If you need super high performance
+and do not require weighted graphs, orbweaver may be for you.
+
+![igraph vs orbweaver benchmark](assets/benchmark.png)
+
+> We may add weighted graph in the future but for not
+> it is not in the short-term road map.
 
 ## Installation
 
