@@ -25,7 +25,7 @@ igraph is much more mature and orbweaver focuses on extreme performance
 and low latency operations. If you need super high performance
 and do not require weighted graphs, orbweaver may be for you.
 
-![igraph vs orbweaver benchmark](assets/benchmark.png)
+![igraph vs orbweaver benchmark](man/figures/benchmark.png)
 
 > We may add weighted graph in the future but for not
 > it is not in the short-term road map.
