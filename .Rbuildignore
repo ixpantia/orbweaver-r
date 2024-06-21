@@ -29,3 +29,6 @@
 ^src/rust/\.cargo$
 ^src/orbweaver\.so$
 ^Makefile
+
+^benchmarks/
+^assets/

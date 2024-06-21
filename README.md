@@ -8,18 +8,15 @@
 
 ## Overview
 
-A fast R library for working with Nodes in a graph. This library
-modifies graphs in place, similar to how [data.table](https://github.com/Rdatatable/data.table)
-modifies data.frames in place. This allows for fast and memory efficient
-graph operations.
+A fast R library for working with Nodes in a graph.
 
 ## Features
 
- - Nodes can store arbitrary data
+ - Find shortest paths between nodes in a graph
  - Find the common parents between selected nodes
- - Modify graphs in place
  - Directed Graph
  - Directed Acyclic Graph
+ - It is quite fast
 
 ## Installation
 

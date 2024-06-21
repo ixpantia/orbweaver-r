@@ -6,7 +6,7 @@ test_that("find all paths on directed graph", {
     build_directed()
 
   expect_equal(
-    find_all_paths(graph, "A", "C") |> purrr::map(as.character),
+    find_all_paths(graph, "A", "C") |> lapply(as.character),
     list(c("A", "B", "C"), c("A", "Z", "C"))
   )
 })
@@ -18,7 +18,7 @@ test_that("find all paths on directed acyclic graph", {
     build_acyclic()
 
   expect_equal(
-    find_all_paths(graph, "A", "C") |> purrr::map(as.character),
+    find_all_paths(graph, "A", "C") |> lapply(as.character),
     list(c("A", "Z", "C"), c("A", "B", "C"))
   )
 })
