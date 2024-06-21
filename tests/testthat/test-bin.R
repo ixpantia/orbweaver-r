@@ -7,7 +7,7 @@ test_that("graph_to_bin in memory directed", {
 
   graph_read <- graph_from_bin(bin = graph_bin)
 
-  expect_equal(children(graph, "A"), children(graph_read, "A"))
+  expect_equal(as.character(children(graph, "A")), as.character(children(graph_read, "A")))
 })
 
 test_that("graph_to_bin in memory acyclic", {
@@ -19,7 +19,7 @@ test_that("graph_to_bin in memory acyclic", {
 
   graph_read <- graph_from_bin(bin = graph_bin, type = "dag")
 
-  expect_equal(children(graph, "A"), children(graph_read, "A"))
+  expect_equal(as.character(children(graph, "A")), as.character(children(graph_read, "A")))
 })
 
 test_that("graph_from_bin no args should error", {
@@ -27,7 +27,6 @@ test_that("graph_from_bin no args should error", {
 })
 
 test_that("graph_to_bin on disk directed", {
-
   temp_file <- tempfile()
 
   graph <- graph_builder() |>
@@ -38,11 +37,10 @@ test_that("graph_to_bin on disk directed", {
 
   graph_read <- graph_from_bin(path = temp_file)
 
-  expect_equal(children(graph, "A"), children(graph_read, "A"))
+  expect_equal(as.character(children(graph, "A")), as.character(children(graph_read, "A")))
 })
 
 test_that("graph_to_bin on disk acyclic", {
-
   temp_file <- tempfile()
 
   graph <- graph_builder() |>
@@ -53,8 +51,7 @@ test_that("graph_to_bin on disk acyclic", {
 
   graph_read <- graph_from_bin(path = temp_file, type = "dag")
 
-  expect_equal(children(graph, "A"), children(graph_read, "A"))
-
+  expect_equal(as.character(children(graph, "A")), as.character(children(graph_read, "A")))
 })
 
 test_that("graph_from_bin should error on invalid type", {
