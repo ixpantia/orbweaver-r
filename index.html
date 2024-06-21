@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">orbweaver</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,18 +66,29 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>A fast R library for working with Nodes in a graph. This library modifies graphs in place, similar to how <a href="https://github.com/Rdatatable/data.table" class="external-link">data.table</a> modifies data.frames in place. This allows for fast and memory efficient graph operations.</p>
+<p>A fast R library for working with Nodes in a graph.</p>
 </div>
 <div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
 <ul>
-<li>Nodes can store arbitrary data</li>
+<li>Find shortest paths between nodes in a graph</li>
 <li>Find the common parents between selected nodes</li>
-<li>Modify graphs in place</li>
 <li>Directed Graph</li>
 <li>Directed Acyclic Graph</li>
+<li>It is quite fast</li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="why-not-igraph">Why not igraph?<a class="anchor" aria-label="anchor" href="#why-not-igraph"></a>
+</h2>
+<p><a href="https://igraph.org/" class="external-link">igraph</a> is an amazing network analysis package. igraph is much more mature and orbweaver focuses on extreme performance and low latency operations. If you need super high performance and do not require weighted graphs, orbweaver may be for you.</p>
+<div class="float">
+<img src="assets/benchmark.png" alt="igraph vs orbweaver benchmark"><div class="figcaption">igraph vs orbweaver benchmark</div>
+</div>
+<blockquote>
+<p>We may add weighted graph in the future but for not it is not in the short-term road map.</p>
+</blockquote>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
