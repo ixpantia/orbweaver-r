@@ -10,41 +10,41 @@ pub struct DirectedGraph(ow::DirectedGraph);
 pub struct DirectedAcyclicGraph(ow::DirectedAcyclicGraph);
 pub struct NodeVec(ow::NodeVec);
 
-pub enum NodesIn {
+pub enum RNodesIn {
     NodeVec(ow::NodeVec),
     Strings(Strings),
 }
 
-impl NodesIn {
-    fn iter(&self) -> NodesInIter<'_> {
-        NodesInIter { vars: self, i: 0 }
+impl RNodesIn {
+    pub fn iter(&self) -> RNodesInIter<'_> {
+        RNodesInIter { vars: self, i: 0 }
     }
 }
 
-impl TryFrom<Robj> for NodesIn {
+impl TryFrom<Robj> for RNodesIn {
     type Error = &'static str;
     fn try_from(value: Robj) -> std::prelude::v1::Result<Self, Self::Error> {
         if let Ok(node_vec) = <&NodeVec>::try_from(value.clone()) {
-            return Ok(NodesIn::NodeVec(node_vec.0.clone()));
+            return Ok(RNodesIn::NodeVec(node_vec.0.clone()));
         }
         if let Ok(strings) = Strings::try_from(value) {
-            return Ok(NodesIn::Strings(strings));
+            return Ok(RNodesIn::Strings(strings));
         }
         Err("The nodes must be a NodeVec or a character vector")
     }
 }
 
-struct NodesInIter<'a> {
-    vars: &'a NodesIn,
+pub struct RNodesInIter<'a> {
+    vars: &'a RNodesIn,
     i: usize,
 }
 
-impl<'a> Iterator for NodesInIter<'a> {
+impl<'a> Iterator for RNodesInIter<'a> {
     type Item = &'a str;
     fn next(&mut self) -> Option<Self::Item> {
         let val = match &self.vars {
-            NodesIn::NodeVec(nv) => nv.get(self.i),
-            NodesIn::Strings(strs) => <[Rstr]>::get(strs, self.i).map(AsRef::as_ref),
+            RNodesIn::NodeVec(nv) => nv.get(self.i),
+            RNodesIn::Strings(strs) => <[Rstr]>::get(strs, self.i).map(AsRef::as_ref),
         };
         self.i += 1;
         val
@@ -60,14 +60,29 @@ impl From<ow::NodeVec> for NodeVec {
 
 #[extendr]
 impl NodeVec {
-    fn print(&self) {
+    pub fn print(&self) {
         println!("{:?}", self.0);
     }
-    fn as_character(&self) -> Robj {
+    pub fn as_character(&self) -> Robj {
         self.0.into_iter().collect_robj()
     }
-    fn len(&self) -> i32 {
+    pub fn len(&self) -> i32 {
         self.0.len() as i32
+    }
+}
+
+impl NodeVec {
+    pub fn as_inner(&self) -> &ow::NodeVec {
+        &self.0
+    }
+    pub fn as_inner_mut(&mut self) -> &mut ow::NodeVec {
+        &mut self.0
+    }
+    pub fn into_inner(self) -> ow::NodeVec {
+        self.0
+    }
+    pub fn from_inner(inner: ow::NodeVec) -> Self {
+        Self(inner)
     }
 }
 
@@ -77,23 +92,23 @@ pub fn to_r_error(err: impl std::error::Error) -> Error {
 
 #[extendr]
 impl DirectedGraphBuilder {
-    fn new() -> Self {
+    pub fn new() -> Self {
         DirectedGraphBuilder(ow::DirectedGraphBuilder::new())
     }
-    fn add_edge(&mut self, from: &str, to: &str) {
+    pub fn add_edge(&mut self, from: &str, to: &str) {
         self.0.add_edge(from, to);
     }
-    fn add_path(&mut self, path: Strings) {
+    pub fn add_path(&mut self, path: Strings) {
         self.0.add_path(path.iter());
     }
     /// This will empty the builder
-    fn build_directed(&mut self) -> DirectedGraph {
+    pub fn build_directed(&mut self) -> DirectedGraph {
         let mut new_builder = Self::new();
         std::mem::swap(self, &mut new_builder);
         DirectedGraph(new_builder.0.build_directed())
     }
     /// This will empty the builder
-    fn build_acyclic(&mut self) -> Result<DirectedAcyclicGraph> {
+    pub fn build_acyclic(&mut self) -> Result<DirectedAcyclicGraph> {
         let mut new_builder = Self::new();
         std::mem::swap(self, &mut new_builder);
         Ok(DirectedAcyclicGraph(
@@ -102,17 +117,32 @@ impl DirectedGraphBuilder {
     }
 }
 
-trait ImplDirectedGraph: Sized {
+impl DirectedGraphBuilder {
+    pub fn as_inner(&self) -> &ow::DirectedGraphBuilder {
+        &self.0
+    }
+    pub fn as_inner_mut(&mut self) -> &mut ow::DirectedGraphBuilder {
+        &mut self.0
+    }
+    pub fn into_inner(self) -> ow::DirectedGraphBuilder {
+        self.0
+    }
+    pub fn from_inner(inner: ow::DirectedGraphBuilder) -> Self {
+        Self(inner)
+    }
+}
+
+pub trait RImplDirectedGraph: Sized {
     fn find_path(&self, from: &str, to: &str) -> Result<NodeVec>;
-    fn children(&self, nodes: NodesIn) -> Result<NodeVec>;
-    fn parents(&self, nodes: NodesIn) -> Result<NodeVec>;
-    fn has_parents(&self, nodes: NodesIn) -> Result<Vec<bool>>;
-    fn has_children(&self, nodes: NodesIn) -> Result<Vec<bool>>;
-    fn least_common_parents(&self, selected: NodesIn) -> Result<NodeVec>;
+    fn children(&self, nodes: RNodesIn) -> Result<NodeVec>;
+    fn parents(&self, nodes: RNodesIn) -> Result<NodeVec>;
+    fn has_parents(&self, nodes: RNodesIn) -> Result<Vec<bool>>;
+    fn has_children(&self, nodes: RNodesIn) -> Result<Vec<bool>>;
+    fn least_common_parents(&self, selected: RNodesIn) -> Result<NodeVec>;
     fn get_all_leaves(&self) -> NodeVec;
-    fn get_leaves_under(&self, nodes: NodesIn) -> Result<NodeVec>;
+    fn get_leaves_under(&self, nodes: RNodesIn) -> Result<NodeVec>;
     fn get_all_roots(&self) -> NodeVec;
-    fn get_roots_over(&self, node_ids: NodesIn) -> Result<NodeVec>;
+    fn get_roots_over(&self, node_ids: RNodesIn) -> Result<NodeVec>;
     fn subset(&self, node_id: &str) -> Result<Self>;
     fn print(&self);
     fn find_all_paths(&self, from: &str, to: &str) -> Result<List>;

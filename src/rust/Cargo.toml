@@ -9,7 +9,7 @@ name = 'orbweaver'
 
 [dependencies]
 extendr-api = { version = "0.7" }
-orbweaver = { version = "0.12.0" }
+orbweaver = { version = "0.13.0" }
 #orbweaver = { git = "https://github.com/ixpantia/orbweaver-rs.git", branch = "main" }
 
 # This will help us filter the platforms
