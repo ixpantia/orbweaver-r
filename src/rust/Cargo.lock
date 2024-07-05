@@ -70,6 +70,7 @@ dependencies = [
  "libR-sys",
  "once_cell",
  "paste",
+ "serde",
 ]
 
 [[package]]
