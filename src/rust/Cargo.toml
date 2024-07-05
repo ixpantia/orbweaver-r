@@ -4,8 +4,8 @@ version = '0.13.0'
 edition = '2021'
 
 [lib]
-crate-type = [ 'staticlib' ]
-name = 'orbweaver'
+crate-type = [ 'staticlib', 'lib' ]
+name = 'orbweaver_r'
 
 [dependencies]
 extendr-api = { version = "0.7", features = ["serde"] }
