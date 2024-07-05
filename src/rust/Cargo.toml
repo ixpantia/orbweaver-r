@@ -8,7 +8,7 @@ crate-type = [ 'staticlib' ]
 name = 'orbweaver'
 
 [dependencies]
-extendr-api = { version = "0.7" }
+extendr-api = { version = "0.7", features = ["serde"] }
 orbweaver = { version = "0.13.0" }
 #orbweaver = { git = "https://github.com/ixpantia/orbweaver-rs.git", branch = "main" }
 
