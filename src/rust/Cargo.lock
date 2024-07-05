@@ -145,7 +145,7 @@ dependencies = [
 
 [[package]]
 name = "orbweaver_r"
-version = "0.1.0"
+version = "0.13.0"
 dependencies = [
  "extendr-api",
  "orbweaver",
