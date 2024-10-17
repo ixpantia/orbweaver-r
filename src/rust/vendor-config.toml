@@ -1,10 +1,5 @@
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/ixpantia/orbweaver-rs.git?rev=b397ad8aa389bcc17aef17593302adb7af765c21"]
-git = "https://github.com/ixpantia/orbweaver-rs.git"
-rev = "b397ad8aa389bcc17aef17593302adb7af765c21"
-replace-with = "vendored-sources"
-
 [source.vendored-sources]
 directory = "vendor"
