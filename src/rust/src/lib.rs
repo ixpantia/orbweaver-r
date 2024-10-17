@@ -134,6 +134,7 @@ impl DirectedGraphBuilder {
 
 pub trait RImplDirectedGraph: Sized {
     fn find_path(&self, from: &str, to: &str) -> Result<NodeVec>;
+    fn find_path_one_to_many(&self, from: &str, to: Strings) -> Result<List>;
     fn children(&self, nodes: RNodesIn) -> Result<NodeVec>;
     fn parents(&self, nodes: RNodesIn) -> Result<NodeVec>;
     fn has_parents(&self, nodes: RNodesIn) -> Result<Vec<bool>>;
