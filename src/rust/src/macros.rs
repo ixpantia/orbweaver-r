@@ -99,6 +99,16 @@ macro_rules! impl_directed_graph {
                     .map(NodeVec)
                     .collect())
             }
+
+            fn find_path_one_to_many(&self, from: &str, to: Strings) -> Result<List> {
+                Ok(self
+                    .0
+                    .find_path_one_to_many(from, to.iter())
+                    .map_err(to_r_error)?
+                    .into_iter()
+                    .map(NodeVec)
+                    .collect())
+            }
         }
 
         impl $ty {

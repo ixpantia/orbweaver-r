@@ -52,6 +52,8 @@ DirectedGraph$length <- function() .Call(wrap__DirectedGraph__length, self)
 
 DirectedGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedGraph__find_all_paths, self, from, to)
 
+DirectedGraph$find_path_one_to_many <- function(from, to) .Call(wrap__DirectedGraph__find_path_one_to_many, self, from, to)
+
 #' @export
 `$.DirectedGraph` <- function (self, name) { func <- DirectedGraph[[name]]; environment(func) <- environment(); func }
 
@@ -97,6 +99,8 @@ DirectedAcyclicGraph$nodes <- function() .Call(wrap__DirectedAcyclicGraph__nodes
 DirectedAcyclicGraph$length <- function() .Call(wrap__DirectedAcyclicGraph__length, self)
 
 DirectedAcyclicGraph$find_all_paths <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_all_paths, self, from, to)
+
+DirectedAcyclicGraph$find_path_one_to_many <- function(from, to) .Call(wrap__DirectedAcyclicGraph__find_path_one_to_many, self, from, to)
 
 #' @export
 `$.DirectedAcyclicGraph` <- function (self, name) { func <- DirectedAcyclicGraph[[name]]; environment(func) <- environment(); func }

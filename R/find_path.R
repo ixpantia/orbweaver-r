@@ -53,3 +53,29 @@ find_all_paths.DirectedGraph <- function(graph, from, to) {
 find_all_paths.DirectedAcyclicGraph <- function(graph, from, to) {
   graph$find_all_paths(from, to)
 }
+
+#' @title Find the shortest path from one node to many
+#'
+#' @description
+#' Find the shortest path from one node to many
+#'
+#' Not all graphs support this function. Currently only
+#' `DirectedAcyclicGraph` supports this.
+#' @param graph A graph object
+#' @param from The starting node of the path
+#' @param to A character vector of nodes
+#' @return A list of paths
+#' @export
+find_path_one_to_many <- function(graph, from, to) {
+  UseMethod("find_path_one_to_many")
+}
+
+#' @export
+find_path_one_to_many.DirectedGraph <- function(graph, from, to) {
+  graph$find_path_one_to_many(from, to)
+}
+
+#' @export
+find_path_one_to_many.DirectedAcyclicGraph <- function(graph, from, to) {
+  graph$find_path_one_to_many(from, to)
+}
