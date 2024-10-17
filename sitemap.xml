@@ -1,81 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_edge.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_path.html</loc>
-  </url>
-  <url>
-    <loc>/reference/build_acyclic.html</loc>
-  </url>
-  <url>
-    <loc>/reference/build_directed.html</loc>
-  </url>
-  <url>
-    <loc>/reference/children.html</loc>
-  </url>
-  <url>
-    <loc>/reference/find_all_paths.html</loc>
-  </url>
-  <url>
-    <loc>/reference/find_path.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_all_leaves.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_all_roots.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_leaves_under.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_roots_over.html</loc>
-  </url>
-  <url>
-    <loc>/reference/graph_builder.html</loc>
-  </url>
-  <url>
-    <loc>/reference/graph_from_bin.html</loc>
-  </url>
-  <url>
-    <loc>/reference/graph_to_bin.html</loc>
-  </url>
-  <url>
-    <loc>/reference/has_children.html</loc>
-  </url>
-  <url>
-    <loc>/reference/has_parents.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/least_common_parents.html</loc>
-  </url>
-  <url>
-    <loc>/reference/nodes.html</loc>
-  </url>
-  <url>
-    <loc>/reference/parents.html</loc>
-  </url>
-  <url>
-    <loc>/reference/populate_edges.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/add_edge.html</loc></url>
+<url><loc>/reference/add_path.html</loc></url>
+<url><loc>/reference/build_acyclic.html</loc></url>
+<url><loc>/reference/build_directed.html</loc></url>
+<url><loc>/reference/children.html</loc></url>
+<url><loc>/reference/find_all_paths.html</loc></url>
+<url><loc>/reference/find_path.html</loc></url>
+<url><loc>/reference/find_path_one_to_many.html</loc></url>
+<url><loc>/reference/get_all_leaves.html</loc></url>
+<url><loc>/reference/get_all_roots.html</loc></url>
+<url><loc>/reference/get_leaves_under.html</loc></url>
+<url><loc>/reference/get_roots_over.html</loc></url>
+<url><loc>/reference/graph_builder.html</loc></url>
+<url><loc>/reference/graph_from_bin.html</loc></url>
+<url><loc>/reference/graph_to_bin.html</loc></url>
+<url><loc>/reference/has_children.html</loc></url>
+<url><loc>/reference/has_parents.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/least_common_parents.html</loc></url>
+<url><loc>/reference/nodes.html</loc></url>
+<url><loc>/reference/parents.html</loc></url>
+<url><loc>/reference/populate_edges.html</loc></url>
 </urlset>
+
