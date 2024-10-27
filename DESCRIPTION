@@ -30,7 +30,8 @@ Depends:
     R (>= 4.2.0)
 Imports:
     glue,
-    rlang
+    rlang,
+    methods
 Suggests: 
     testthat (>= 3.0.0),
     tibble
