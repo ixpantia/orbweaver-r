@@ -4,13 +4,13 @@ vendor:
 	$(MAKE) -C src/rust vendor
 
 document:
-	Rscript -e "rextendr::document()"
+	NOT_CRAN="true" Rscript -e "rextendr::document()"
 
 install: document
-	Rscript -e "devtools::install()"
+	NOT_CRAN="true" Rscript -e "devtools::install()"
 
 test:
-	Rscript -e "devtools::test()"
+	NOT_CRAN="true" Rscript -e "devtools::test()"
 
 covr:
-	Rscript -e "covr::report()"
+	NOT_CRAN="true" Rscript -e "covr::report()"

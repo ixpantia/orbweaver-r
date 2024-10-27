@@ -13,10 +13,10 @@ children <- function(graph, nodes) {
 
 #' @export
 children.DirectedGraph <- function(graph, nodes) {
-  graph$children(nodes)
+  throw_if_error(graph$children(nodes))
 }
 
 #' @export
 children.DirectedAcyclicGraph <- function(graph, nodes) {
-  graph$children(nodes)
+  throw_if_error(graph$children(nodes))
 }

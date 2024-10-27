@@ -14,12 +14,12 @@ get_roots_over <- function(graph, nodes) {
 
 #' @export
 get_roots_over.DirectedGraph <- function(graph, nodes) {
-  graph$get_roots_over(nodes)
+  throw_if_error(graph$get_roots_over(nodes))
 }
 
 #' @export
 get_roots_over.DirectedAcyclicGraph <- function(graph, nodes) {
-  graph$get_roots_over(nodes)
+  throw_if_error(graph$get_roots_over(nodes))
 }
 
 #' @title Get the all the root nodes of a graph
@@ -37,10 +37,10 @@ get_all_roots <- function(graph, ...) {
 
 #' @export
 get_all_roots.DirectedGraph <- function(graph, ...) {
-  graph$get_all_roots()
+  throw_if_error(graph$get_all_roots())
 }
 
 #' @export
 get_all_roots.DirectedAcyclicGraph <- function(graph, ...) {
-  graph$get_all_roots()
+  throw_if_error(graph$get_all_roots())
 }

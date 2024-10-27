@@ -14,12 +14,12 @@ get_leaves_under <- function(graph, nodes) {
 
 #' @export
 get_leaves_under.DirectedGraph <- function(graph, nodes) {
-  graph$get_leaves_under(nodes)
+  throw_if_error(graph$get_leaves_under(nodes))
 }
 
 #' @export
 get_leaves_under.DirectedAcyclicGraph <- function(graph, nodes) {
-  graph$get_leaves_under(nodes)
+  throw_if_error(graph$get_leaves_under(nodes))
 }
 
 #' @title Get all the leaf nodes of a graph

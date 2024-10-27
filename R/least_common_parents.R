@@ -12,10 +12,10 @@ least_common_parents <- function(graph, selected) {
 
 #' @export
 least_common_parents.DirectedGraph <- function(graph, selected) {
-  graph$least_common_parents(selected)
+  throw_if_error(graph$least_common_parents(selected))
 }
 
 #' @export
 least_common_parents.DirectedAcyclicGraph <- function(graph, selected) {
-  graph$least_common_parents(selected)
+  throw_if_error(graph$least_common_parents(selected))
 }
