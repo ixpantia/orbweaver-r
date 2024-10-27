@@ -20,12 +20,12 @@ find_path <- function(graph, from, to) {
 
 #' @export
 find_path.DirectedGraph <- function(graph, from, to) {
-  graph$find_path(from, to)
+  throw_if_error(graph$find_path(from, to))
 }
 
 #' @export
 find_path.DirectedAcyclicGraph <- function(graph, from, to) {
-  graph$find_path(from, to)
+  throw_if_error(graph$find_path(from, to))
 }
 
 #' @title Find all paths between two nodes
@@ -46,12 +46,12 @@ find_all_paths <- function(graph, from, to) {
 
 #' @export
 find_all_paths.DirectedGraph <- function(graph, from, to) {
-  graph$find_all_paths(from, to)
+  throw_if_error(graph$find_all_paths(from, to))
 }
 
 #' @export
 find_all_paths.DirectedAcyclicGraph <- function(graph, from, to) {
-  graph$find_all_paths(from, to)
+  throw_if_error(graph$find_all_paths(from, to))
 }
 
 #' @title Find the shortest path from one node to many

@@ -12,10 +12,10 @@ has_children <- function(graph, nodes) {
 
 #' @export
 has_children.DirectedGraph <- function(graph, nodes) {
-  graph$has_children(nodes)
+  throw_if_error(graph$has_children(nodes))
 }
 
 #' @export
 has_children.DirectedAcyclicGraph <- function(graph, nodes) {
-  graph$has_children(nodes)
+  throw_if_error(graph$has_children(nodes))
 }

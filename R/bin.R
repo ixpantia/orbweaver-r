@@ -5,9 +5,9 @@
 #' @export
 graph_to_bin <- function(graph, path) {
   if (missing(path)) {
-    return(graph$to_bin_mem())
+    return(throw_if_error(graph$to_bin_mem()))
   }
-  graph$to_bin_disk(path)
+  throw_if_error(graph$to_bin_disk(path))
 }
 
 #' @title Read the graph from a binary blob
@@ -22,19 +22,23 @@ graph_from_bin <- function(path, bin, type = c("directed", "dag")) {
   }
   if (!missing(bin)) {
     return(
-      switch(
-        type[1],
-        "directed" = DirectedGraph$from_bin_mem(bin),
-        "dag" = DirectedAcyclicGraph$from_bin_mem(bin)
+      throw_if_error(
+        switch(
+          type[1],
+          "directed" = DirectedGraph$from_bin_mem(bin),
+          "dag" = DirectedAcyclicGraph$from_bin_mem(bin)
+        )
       )
     )
   }
   if (missing(path)) {
     rlang::abort("Must provide `path` or `bin` arguments")
   }
-  switch(
-    type[1],
-    "directed" = DirectedGraph$from_bin_disk(path),
-    "dag" = DirectedAcyclicGraph$from_bin_disk(path)
+  throw_if_error(
+    switch(
+      type[1],
+      "directed" = DirectedGraph$from_bin_disk(path),
+      "dag" = DirectedAcyclicGraph$from_bin_disk(path)
+    )
   )
 }

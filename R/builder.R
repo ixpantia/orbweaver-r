@@ -18,7 +18,7 @@ graph_builder <- function(type = "directed") {
 #' @return The updated graph builder object
 #' @export
 add_edge <- function(graph_builder, from, to) {
-  graph_builder$add_edge(from, to)
+  throw_if_error(graph_builder$add_edge(from, to))
   return(graph_builder)
 }
 
@@ -33,7 +33,7 @@ add_edge <- function(graph_builder, from, to) {
 #' @return The updated graph builder object
 #' @export
 add_path <- function(graph_builder, path) {
-  graph_builder$add_path(path)
+  throw_if_error(graph_builder$add_path(path))
   return(graph_builder)
 }
 
@@ -50,7 +50,7 @@ add_path <- function(graph_builder, path) {
 #' @return A DirectedGraph Object
 #' @export
 build_directed <- function(graph_builder) {
-  graph_builder$build_directed()
+  throw_if_error(graph_builder$build_directed())
 }
 
 #' @title Build a DirectedAcyclicGraph from a builder
@@ -64,7 +64,7 @@ build_directed <- function(graph_builder) {
 #' @return A DirectedAcyclicGraph Object
 #' @export
 build_acyclic <- function(graph_builder) {
-  graph_builder$build_acyclic()
+  throw_if_error(graph_builder$build_acyclic())
 }
 
 #' @title Populates the edges of a graph from a `tibble`
@@ -88,6 +88,8 @@ populate_edges <- function(graph_builder, edges_df, parent_col, child_col) {
     rlang::abort(glue::glue("Column {child_col} is not of class `character`"))
   }
 
-  rs_populate_edges_builder(graph_builder, parent_iter, child_iter)
+  throw_if_error(
+    rs_populate_edges_builder(graph_builder, parent_iter, child_iter)
+  )
   return(graph_builder)
 }

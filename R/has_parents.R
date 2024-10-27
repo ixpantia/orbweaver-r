@@ -12,10 +12,10 @@ has_parents <- function(graph, nodes) {
 
 #' @export
 has_parents.DirectedGraph <- function(graph, nodes) {
-  graph$has_parents(nodes)
+  throw_if_error(graph$has_parents(nodes))
 }
 
 #' @export
 has_parents.DirectedAcyclicGraph <- function(graph, nodes) {
-  graph$has_parents(nodes)
+  throw_if_error(graph$has_parents(nodes))
 }

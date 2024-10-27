@@ -4,7 +4,7 @@ subset.DirectedGraph <- function(x, ...) {
   if (length(arguments) > 1) {
     rlang::abort("Currently only one node is supported for subset")
   }
-  x$subset(arguments)
+  throw_if_error(x$subset(arguments))
 }
 
 #' @export
@@ -13,5 +13,5 @@ subset.DirectedAcyclicGraph <- function(x, ...) {
   if (length(arguments) > 1) {
     rlang::abort("Currently only one node is supported for subset")
   }
-  x$subset(arguments)
+  throw_if_error(x$subset(arguments))
 }
