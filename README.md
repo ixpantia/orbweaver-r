@@ -69,23 +69,23 @@ this package from Git using whatever method you prefer.
 With `remotes`:
 
 ```R
-remotes::install_github("ixpantia/orbweaver")
+remotes::install_github("ixpantia/orbweaver-r")
 ```
 
 With `devtools`:
 
 ```R
-devtools::install_github("ixpantia/orbweaver")
+devtools::install_github("ixpantia/orbweaver-r")
 ```
 
 With `renv`:
 
 ```R
-renv::install("ixpantia/orbweaver")
+renv::install("ixpantia/orbweaver-r")
 ```
 
 With `pak`:
 
 ```R
-pak::pak("ixpantia/orbweaver")
+pak::pak("ixpantia/orbweaver-r")
 ```
