@@ -89,3 +89,21 @@ With `pak`:
 ```R
 pak::pak("ixpantia/orbweaver-r")
 ```
+
+### Debugging installation issues
+
+Is .cargo/bin in your `PATH`?
+
+If `echo $PATH` includes `.cargo/bin` but `Sys.getenv("PATH")` doesn't, then add this to .Renviron:
+
+```
+# You can open .Renviron with `usethis::edit_r_environ()`
+PATH=${HOME}/.cargo/bin:${PATH}
+```
+
+Then restart R and install with:
+
+```r
+# `pak::pak()` may fails because it tries to to install cargo in a differetn way
+remotes::install_github("ixpantia/orbweaver-r")
+```
