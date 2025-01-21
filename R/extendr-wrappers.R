@@ -36,6 +36,8 @@ DirectedGraph$get_roots_over <- function(node_ids) .Call(wrap__DirectedGraph__ge
 
 DirectedGraph$subset <- function(node_id) .Call(wrap__DirectedGraph__subset, self, node_id)
 
+DirectedGraph$subset_multi <- function(node_ids) .Call(wrap__DirectedGraph__subset_multi, self, node_ids)
+
 DirectedGraph$print <- function() invisible(.Call(wrap__DirectedGraph__print, self))
 
 DirectedGraph$to_bin_disk <- function(path) .Call(wrap__DirectedGraph__to_bin_disk, self, path)
@@ -83,6 +85,8 @@ DirectedAcyclicGraph$get_all_roots <- function() .Call(wrap__DirectedAcyclicGrap
 DirectedAcyclicGraph$get_roots_over <- function(node_ids) .Call(wrap__DirectedAcyclicGraph__get_roots_over, self, node_ids)
 
 DirectedAcyclicGraph$subset <- function(node_id) .Call(wrap__DirectedAcyclicGraph__subset, self, node_id)
+
+DirectedAcyclicGraph$subset_multi <- function(node_ids) .Call(wrap__DirectedAcyclicGraph__subset_multi, self, node_ids)
 
 DirectedAcyclicGraph$print <- function() invisible(.Call(wrap__DirectedAcyclicGraph__print, self))
 

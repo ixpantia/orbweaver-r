@@ -145,6 +145,7 @@ pub trait RImplDirectedGraph: Sized {
     fn get_all_roots(&self) -> NodeVec;
     fn get_roots_over(&self, node_ids: RNodesIn) -> Result<NodeVec>;
     fn subset(&self, node_id: &str) -> Result<Self>;
+    fn subset_multi(&self, node_id: RNodesIn) -> Result<Self>;
     fn print(&self);
     fn find_all_paths(&self, from: &str, to: &str) -> Result<List>;
     fn to_bin_disk(&self, path: &str) -> Result<()>;

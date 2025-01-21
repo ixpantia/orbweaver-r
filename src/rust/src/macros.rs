@@ -51,6 +51,11 @@ macro_rules! impl_directed_graph {
             fn subset(&self, node_id: &str) -> Result<Self> {
                 Ok(Self(self.0.subset(node_id).map_err(to_r_error)?))
             }
+            fn subset_multi(&self, node_ids: RNodesIn) -> Result<Self> {
+                Ok(Self(
+                    self.0.subset_multi(node_ids.iter()).map_err(to_r_error)?,
+                ))
+            }
             fn print(&self) {
                 println!("{:?}", self.0)
             }
