@@ -6,6 +6,7 @@ env:
 tasks:
   clean:
     - rm -rf src/.cargo
+    - rm -rf orbweaver_*.tar.gz
   vendor:
     dir: src/rust
     cmds:
@@ -31,3 +32,9 @@ tasks:
   document:
     cmds:
       - Rscript -e "rextendr::document()"
+  check:
+    deps:
+      - clean
+    cmds:
+      - R CMD build .
+      - R CMD check orbweaver*.tar.gz
