@@ -8,8 +8,7 @@ crate-type = [ 'staticlib', 'lib' ]
 name = 'orbweaver_r'
 
 [dependencies]
-# orbweaver = { version = "0.17.1" }
-orbweaver = { git = "https://github.com/andyquinterom/orbweaver-rs.git", branch = "T27" }
+orbweaver = { version = "0.18.0" }
 extendr-api = { version = "0.7", features = ["serde", "result_condition"] }
 
 # This will help us filter the platforms
