@@ -132,9 +132,8 @@ checksum = "1261fe7e33c73b354eab43b1273a57c8f967d0391e80353e51f764ac02cf6775"
 
 [[package]]
 name = "orbweaver"
-version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f7074c2d5f33aa5ad4d66fbdcc114dd7652e24cc99f21e7118fe61e11f495efa"
+version = "0.18.0"
+source = "git+https://github.com/andyquinterom/orbweaver-rs.git?branch=T27#5c12db46cdf1911be39d132a8c1d469190f04a7a"
 dependencies = [
  "flate2",
  "fxhash",
@@ -145,7 +144,7 @@ dependencies = [
 
 [[package]]
 name = "orbweaver_r"
-version = "0.16.0"
+version = "0.18.0"
 dependencies = [
  "extendr-api",
  "orbweaver",
