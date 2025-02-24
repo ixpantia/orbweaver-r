@@ -71,10 +71,9 @@
 <h2 id="why-not-igraph">Why not igraph?<a class="anchor" aria-label="anchor" href="#why-not-igraph"></a>
 </h2>
 <p><a href="https://igraph.org/" class="external-link">igraph</a> is an amazing network analysis package. igraph is much more mature and orbweaver focuses on extreme performance and low latency operations. If you need super high performance and do not require weighted graphs, orbweaver may be for you.</p>
-<div class="float">
-<img src="reference/figures/benchmark.png" alt="igraph vs orbweaver benchmark"><div class="figcaption">igraph vs orbweaver benchmark</div>
-</div>
-<blockquote>
+<figure><img src="reference/figures/benchmark.png" alt="igraph vs orbweaver benchmark"><figcaption aria-hidden="true">
+igraph vs orbweaver benchmark
+</figcaption></figure><blockquote>
 <p>We may add weighted graph in the future but for not it is not in the short-term road map.</p>
 </blockquote>
 </div>
@@ -84,8 +83,13 @@
 <div class="section level3">
 <h3 id="rust-toolchain">Rust Toolchain<a class="anchor" aria-label="anchor" href="#rust-toolchain"></a>
 </h3>
-<p>Before installing this package, you will need to install the Rust toolchain. If you are on Mac or Linux, you can do this by running the following command in your terminal:</p>
+<p>Before installing this package, you will need to install the Rust toolchain.</p>
+<div class="section level4">
+<h4 id="mac-or-linux">Mac or Linux<a class="anchor" aria-label="anchor" href="#mac-or-linux"></a>
+</h4>
+<p>If you are on Mac or Linux, you can do this by running the following command in your terminal:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">'=https'</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div>
+</div>
 <div class="section level4">
 <h4 id="windows">Windows<a class="anchor" aria-label="anchor" href="#windows"></a>
 </h4>
@@ -98,20 +102,50 @@
 <div class="section level3">
 <h3 id="r-package">R Package<a class="anchor" aria-label="anchor" href="#r-package"></a>
 </h3>
-<p>Once you have the Rust toolchain installed, you can install this package from Git using whatever method you prefer.</p>
-<p>With <code>remotes</code>:</p>
+<p>Once you have the Rust toolchain installed, you can install orbweaver from GitHub with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ixpantia/orbweaver-r"</span><span class="op">)</span></span></code></pre></div>
-<p>With <code>devtools</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ixpantia/orbweaver-r"</span><span class="op">)</span></span></code></pre></div>
-<p>With <code>renv</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">renv</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span><span class="st">"ixpantia/orbweaver-r"</span><span class="op">)</span></span></code></pre></div>
-<p>With <code>pak</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"ixpantia/orbweaver-r"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ixpantia/orbweaver-r"</span><span class="op">)</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ixpantia/orbweaver-r" class="external-link">orbweaver</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  parent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"C"</span>, <span class="st">"F"</span><span class="op">)</span>,</span>
+<span>  child  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"D"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">edges</span></span>
+<span><span class="co">#&gt;   parent child</span></span>
+<span><span class="co">#&gt; 1      A     B</span></span>
+<span><span class="co">#&gt; 2      B     C</span></span>
+<span><span class="co">#&gt; 3      C     D</span></span>
+<span><span class="co">#&gt; 4      C     E</span></span>
+<span><span class="co">#&gt; 5      F     D</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/graph_builder.html">graph_builder</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;pointer: 0x60b8e1cd1790&gt;</span></span>
+<span><span class="co">#&gt; attr(,"class")</span></span>
+<span><span class="co">#&gt; [1] "DirectedGraphBuilder"</span></span>
+<span>  </span>
+<span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graph_builder.html">graph_builder</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/populate_edges.html">populate_edges</a></span><span class="op">(</span><span class="va">edges</span>, <span class="st">"parent"</span>, <span class="st">"child"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/build_directed.html">build_directed</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">graph</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Class 'DirectedGraph' &lt;externalptr&gt;</span></span>
+<span></span>
+<span><span class="va">graph</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/find_all_paths.html">find_all_paths</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"A"</span>, to <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span></span>
+<span><span class="co"># Not the other way around</span></span>
+<span><span class="va">graph</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/find_all_paths.html">find_all_paths</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"D"</span>, to <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; list()</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
