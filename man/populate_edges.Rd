@@ -21,3 +21,16 @@ The updated graph builder object
 \description{
 Adds a set of edges from a \code{tibble} to a graph
 }
+\examples{
+graph_edges <- data.frame(
+  parent = c("A", "B", "C"),
+  child = c("B", "C", "D")
+)
+
+graph_builder() |>
+  populate_edges(
+    edges_df = graph_edges,
+    parent_col = "parent",
+    child_col = "child"
+  )
+}

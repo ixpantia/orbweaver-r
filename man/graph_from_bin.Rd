@@ -19,3 +19,12 @@ A graph object
 \description{
 Read the graph from a binary blob
 }
+\examples{
+bin <- graph_builder() |>
+  add_edge("A", "B") |>
+  build_directed() |>
+  graph_to_bin()
+bin
+
+graph_from_bin(bin = bin)
+}

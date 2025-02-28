@@ -6,6 +6,14 @@
 #' @param nodes A character vector of nodes to determine
 #' @return A logical vector with the same length as `nodes`
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_edge(from = "A", to = "B") |>
+#'   build_directed()
+#' graph
+#'
+#' graph |> has_parents(nodes = "A")
+#' graph |> has_parents(nodes = "B")
 has_parents <- function(graph, nodes) {
   UseMethod("has_parents")
 }
