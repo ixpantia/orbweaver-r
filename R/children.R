@@ -7,6 +7,12 @@
 #' @param nodes A character vector of nodes to find children for
 #' @return A character vector
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_edge(from = "A", to = "B") |>
+#'   build_directed()
+#'
+#' graph |> children("A")
 children <- function(graph, nodes) {
   UseMethod("children")
 }

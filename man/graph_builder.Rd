@@ -9,6 +9,12 @@ graph_builder(type = "directed")
 \arguments{
 \item{type}{The type of graph}
 }
+\value{
+An object of class 'DirectedGraphBuilder'.
+}
 \description{
 Object used to build graphs
+}
+\examples{
+graph_builder()
 }

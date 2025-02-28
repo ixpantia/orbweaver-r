@@ -18,3 +18,12 @@ A character vector of nodes
 Retrieves the nodes in a graph that have no parents
 over a certain node or group of nodes
 }
+\examples{
+graph <- graph_builder() |>
+  add_path(c("A", "B", "C")) |>
+  add_path(c("A", "D", "C")) |>
+  add_path(c("Z", "B", "C")) |>
+  build_directed()
+
+get_roots_over(graph, "D")
+}

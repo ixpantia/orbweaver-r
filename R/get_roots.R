@@ -8,6 +8,14 @@
 #' @param nodes A character vector of nodes to find roots for
 #' @return A character vector of nodes
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_path(c("A", "B", "C")) |>
+#'   add_path(c("A", "D", "C")) |>
+#'   add_path(c("Z", "B", "C")) |>
+#'   build_directed()
+#'
+#' get_roots_over(graph, "D")
 get_roots_over <- function(graph, nodes) {
   UseMethod("get_roots_over")
 }
@@ -31,6 +39,15 @@ get_roots_over.DirectedAcyclicGraph <- function(graph, nodes) {
 #' @param ... Unused
 #' @return A character vector of nodes
 #' @export
+
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_path(c("A", "B", "C")) |>
+#'   add_path(c("A", "D", "C")) |>
+#'   add_path(c("Z", "B", "C")) |>
+#'   build_directed()
+#'
+#' get_all_roots(graph)
 get_all_roots <- function(graph, ...) {
   UseMethod("get_all_roots")
 }

@@ -18,3 +18,11 @@ A character vector
 Get a list of the node ids of the parents of
 the provided node.
 }
+\examples{
+graph <- graph_builder() |>
+  add_edge(from = "A", to = "B") |>
+  build_directed()
+
+graph |> parents("A")
+graph |> parents("B")
+}

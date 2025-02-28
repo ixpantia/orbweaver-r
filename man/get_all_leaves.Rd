@@ -17,3 +17,13 @@ A character vector of nodes
 \description{
 Retrieves the nodes in a graph that have no children
 }
+\examples{
+graph <- graph_builder() |>
+  add_path(c("A", "B", "C")) |>
+  add_path(c("A", "D", "C")) |>
+  add_path(c("Z", "B", "C")) |>
+  add_path(c("Z", "B", "H")) |>
+  build_directed()
+
+get_all_leaves(graph)
+}

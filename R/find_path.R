@@ -14,6 +14,12 @@
 #' @param to The ending node of the path
 #' @return A character vector
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_path(c("A", "B", "C")) |>
+#'   build_directed()
+#'
+#' find_path(graph, "A", "C")
 find_path <- function(graph, from, to) {
   UseMethod("find_path")
 }
@@ -40,6 +46,14 @@ find_path.DirectedAcyclicGraph <- function(graph, from, to) {
 #' @param to The ending node of the path
 #' @return A list of character vectors
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_path(c("A", "B", "C")) |>
+#'   add_path(c("A", "Z", "C")) |>
+#'   add_path(c("A", "B", "A")) |>
+#'   build_directed()
+#'
+#' find_all_paths(graph, "A", "C")
 find_all_paths <- function(graph, from, to) {
   UseMethod("find_all_paths")
 }
@@ -66,6 +80,17 @@ find_all_paths.DirectedAcyclicGraph <- function(graph, from, to) {
 #' @param to A character vector of nodes
 #' @return A list of paths
 #' @export
+#' @examples
+#' edges <- data.frame(
+#'   parent = c("A", "A", "B", "Z"),
+#'   child =  c("B", "Z", "Z", "F")
+#' )
+#'
+#' graph <- graph_builder() |>
+#'   populate_edges(edges, parent, child) |>
+#'   build_acyclic()
+#'
+#' find_path_one_to_many(graph, "A", edges$child)
 find_path_one_to_many <- function(graph, from, to) {
   UseMethod("find_path_one_to_many")
 }

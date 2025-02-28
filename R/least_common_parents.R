@@ -6,6 +6,18 @@
 #' @param selected A character vector of node ids
 #' @return A character vector of node ids
 #' @export
+#' @examples
+#' graph_edges <- data.frame(
+#'   parent = c("A", "B", "C", "C", "F"),
+#'   child = c("B", "C", "D", "E", "D")
+#' )
+#'
+#' graph <- graph_builder() |>
+#'   populate_edges(graph_edges, parent, child) |>
+#'   build_directed()
+#' graph
+#'
+#' graph |> least_common_parents(c("D", "E"))
 least_common_parents <- function(graph, selected) {
   UseMethod("least_common_parents")
 }

@@ -1,9 +1,9 @@
 #' @export
 print.DirectedGraph <- function(x, ...) {
-  x$print()
+  writeLines(x$print())
 }
 
 #' @export
 print.DirectedAcyclicGraph <- function(x, ...) {
-  x$print()
+  writeLines(x$print())
 }

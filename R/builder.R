@@ -1,7 +1,10 @@
 #' @title A new builder for a graph based on the type
 #' @description Object used to build graphs
 #' @param type The type of graph
+#' @return An object of class 'DirectedGraphBuilder'.
 #' @export
+#' @examples
+#' graph_builder()
 graph_builder <- function(type = "directed") {
   DirectedGraphBuilder$new()
 }
@@ -17,6 +20,9 @@ graph_builder <- function(type = "directed") {
 #' @param to The `to` node.
 #' @return The updated graph builder object
 #' @export
+#' @examples
+#' graph_builder() |>
+#'   add_edge("A", "B")
 add_edge <- function(graph_builder, from, to) {
   throw_if_error(graph_builder$add_edge(from, to))
   return(graph_builder)
@@ -32,6 +38,9 @@ add_edge <- function(graph_builder, from, to) {
 #' @param path A character vector that describes the path
 #' @return The updated graph builder object
 #' @export
+#' @examples
+#' graph_builder() |>
+#'   add_path(c("A", "B", "C"))
 add_path <- function(graph_builder, path) {
   throw_if_error(graph_builder$add_path(path))
   return(graph_builder)
@@ -49,6 +58,10 @@ add_path <- function(graph_builder, path) {
 #' @param graph_builder A graph builder object
 #' @return A DirectedGraph Object
 #' @export
+#' @examples
+#' graph_builder() |>
+#'   add_path(c("1", "2", "3", "4")) |>
+#'   build_directed()
 build_directed <- function(graph_builder) {
   throw_if_error(graph_builder$build_directed())
 }
@@ -63,18 +76,34 @@ build_directed <- function(graph_builder) {
 #' @param graph_builder A graph builder object
 #' @return A DirectedAcyclicGraph Object
 #' @export
+#' @examples
+#' graph_builder() |>
+#'   add_path(c("1", "2", "3", "4")) |>
+#'   build_acyclic()
 build_acyclic <- function(graph_builder) {
   throw_if_error(graph_builder$build_acyclic())
 }
 
-#' @title Populates the edges of a graph from a `tibble`
-#' @description Adds a set of edges from a `tibble` to a graph
+#' @title Populates the edges of a graph from a `data.frame`
+#' @description Adds a set of edges from a `data.frame` to a graph
 #' @param graph_builder A graph builder object
-#' @param edges_df A `tibble` with a parent and child variable
+#' @param edges_df A `data.frame` with a parent and child variable
 #' @param parent_col The name of the column containing the parents
 #' @param child_col The name of the column containing the children
 #' @return The updated graph builder object
 #' @export
+#' @examples
+#' graph_edges <- data.frame(
+#'   parent = c("A", "B", "C"),
+#'   child = c("B", "C", "D")
+#' )
+#'
+#' graph_builder() |>
+#'   populate_edges(
+#'     edges_df = graph_edges,
+#'     parent_col = "parent",
+#'     child_col = "child"
+#'   )
 populate_edges <- function(graph_builder, edges_df, parent_col, child_col) {
   parent_col <- as.character(rlang::ensym(parent_col))
   child_col <- as.character(rlang::ensym(child_col))
