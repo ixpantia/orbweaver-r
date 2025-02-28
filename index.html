@@ -71,9 +71,10 @@
 <h2 id="why-not-igraph">Why not igraph?<a class="anchor" aria-label="anchor" href="#why-not-igraph"></a>
 </h2>
 <p><a href="https://igraph.org/" class="external-link">igraph</a> is an amazing network analysis package. igraph is much more mature and orbweaver focuses on extreme performance and low latency operations. If you need super high performance and do not require weighted graphs, orbweaver may be for you.</p>
-<figure><img src="reference/figures/benchmark.png" alt="igraph vs orbweaver benchmark"><figcaption aria-hidden="true">
-igraph vs orbweaver benchmark
-</figcaption></figure><blockquote>
+<div class="float">
+<img src="reference/figures/benchmark.png" alt="igraph vs orbweaver benchmark"><div class="figcaption">igraph vs orbweaver benchmark</div>
+</div>
+<blockquote>
 <p>We may add weighted graph in the future but for not it is not in the short-term road map.</p>
 </blockquote>
 </div>
@@ -118,30 +119,33 @@ igraph vs orbweaver benchmark
 <span>  parent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"C"</span>, <span class="st">"F"</span><span class="op">)</span>,</span>
 <span>  child  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"D"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">edges</span></span>
-<span><span class="co">#&gt;   parent child</span></span>
-<span><span class="co">#&gt; 1      A     B</span></span>
-<span><span class="co">#&gt; 2      B     C</span></span>
-<span><span class="co">#&gt; 3      C     D</span></span>
-<span><span class="co">#&gt; 4      C     E</span></span>
-<span><span class="co">#&gt; 5      F     D</span></span>
 <span></span>
-<span><span class="fu"><a href="reference/graph_builder.html">graph_builder</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; &lt;pointer: 0x60b8e1cd1790&gt;</span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "DirectedGraphBuilder"</span></span>
-<span>  </span>
 <span><span class="va">graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graph_builder.html">graph_builder</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/populate_edges.html">populate_edges</a></span><span class="op">(</span><span class="va">edges</span>, <span class="st">"parent"</span>, <span class="st">"child"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/build_directed.html">build_directed</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">graph</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">graph</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Class 'DirectedGraph' &lt;externalptr&gt;</span></span>
+<span><span class="co">#&gt; # of nodes: 6</span></span>
+<span><span class="co">#&gt; # of edges: 5</span></span>
+<span><span class="co">#&gt; # of roots: 2</span></span>
+<span><span class="co">#&gt; # of leaves: 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; |     Parent      |      Child      |</span></span>
+<span><span class="co">#&gt; | --------------- | --------------- |</span></span>
+<span><span class="co">#&gt; | A               | B               |</span></span>
+<span><span class="co">#&gt; | B               | C               |</span></span>
+<span><span class="co">#&gt; | C               | E               |</span></span>
+<span><span class="co">#&gt; | C               | D               |</span></span>
+<span><span class="co">#&gt; | F               | D               |</span></span>
 <span></span>
 <span><span class="va">graph</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/find_all_paths.html">find_all_paths</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"A"</span>, to <span class="op">=</span> <span class="st">"D"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; # of nodes: 4</span></span>
+<span><span class="co">#&gt; |           Nodes           |</span></span>
+<span><span class="co">#&gt; |             A             |</span></span>
+<span><span class="co">#&gt; |             B             |</span></span>
+<span><span class="co">#&gt; |             C             |</span></span>
+<span><span class="co">#&gt; |             D             |</span></span>
 <span></span>
 <span><span class="co"># Not the other way around</span></span>
 <span><span class="va">graph</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/find_all_paths.html">find_all_paths</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"D"</span>, to <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span>
@@ -190,7 +194,7 @@ igraph vs orbweaver benchmark
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=orbweaver" class="external-link"><img src="https://www.r-pkg.org/badges/version/orbweaver" alt="CRAN status"></a></li>
+<li><a href="https://cran.r-project.org/package=orbweaver" class="external-link"><img src="https://www.r-pkg.org/badges/version/orbweaver.png" alt="CRAN status"></a></li>
 <li><a href="https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml" class="external-link"><img src="https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
