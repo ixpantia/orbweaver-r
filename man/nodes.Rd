@@ -17,3 +17,11 @@ A character vector with the nodes
 \description{
 Returns the unique nodes in the graph
 }
+\examples{
+graph <- graph_builder() |>
+  add_edge(from = "A", to = "B") |>
+  build_directed()
+graph
+
+nodes(graph)
+}

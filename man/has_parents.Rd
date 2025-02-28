@@ -18,3 +18,12 @@ A logical vector with the same length as \code{nodes}
 This function validates if any edge points to the
 given node.
 }
+\examples{
+graph <- graph_builder() |>
+  add_edge(from = "A", to = "B") |>
+  build_directed()
+graph
+
+graph |> has_parents(nodes = "A")
+graph |> has_parents(nodes = "B")
+}

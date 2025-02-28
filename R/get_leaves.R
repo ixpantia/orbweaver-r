@@ -8,6 +8,15 @@
 #' @param nodes A character vector of nodes to find leaves for
 #' @return A character vector of nodes
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_path(c("A", "B", "C")) |>
+#'   add_path(c("A", "D", "C")) |>
+#'   add_path(c("Z", "B", "C")) |>
+#'   add_path(c("Z", "B", "H")) |>
+#'   build_directed()
+#'
+#' get_leaves_under(graph, "D")
 get_leaves_under <- function(graph, nodes) {
   UseMethod("get_leaves_under")
 }
@@ -31,6 +40,15 @@ get_leaves_under.DirectedAcyclicGraph <- function(graph, nodes) {
 #' @param ... Unused
 #' @return A character vector of nodes
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_path(c("A", "B", "C")) |>
+#'   add_path(c("A", "D", "C")) |>
+#'   add_path(c("Z", "B", "C")) |>
+#'   add_path(c("Z", "B", "H")) |>
+#'   build_directed()
+#'
+#' get_all_leaves(graph)
 get_all_leaves <- function(graph, ...) {
   UseMethod("get_all_leaves")
 }

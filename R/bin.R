@@ -3,6 +3,12 @@
 #' @param path Path to a file to save the graph into
 #' @return Run for its side-effects
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_edge("A", "B") |>
+#'   build_directed()
+#'
+#' graph_to_bin(graph)
 graph_to_bin <- function(graph, path) {
   if (missing(path)) {
     return(throw_if_error(graph$to_bin_mem()))
@@ -16,6 +22,14 @@ graph_to_bin <- function(graph, path) {
 #' @param type The type of graph the JSON represents
 #' @return A graph object
 #' @export
+#' @examples
+#' bin <- graph_builder() |>
+#'   add_edge("A", "B") |>
+#'   build_directed() |>
+#'   graph_to_bin()
+#' bin
+#'
+#' graph_from_bin(bin = bin)
 graph_from_bin <- function(path, bin, type = c("directed", "dag")) {
   if (!type[1] %in% c("directed", "dag")) {
     rlang::abort("Invalid argument `type`")

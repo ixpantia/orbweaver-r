@@ -20,3 +20,7 @@ The updated graph builder object
 Adds an edge from one node to another in a
 a directed graph builder.
 }
+\examples{
+graph_builder() |>
+  add_edge("A", "B")
+}

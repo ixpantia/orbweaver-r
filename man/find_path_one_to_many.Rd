@@ -22,3 +22,15 @@ Find the shortest path from one node to many
 Not all graphs support this function. Currently only
 \code{DirectedAcyclicGraph} supports this.
 }
+\examples{
+edges <- data.frame(
+  parent = c("A", "A", "B", "Z"),
+  child =  c("B", "Z", "Z", "F")
+)
+
+graph <- graph_builder() |>
+  populate_edges(edges, parent, child) |>
+  build_acyclic()
+
+find_path_one_to_many(graph, "A", edges$child)
+}

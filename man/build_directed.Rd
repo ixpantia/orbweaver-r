@@ -19,3 +19,8 @@ object.
 NOTE: This will consume the builder. It will leave an empty
 builder in its place.
 }
+\examples{
+graph_builder() |>
+  add_path(c("1", "2", "3", "4")) |>
+  build_directed()
+}

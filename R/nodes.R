@@ -4,6 +4,13 @@
 #' @param ... Reserved for later use
 #' @return A character vector with the nodes
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_edge(from = "A", to = "B") |>
+#'   build_directed()
+#' graph
+#'
+#' nodes(graph)
 nodes <- function(graph, ...) {
   graph$nodes()
 }

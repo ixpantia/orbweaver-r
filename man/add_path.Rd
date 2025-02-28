@@ -18,3 +18,7 @@ The updated graph builder object
 Adds all of the edges that make up the given
 path to the graph.
 }
+\examples{
+graph_builder() |>
+  add_path(c("A", "B", "C"))
+}

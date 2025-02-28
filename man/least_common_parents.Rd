@@ -18,3 +18,16 @@ A character vector of node ids
 It finds the nodes that have no parents in the given
 set.
 }
+\examples{
+graph_edges <- data.frame(
+  parent = c("A", "B", "C", "C", "F"),
+  child = c("B", "C", "D", "E", "D")
+)
+
+graph <- graph_builder() |>
+  populate_edges(graph_edges, parent, child) |>
+  build_directed()
+graph
+
+graph |> least_common_parents(c("D", "E"))
+}

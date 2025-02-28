@@ -7,6 +7,13 @@
 #' @param nodes A character vector of nodes to find parents for
 #' @return A character vector
 #' @export
+#' @examples
+#' graph <- graph_builder() |>
+#'   add_edge(from = "A", to = "B") |>
+#'   build_directed()
+#'
+#' graph |> parents("A")
+#' graph |> parents("B")
 parents <- function(graph, nodes) {
   UseMethod("parents")
 }

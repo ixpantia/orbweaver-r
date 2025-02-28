@@ -26,3 +26,10 @@ while an \code{DirectedAcyclicGraph} uses topological sort.
 The path is represented as a character vector with the
 node ids of the nodes that make up the path.
 }
+\examples{
+graph <- graph_builder() |>
+  add_path(c("A", "B", "C")) |>
+  build_directed()
+
+find_path(graph, "A", "C")
+}
