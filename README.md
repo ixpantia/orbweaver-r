@@ -75,8 +75,13 @@ download the installer from
 
 ### R Package
 
-Once you have the Rust toolchain installed, you can install orbweaver
-from GitHub with:
+You can install orbweaver from CRAN with:
+
+``` r
+install.packages("orbweaver")
+```
+
+You can install orbweaver from GitHub with:
 
 ``` r
 # install.packages("remotes")
@@ -101,7 +106,7 @@ edges
 #> 5      F     D
 
 graph_builder()
-#> <pointer: 0x60b8e1cd1790>
+#> <pointer: 0x5826abc275d0>
 #> attr(,"class")
 #> [1] "DirectedGraphBuilder"
   

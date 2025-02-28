@@ -81,8 +81,13 @@ well. You can download the installer from
 
 ### R Package
 
-Once you have the Rust toolchain installed, you can install
-orbweaver from GitHub with:
+You can install orbweaver from CRAN with:
+
+```R
+install.packages("orbweaver")
+```
+
+You can install orbweaver from GitHub with:
 
 ```R
 # install.packages("remotes")
