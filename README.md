@@ -98,32 +98,14 @@ edges <- data.frame(
   parent = c("A", "B", "C", "C", "F"),
   child  = c("B", "C", "D", "E", "D")
 )
-edges
-#>   parent child
-#> 1      A     B
-#> 2      B     C
-#> 3      C     D
-#> 4      C     E
-#> 5      F     D
 
-graph_builder()
-#> <pointer: 0x5f2331d3ee90>
-#> attr(,"class")
-#> [1] "DirectedGraphBuilder"
-  
 graph <- graph_builder() |>
   populate_edges(edges, "parent", "child") |>
   build_directed()
-
-graph
 
 str(graph)
 #> Class 'DirectedGraph' <externalptr>
 
 graph |> find_all_paths(from = "A", to = "D")
 #> [[1]]
-
-# Not the other way around
-graph |> find_all_paths(from = "D", to = "A")
-#> list()
 ```

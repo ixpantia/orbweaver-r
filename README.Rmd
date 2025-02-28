@@ -104,21 +104,13 @@ edges <- data.frame(
   parent = c("A", "B", "C", "C", "F"),
   child  = c("B", "C", "D", "E", "D")
 )
-edges
 
-graph_builder()
-  
 graph <- graph_builder() |>
   populate_edges(edges, "parent", "child") |>
   build_directed()
 
-graph
-
 str(graph)
 
 graph |> find_all_paths(from = "A", to = "D")
-
-# Not the other way around
-graph |> find_all_paths(from = "D", to = "A")
 ```
 
