@@ -1,4 +1,5 @@
 
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # orbweaver <a><img src="https://storage.googleapis.com/ix-paquetes-internos/logo-orbweaver.png" align="right" width="30%"></a>
@@ -6,7 +7,7 @@
 <!-- badges: start -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/orbweaver)](https://cran.r-project.org/package=orbweaver)
+status](https://www.r-pkg.org/badges/version/orbweaver.png)](https://cran.r-project.org/package=orbweaver)
 [![R-CMD-check](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml/badge.svg)](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml)
 <!-- badges: end -->
 
@@ -29,12 +30,7 @@ igraph is much more mature and orbweaver focuses on extreme performance
 and low latency operations. If you need super high performance and do
 not require weighted graphs, orbweaver may be for you.
 
-<figure>
-<img src="man/figures/benchmark.png"
-alt="igraph vs orbweaver benchmark" />
-<figcaption aria-hidden="true">igraph vs orbweaver
-benchmark</figcaption>
-</figure>
+![igraph vs orbweaver benchmark](man/figures/benchmark.png)
 
 > We may add weighted graph in the future but for not it is not in the
 > short-term road map.
@@ -92,30 +88,33 @@ edges <- data.frame(
   parent = c("A", "B", "C", "C", "F"),
   child  = c("B", "C", "D", "E", "D")
 )
-edges
-#>   parent child
-#> 1      A     B
-#> 2      B     C
-#> 3      C     D
-#> 4      C     E
-#> 5      F     D
 
-graph_builder()
-#> <pointer: 0x60b8e1cd1790>
-#> attr(,"class")
-#> [1] "DirectedGraphBuilder"
-  
 graph <- graph_builder() |>
   populate_edges(edges, "parent", "child") |>
   build_directed()
 
 graph
-
-str(graph)
-#> Class 'DirectedGraph' <externalptr>
+#> # of nodes: 6
+#> # of edges: 5
+#> # of roots: 2
+#> # of leaves: 2
+#> 
+#> |     Parent      |      Child      |
+#> | --------------- | --------------- |
+#> | A               | B               |
+#> | B               | C               |
+#> | C               | E               |
+#> | C               | D               |
+#> | F               | D               |
 
 graph |> find_all_paths(from = "A", to = "D")
 #> [[1]]
+#> # of nodes: 4
+#> |           Nodes           |
+#> |             A             |
+#> |             B             |
+#> |             C             |
+#> |             D             |
 
 # Not the other way around
 graph |> find_all_paths(from = "D", to = "A")
