@@ -1,37 +1,30 @@
 Package: orbweaver
 Title: Fast and Efficient Graph Data Structures
 Version: 0.18.0
-Authors@R: 
-    c(person(given = "ixpantia, SRL",
-             role = "cph",
-             email = "hola@ixpantia.com"),
-      person("Andres", "Quintero", , "andres@ixpantia.com", role = c("aut", "cre")),
-      person(given = "The authors of the dependency Rust crates",
-             role = c("ctb"),
-             comment = "see inst/AUTHORS file for details"))
-Description: Empower your data analysis with 'orbweaver', an R package
-    designed for effortless construction and analysis of graph data
-    structures. With 'orbweaver', you can seamlessly build and manipulate
-    graph structures, leveraging its high-performance methods for
-    filtering, joining, and mutating data within the R environment.
-    Drawing inspiration from the efficiency of the 'data.table'
-    package, 'orbweaver' ensures that mutations and changes to
-    the graph are performed in place, streamlining your
-    workflow for optimal productivity.
+Authors@R: c(
+    person("ixpantia, SRL", , , "hola@ixpantia.com", role = "cph"),
+    person("Andres", "Quintero", , "andres@ixpantia.com", role = c("aut", "cre")),
+    person("The authors of the dependency Rust crates", role = "ctb",
+           comment = "see inst/AUTHORS file for details")
+  )
+Description: Seamlessly build and manipulate graph structures, leveraging
+    its high-performance methods for filtering, joining, and mutating
+    data. Ensures that mutations and changes to the graph are performed in
+    place, streamlining your workflow for optimal productivity.
+License: MIT + file LICENSE
 URL: https://github.com/ixpantia/orbweaver-r
 BugReports: https://github.com/ixpantia/orbweaver-r/issues
-License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
-Config/rextendr/version: 0.3.1.9000
-SystemRequirements: Cargo (Rust's package manager) >= 1.70, rustc >= 1.70
 Depends:
     R (>= 4.2.0)
 Imports:
     glue,
-    rlang,
-    methods
+    methods,
+    rlang
 Suggests: 
     testthat (>= 3.0.0)
+Config/rextendr/version: 0.3.1.9000
 Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+SystemRequirements: Cargo (Rust's package manager) >= 1.70, rustc >= 1.70

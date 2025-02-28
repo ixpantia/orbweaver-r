@@ -19,7 +19,7 @@ A character vector
 \description{
 Finds a path between two nodes in a graph.
 
-Different types of graphs use different algorithims to
+Different types of graphs use different algorithms to
 find the paths. a \code{DirectedGraph} uses breadth-first search
 while an \code{DirectedAcyclicGraph} uses topological sort.
 

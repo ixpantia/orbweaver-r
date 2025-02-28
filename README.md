@@ -9,6 +9,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/orbweaver.png)](https://cran.r-project.org/package=orbweaver)
 [![R-CMD-check](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml/badge.svg)](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml)
+[![R-CMD-check](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -71,8 +72,13 @@ download the installer from
 
 ### R Package
 
-Once you have the Rust toolchain installed, you can install orbweaver
-from GitHub with:
+You can install orbweaver from CRAN with:
+
+``` r
+install.packages("orbweaver")
+```
+
+You can install orbweaver from GitHub with:
 
 ``` r
 # install.packages("remotes")
@@ -115,8 +121,4 @@ graph |> find_all_paths(from = "A", to = "D")
 #> |             B             |
 #> |             C             |
 #> |             D             |
-
-# Not the other way around
-graph |> find_all_paths(from = "D", to = "A")
-#> list()
 ```
