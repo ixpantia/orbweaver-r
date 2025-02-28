@@ -58,3 +58,5 @@ docs
 .vscode
 src/rust/vendor
 .Rproj.user
+/.quarto/
+README.html
