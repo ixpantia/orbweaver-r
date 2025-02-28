@@ -60,8 +60,8 @@ impl From<ow::NodeVec> for NodeVec {
 
 #[extendr]
 impl NodeVec {
-    pub fn print(&self) {
-        println!("{:?}", self.0);
+    pub fn print(&self) -> String {
+        format!("{:?}", self.0)
     }
     pub fn as_character(&self) -> Robj {
         self.0.into_iter().collect_robj()
@@ -146,7 +146,7 @@ pub trait RImplDirectedGraph: Sized {
     fn get_roots_over(&self, node_ids: RNodesIn) -> Result<NodeVec>;
     fn subset_multi(&self, node_id: RNodesIn) -> Result<Self>;
     fn subset_multi_with_limit(&self, node_id: RNodesIn, limit: i32) -> Result<Self>;
-    fn print(&self);
+    fn print(&self) -> String;
     fn find_all_paths(&self, from: &str, to: &str) -> Result<List>;
     fn to_bin_disk(&self, path: &str) -> Result<()>;
     fn to_bin_mem(&self) -> Result<Vec<u8>>;

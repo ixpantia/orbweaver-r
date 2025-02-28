@@ -67,8 +67,8 @@ macro_rules! impl_directed_graph {
                         .map_err(to_r_error)?,
                 ))
             }
-            fn print(&self) {
-                println!("{:?}", self.0)
+            fn print(&self) -> String {
+                format!("{:?}", self.0)
             }
 
             fn to_bin_disk(&self, path: &str) -> Result<()> {
