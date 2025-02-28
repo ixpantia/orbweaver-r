@@ -38,7 +38,7 @@ DirectedGraph$subset_multi <- function(node_ids) .Call(wrap__DirectedGraph__subs
 
 DirectedGraph$subset_multi_with_limit <- function(node_ids, limit) .Call(wrap__DirectedGraph__subset_multi_with_limit, self, node_ids, limit)
 
-DirectedGraph$print <- function() invisible(.Call(wrap__DirectedGraph__print, self))
+DirectedGraph$print <- function() .Call(wrap__DirectedGraph__print, self)
 
 DirectedGraph$to_bin_disk <- function(path) .Call(wrap__DirectedGraph__to_bin_disk, self, path)
 
@@ -88,7 +88,7 @@ DirectedAcyclicGraph$subset_multi <- function(node_ids) .Call(wrap__DirectedAcyc
 
 DirectedAcyclicGraph$subset_multi_with_limit <- function(node_ids, limit) .Call(wrap__DirectedAcyclicGraph__subset_multi_with_limit, self, node_ids, limit)
 
-DirectedAcyclicGraph$print <- function() invisible(.Call(wrap__DirectedAcyclicGraph__print, self))
+DirectedAcyclicGraph$print <- function() .Call(wrap__DirectedAcyclicGraph__print, self)
 
 DirectedAcyclicGraph$to_bin_disk <- function(path) .Call(wrap__DirectedAcyclicGraph__to_bin_disk, self, path)
 
@@ -132,7 +132,7 @@ DirectedGraphBuilder$build_acyclic <- function() .Call(wrap__DirectedGraphBuilde
 
 NodeVec <- new.env(parent = emptyenv())
 
-NodeVec$print <- function() invisible(.Call(wrap__NodeVec__print, self))
+NodeVec$print <- function() .Call(wrap__NodeVec__print, self)
 
 NodeVec$as_character <- function() .Call(wrap__NodeVec__as_character, self)
 

@@ -1,6 +1,6 @@
 #' @export
 print.NodeVec <- function(x, ...) {
-  x$print()
+  writeLines(x$print())
 }
 
 #' @export
