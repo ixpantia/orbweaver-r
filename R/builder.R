@@ -67,10 +67,10 @@ build_acyclic <- function(graph_builder) {
   throw_if_error(graph_builder$build_acyclic())
 }
 
-#' @title Populates the edges of a graph from a `tibble`
-#' @description Adds a set of edges from a `tibble` to a graph
+#' @title Populates the edges of a graph from a `data.frame`
+#' @description Adds a set of edges from a `data.frame` to a graph
 #' @param graph_builder A graph builder object
-#' @param edges_df A `tibble` with a parent and child variable
+#' @param edges_df A `data.frame` with a parent and child variable
 #' @param parent_col The name of the column containing the parents
 #' @param child_col The name of the column containing the children
 #' @return The updated graph builder object

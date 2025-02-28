@@ -32,3 +32,5 @@
 
 ^benchmarks/
 ^assets/
+^orbweaver\.Rproj$
+^Taskfile\.yml$

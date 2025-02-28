@@ -2,14 +2,14 @@
 % Please edit documentation in R/builder.R
 \name{populate_edges}
 \alias{populate_edges}
-\title{Populates the edges of a graph from a \code{tibble}}
+\title{Populates the edges of a graph from a \code{data.frame}}
 \usage{
 populate_edges(graph_builder, edges_df, parent_col, child_col)
 }
 \arguments{
 \item{graph_builder}{A graph builder object}
 
-\item{edges_df}{A \code{tibble} with a parent and child variable}
+\item{edges_df}{A \code{data.frame} with a parent and child variable}
 
 \item{parent_col}{The name of the column containing the parents}
 
@@ -19,5 +19,5 @@ populate_edges(graph_builder, edges_df, parent_col, child_col)
 The updated graph builder object
 }
 \description{
-Adds a set of edges from a \code{tibble} to a graph
+Adds a set of edges from a \code{data.frame} to a graph
 }

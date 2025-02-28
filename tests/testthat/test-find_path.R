@@ -25,7 +25,7 @@ test_that("find all paths on directed acyclic graph", {
 
 test_that("find path from one node to many nodes", {
 
-  edges <- tibble::tibble(
+  edges <- data.frame(
     Parent = c("A", "A", "B", "C", "D", "Z"),
     Child = c("B", "C", "Z", "D", "Z", "F")
   )

@@ -57,3 +57,4 @@ src/rust/vendor/
 docs
 .vscode
 src/rust/vendor
+.Rproj.user
