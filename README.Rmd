@@ -109,7 +109,7 @@ graph <- graph_builder() |>
   populate_edges(edges, "parent", "child") |>
   build_directed()
 
-str(graph)
+graph
 
 graph |> find_all_paths(from = "A", to = "D")
 ```
