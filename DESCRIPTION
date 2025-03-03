@@ -1,6 +1,6 @@
 Package: orbweaver
 Title: Fast and Efficient Graph Data Structures
-Version: 0.18.0
+Version: 0.18.2
 Authors@R: c(
     person("ixpantia, SRL", , , "hola@ixpantia.com", role = "cph"),
     person("Andres", "Quintero", , "andres@ixpantia.com", role = c("aut", "cre")),
