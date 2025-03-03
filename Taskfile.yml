@@ -10,6 +10,7 @@ tasks:
   vendor:
     dir: src/rust
     cmds:
+      - rm -rf src/.cargo
       - cargo vendor-filterer > vendor-config.toml
       - tar -cJf vendor.tar.xz vendor/
       - rm -rf vendor/

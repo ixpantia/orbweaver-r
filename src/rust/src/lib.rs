@@ -98,8 +98,9 @@ impl DirectedGraphBuilder {
     pub fn add_edge(&mut self, from: &str, to: &str) {
         self.0.add_edge(from, to);
     }
-    pub fn add_path(&mut self, path: Strings) {
-        self.0.add_path(path.iter());
+    pub fn add_path(&mut self, path: Strings) -> Result<()> {
+        self.0.add_path(path.iter()).map_err(|e| e.to_string())?;
+        Ok(())
     }
     /// This will empty the builder
     pub fn build_directed(&mut self) -> DirectedGraph {
