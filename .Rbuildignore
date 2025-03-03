@@ -34,3 +34,4 @@
 ^assets/
 ^orbweaver\.Rproj$
 ^Taskfile\.yml$
+^vignettes/articles$

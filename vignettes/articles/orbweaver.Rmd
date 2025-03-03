@@ -1,0 +1,96 @@
+---
+title: "orbweaver"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(orbweaver)
+```
+
+orbweaver helps you to build, manipulate and analyze directed and acyclic graphs in R.
+
+`graph_builder()` and friends create a graph.
+
+```{r}
+graph <- graph_builder() |>
+  add_edge("A", "B") |>
+  add_edge("A", "C") |>
+  add_edge("B", "D") |>
+  add_edge("C", "D") |>
+  build_directed()
+graph
+```
+
+`graph_to_bin()` and `graph_from_bin()` write and read a graph to and from a file or memory.
+
+```{r}
+file <- tempfile()
+graph_to_bin(graph, path = file)
+from_file <- graph_from_bin(path = file, type = "directed")
+from_file
+
+bin <- graph_to_bin(graph)
+from_memory <- graph_from_bin(bin = bin, type = "directed")
+from_memory
+```
+
+`find_path()` finds a path between two nodes.
+
+```{r}
+path <- find_path(graph, "A", "D")
+path
+```
+
+`find_all_paths()` finds all paths between two nodes.
+
+```{r}
+all_paths <- find_all_paths(graph, "A", "D")
+all_paths
+```
+
+`find_path_one_to_many()` finds the shortest path from one node to multiple destinations in an acyclic graph.
+
+```{r}
+edges <- data.frame(
+  parent = c("A", "A", "B", "C"),
+  child = c("B", "C", "D", "D")
+)
+acyclic_graph <- graph_builder() |>
+  populate_edges(edges_df = edges, parent_col = parent, child_col = child) |>
+  build_acyclic()
+
+shortest_paths <- find_path_one_to_many(acyclic_graph, from = "A", to = edges$child)
+shortest_paths
+```
+
+`has_children()` checks whether a node has children.
+
+```{r}
+has_children(graph, nodes = "A")
+has_children(graph, nodes = "D")
+```
+
+`has_parents()` checks whether a node has parents.
+
+```{r}
+has_parents(graph, nodes = "A")
+has_parents(graph, nodes = "D")
+```
+
+`subset()` subsets a graph to include only specific nodes.
+
+```{r}
+subset(graph, "A", "B", "D")
+```
+
+`length()` returns the number of nodes in a graph.
+
+```{r}
+length(graph)
+```
