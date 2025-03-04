@@ -22,3 +22,12 @@ path to the graph.
 graph_builder() |>
   add_path(c("A", "B", "C"))
 }
+\seealso{
+Other build graphs: 
+\code{\link{add_edge}()},
+\code{\link{build_acyclic}()},
+\code{\link{build_directed}()},
+\code{\link{graph_builder}()},
+\code{\link{populate_edges}()}
+}
+\concept{build graphs}

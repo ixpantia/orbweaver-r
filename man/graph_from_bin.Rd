@@ -28,3 +28,8 @@ bin
 
 graph_from_bin(bin = bin)
 }
+\seealso{
+Other graphs i/o: 
+\code{\link{graph_to_bin}()}
+}
+\concept{graphs i/o}

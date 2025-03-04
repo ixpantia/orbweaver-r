@@ -28,3 +28,14 @@ graph <- graph_builder() |>
 
 get_leaves_under(graph, "D")
 }
+\seealso{
+Other analyze graphs: 
+\code{\link{find_all_paths}()},
+\code{\link{find_path}()},
+\code{\link{find_path_one_to_many}()},
+\code{\link{get_all_leaves}()},
+\code{\link{get_all_roots}()},
+\code{\link{get_roots_over}()},
+\code{\link{least_common_parents}()}
+}
+\concept{analyze graphs}

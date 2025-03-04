@@ -34,3 +34,12 @@ graph_builder() |>
     child_col = "child"
   )
 }
+\seealso{
+Other build graphs: 
+\code{\link{add_edge}()},
+\code{\link{add_path}()},
+\code{\link{build_acyclic}()},
+\code{\link{build_directed}()},
+\code{\link{graph_builder}()}
+}
+\concept{build graphs}

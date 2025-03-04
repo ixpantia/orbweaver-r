@@ -24,3 +24,12 @@ graph_builder() |>
   add_path(c("1", "2", "3", "4")) |>
   build_directed()
 }
+\seealso{
+Other build graphs: 
+\code{\link{add_edge}()},
+\code{\link{add_path}()},
+\code{\link{build_acyclic}()},
+\code{\link{graph_builder}()},
+\code{\link{populate_edges}()}
+}
+\concept{build graphs}

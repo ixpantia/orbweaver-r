@@ -8,6 +8,7 @@
 #' @param nodes A character vector of nodes to find leaves for
 #' @return A character vector of nodes
 #' @export
+#' @family analyze graphs
 #' @examples
 #' graph <- graph_builder() |>
 #'   add_path(c("A", "B", "C")) |>
@@ -40,6 +41,7 @@ get_leaves_under.DirectedAcyclicGraph <- function(graph, nodes) {
 #' @param ... Unused
 #' @return A character vector of nodes
 #' @export
+#' @family analyze graphs
 #' @examples
 #' graph <- graph_builder() |>
 #'   add_path(c("A", "B", "C")) |>

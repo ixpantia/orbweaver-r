@@ -24,3 +24,8 @@ graph <- graph_builder() |>
 
 graph_to_bin(graph)
 }
+\seealso{
+Other graphs i/o: 
+\code{\link{graph_from_bin}()}
+}
+\concept{graphs i/o}

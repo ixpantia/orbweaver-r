@@ -6,6 +6,7 @@
 #' @param selected A character vector of node ids
 #' @return A character vector of node ids
 #' @export
+#' @family analyze graphs
 #' @examples
 #' graph_edges <- data.frame(
 #'   parent = c("A", "B", "C", "C", "F"),

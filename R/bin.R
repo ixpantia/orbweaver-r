@@ -3,6 +3,7 @@
 #' @param path Path to a file to save the graph into
 #' @return Run for its side-effects
 #' @export
+#' @family graphs i/o
 #' @examples
 #' graph <- graph_builder() |>
 #'   add_edge("A", "B") |>
@@ -22,6 +23,7 @@ graph_to_bin <- function(graph, path) {
 #' @param type The type of graph the JSON represents
 #' @return A graph object
 #' @export
+#' @family graphs i/o
 #' @examples
 #' bin <- graph_builder() |>
 #'   add_edge("A", "B") |>

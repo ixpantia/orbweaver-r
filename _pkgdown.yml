@@ -1,3 +1,17 @@
 url: ~
 template:
   bootstrap: 5
+
+reference:
+  - title: Build
+    contents:
+      - has_concept("build graphs")
+  - title: i/o
+    contents:
+      - has_concept("graphs i/o")
+  - title: Analyze
+    contents:
+      - has_concept("analyze graphs")
+  - title: Other
+    contents:
+      - lacks_concepts(c("build graphs", "analyze graphs"))

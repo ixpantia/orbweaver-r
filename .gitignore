@@ -60,3 +60,4 @@ src/rust/vendor
 .Rproj.user
 /.quarto/
 README.html
+orbweaver.Rproj
