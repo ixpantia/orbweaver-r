@@ -118,7 +118,7 @@ DirectedGraphBuilder$new <- function() .Call(wrap__DirectedGraphBuilder__new)
 
 DirectedGraphBuilder$add_edge <- function(from, to) invisible(.Call(wrap__DirectedGraphBuilder__add_edge, self, from, to))
 
-DirectedGraphBuilder$add_path <- function(path) invisible(.Call(wrap__DirectedGraphBuilder__add_path, self, path))
+DirectedGraphBuilder$add_path <- function(path) .Call(wrap__DirectedGraphBuilder__add_path, self, path)
 
 DirectedGraphBuilder$build_directed <- function() .Call(wrap__DirectedGraphBuilder__build_directed, self)
 
