@@ -18,3 +18,12 @@ Object used to build graphs
 \examples{
 graph_builder()
 }
+\seealso{
+Other build graphs: 
+\code{\link{add_edge}()},
+\code{\link{add_path}()},
+\code{\link{build_acyclic}()},
+\code{\link{build_directed}()},
+\code{\link{populate_edges}()}
+}
+\concept{build graphs}

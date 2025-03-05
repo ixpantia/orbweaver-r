@@ -3,6 +3,7 @@
 #' @param type The type of graph
 #' @return An object of class 'DirectedGraphBuilder'.
 #' @export
+#' @family build graphs
 #' @examples
 #' graph_builder()
 graph_builder <- function(type = "directed") {
@@ -20,6 +21,7 @@ graph_builder <- function(type = "directed") {
 #' @param to The `to` node.
 #' @return The updated graph builder object
 #' @export
+#' @family build graphs
 #' @examples
 #' graph_builder() |>
 #'   add_edge("A", "B")
@@ -38,6 +40,7 @@ add_edge <- function(graph_builder, from, to) {
 #' @param path A character vector that describes the path
 #' @return The updated graph builder object
 #' @export
+#' @family build graphs
 #' @examples
 #' graph_builder() |>
 #'   add_path(c("A", "B", "C"))
@@ -58,6 +61,7 @@ add_path <- function(graph_builder, path) {
 #' @param graph_builder A graph builder object
 #' @return A DirectedGraph Object
 #' @export
+#' @family build graphs
 #' @examples
 #' graph_builder() |>
 #'   add_path(c("1", "2", "3", "4")) |>
@@ -76,6 +80,7 @@ build_directed <- function(graph_builder) {
 #' @param graph_builder A graph builder object
 #' @return A DirectedAcyclicGraph Object
 #' @export
+#' @family build graphs
 #' @examples
 #' graph_builder() |>
 #'   add_path(c("1", "2", "3", "4")) |>
@@ -92,6 +97,7 @@ build_acyclic <- function(graph_builder) {
 #' @param child_col The name of the column containing the children
 #' @return The updated graph builder object
 #' @export
+#' @family build graphs
 #' @examples
 #' graph_edges <- data.frame(
 #'   parent = c("A", "B", "C"),

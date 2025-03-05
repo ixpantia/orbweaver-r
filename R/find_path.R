@@ -14,6 +14,7 @@
 #' @param to The ending node of the path
 #' @return A character vector
 #' @export
+#' @family analyze graphs
 #' @examples
 #' graph <- graph_builder() |>
 #'   add_path(c("A", "B", "C")) |>
@@ -46,6 +47,7 @@ find_path.DirectedAcyclicGraph <- function(graph, from, to) {
 #' @param to The ending node of the path
 #' @return A list of character vectors
 #' @export
+#' @family analyze graphs
 #' @examples
 #' graph <- graph_builder() |>
 #'   add_path(c("A", "B", "C")) |>
@@ -80,6 +82,7 @@ find_all_paths.DirectedAcyclicGraph <- function(graph, from, to) {
 #' @param to A character vector of nodes
 #' @return A list of paths
 #' @export
+#' @family analyze graphs
 #' @examples
 #' edges <- data.frame(
 #'   parent = c("A", "A", "B", "Z"),

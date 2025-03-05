@@ -24,3 +24,12 @@ a directed graph builder.
 graph_builder() |>
   add_edge("A", "B")
 }
+\seealso{
+Other build graphs: 
+\code{\link{add_path}()},
+\code{\link{build_acyclic}()},
+\code{\link{build_directed}()},
+\code{\link{graph_builder}()},
+\code{\link{populate_edges}()}
+}
+\concept{build graphs}

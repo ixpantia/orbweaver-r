@@ -31,3 +31,14 @@ graph
 
 graph |> least_common_parents(c("D", "E"))
 }
+\seealso{
+Other analyze graphs: 
+\code{\link{find_all_paths}()},
+\code{\link{find_path}()},
+\code{\link{find_path_one_to_many}()},
+\code{\link{get_all_leaves}()},
+\code{\link{get_all_roots}()},
+\code{\link{get_leaves_under}()},
+\code{\link{get_roots_over}()}
+}
+\concept{analyze graphs}
