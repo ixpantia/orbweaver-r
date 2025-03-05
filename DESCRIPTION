@@ -28,3 +28,4 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 SystemRequirements: Cargo (Rust's package manager) >= 1.70, rustc >= 1.70
+Config/Needs/website: rmarkdown
