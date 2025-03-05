@@ -4,7 +4,7 @@
 \alias{graph_builder}
 \title{A new builder for a graph based on the type}
 \usage{
-graph_builder(type = "directed")
+graph_builder(type = c("directed"))
 }
 \arguments{
 \item{type}{The type of graph}

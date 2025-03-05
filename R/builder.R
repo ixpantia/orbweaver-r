@@ -6,8 +6,11 @@
 #' @family build graphs
 #' @examples
 #' graph_builder()
-graph_builder <- function(type = "directed") {
-  DirectedGraphBuilder$new()
+graph_builder <- function(type = c("directed")) {
+  switch(
+    rlang::arg_match(type),
+    "directed" = DirectedGraphBuilder$new()
+  )
 }
 
 #' @title Add an edge to a graph builder

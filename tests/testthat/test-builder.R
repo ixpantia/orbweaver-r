@@ -93,3 +93,9 @@ test_that("can populate edges error when not char col2", {
       populate_edges(graph_edges, "parent", "child")
   })
 })
+
+test_that("builder should error if given invalid type", {
+  expect_error({
+    graph_builder(type = "bad")
+  })
+})
