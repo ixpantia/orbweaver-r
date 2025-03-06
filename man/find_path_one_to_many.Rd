@@ -2,7 +2,7 @@
 % Please edit documentation in R/find_path.R
 \name{find_path_one_to_many}
 \alias{find_path_one_to_many}
-\title{Find the shortest path from one node to many}
+\title{Find the a valid path from one node to many}
 \usage{
 find_path_one_to_many(graph, from, to)
 }
@@ -17,10 +17,7 @@ find_path_one_to_many(graph, from, to)
 A list of paths
 }
 \description{
-Find the shortest path from one node to many
-
-Not all graphs support this function. Currently only
-\code{DirectedAcyclicGraph} supports this.
+Find a valid path from one node to many
 }
 \examples{
 edges <- data.frame(
