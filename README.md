@@ -101,7 +101,25 @@ graph <- graph_builder() |>
   build_directed()
 
 graph
+#> # of nodes: 6
+#> # of edges: 5
+#> # of roots: 2
+#> # of leaves: 2
+#> 
+#> |     Parent      |      Child      |
+#> | --------------- | --------------- |
+#> | A               | B               |
+#> | B               | C               |
+#> | C               | E               |
+#> | C               | D               |
+#> | F               | D               |
 
 graph |> find_all_paths(from = "A", to = "D")
 #> [[1]]
+#> # of nodes: 4
+#> |           Nodes           |
+#> |             A             |
+#> |             B             |
+#> |             C             |
+#> |             D             |
 ```
