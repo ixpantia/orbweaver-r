@@ -10,6 +10,7 @@
 status](https://www.r-pkg.org/badges/version/orbweaver.png)](https://cran.r-project.org/package=orbweaver)
 [![R-CMD-check](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml/badge.svg)](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml)
 [![R-CMD-check](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/maurolepore/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/maurolepore/orbweaver-r/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -100,25 +101,7 @@ graph <- graph_builder() |>
   build_directed()
 
 graph
-#> # of nodes: 6
-#> # of edges: 5
-#> # of roots: 2
-#> # of leaves: 2
-#> 
-#> |     Parent      |      Child      |
-#> | --------------- | --------------- |
-#> | A               | B               |
-#> | B               | C               |
-#> | C               | E               |
-#> | C               | D               |
-#> | F               | D               |
 
 graph |> find_all_paths(from = "A", to = "D")
 #> [[1]]
-#> # of nodes: 4
-#> |           Nodes           |
-#> |             A             |
-#> |             B             |
-#> |             C             |
-#> |             D             |
 ```
