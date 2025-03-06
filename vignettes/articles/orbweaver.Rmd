@@ -123,8 +123,8 @@ find_path(graph, from = "a", to = "d")
 find_all_paths(graph, from = "a", to = "d")
 ```
 
-* `find_path_one_to_many()` finds the shortest path from one node to multiple 
-destinations in an acyclic graph.
+* `find_path_one_to_many()` finds a valid path from one node to multiple 
+destinations in a directed graph.
 
 ```{r}
 find_path_one_to_many(acyclic_graph, from = "a", to = edges$child)
