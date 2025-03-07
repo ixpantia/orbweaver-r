@@ -1,5 +1,4 @@
 
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # orbweaver <a><img src="https://storage.googleapis.com/ix-paquetes-internos/logo-orbweaver.png" align="right" width="30%"></a>
@@ -7,10 +6,10 @@
 <!-- badges: start -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/orbweaver.png)](https://cran.r-project.org/package=orbweaver)
+status](https://www.r-pkg.org/badges/version/orbweaver)](https://cran.r-project.org/package=orbweaver)
 [![R-CMD-check](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml/badge.svg)](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml)
 [![R-CMD-check](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml)
-[![R-CMD-check](https://github.com/maurolepore/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/maurolepore/orbweaver-r/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
@@ -32,7 +31,12 @@ igraph is much more mature and orbweaver focuses on extreme performance
 and low latency operations. If you need super high performance and do
 not require weighted graphs, orbweaver may be for you.
 
-![igraph vs orbweaver benchmark](man/figures/benchmark.png)
+<figure>
+<img src="man/figures/benchmark.png"
+alt="igraph vs orbweaver benchmark" />
+<figcaption aria-hidden="true">igraph vs orbweaver
+benchmark</figcaption>
+</figure>
 
 > We may add weighted graph in the future but for not it is not in the
 > short-term road map.

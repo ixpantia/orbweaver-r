@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/orbweaver)](https://cran.r-project.org/package=orbweaver)
 [![R-CMD-check](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml/badge.svg)](https://github.com/ixpantia/orbweaver/actions/workflows/check-full.yaml)
 [![R-CMD-check](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml)
-[![R-CMD-check](https://github.com/maurolepore/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/maurolepore/orbweaver-r/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ixpantia/orbweaver-r/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Overview
