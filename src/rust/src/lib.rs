@@ -155,6 +155,7 @@ pub trait RImplDirectedGraph: Sized {
     fn from_bin_mem(bin: &[u8]) -> Result<Self>;
     fn nodes(&self) -> NodeVec;
     fn length(&self) -> i32;
+    fn as_data_frame(&self) -> List;
 }
 
 impl_directed_graph!(DirectedAcyclicGraph, ow::DirectedAcyclicGraph);

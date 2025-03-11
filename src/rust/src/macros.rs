@@ -125,6 +125,33 @@ macro_rules! impl_directed_graph {
                     .map(NodeVec)
                     .collect())
             }
+
+            fn as_data_frame(&self) -> List {
+                let internal_graph = &self.0;
+
+                let n_nodes = internal_graph.nodes().len();
+                let mut from = Vec::with_capacity(n_nodes);
+                let mut to = Vec::with_capacity(n_nodes);
+
+                for node in &internal_graph.nodes() {
+                    let children = internal_graph
+                        .children([node])
+                        .expect("Every node is valid");
+
+                    let mut children = children.as_vec();
+
+                    children.dedup();
+
+                    let node = Rstr::from(node);
+
+                    for child in children {
+                        from.push(node.clone());
+                        to.push(Rstr::from(child));
+                    }
+                }
+
+                list!(from = from, to = to)
+            }
         }
 
         impl $ty {
