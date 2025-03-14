@@ -14,6 +14,7 @@ File 'orbweaver/libs/x64/orbweaver.dll':
     'FORMALS'
 ``` 
 
-We'll monitor R-devel and remove non-API calls if we see warnings or errors.
+We'll monitor R-devel and remove the non-API calls if this becomes a warning or
+error.
 
-* Also, the installed size is over 5Mb because we vendor system dependencies.
+* Also, the installed size is a bit over 5Mb because we vendor dependencies.
