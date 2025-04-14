@@ -5,11 +5,19 @@ use std::io::{BufReader, BufWriter};
 pub mod from_dataframe;
 mod macros;
 
+#[extendr]
 pub struct DirectedGraphBuilder(ow::DirectedGraphBuilder);
+
+#[extendr]
 pub struct DirectedGraph(ow::DirectedGraph);
+
+#[extendr]
 pub struct DirectedAcyclicGraph(ow::DirectedAcyclicGraph);
+
+#[extendr]
 pub struct NodeVec(ow::NodeVec);
 
+#[extendr]
 pub enum RNodesIn {
     NodeVec(ow::NodeVec),
     Strings(Strings),
@@ -69,6 +77,9 @@ impl NodeVec {
     pub fn len(&self) -> i32 {
         self.0.len() as i32
     }
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
 }
 
 impl NodeVec {
@@ -88,6 +99,12 @@ impl NodeVec {
 
 pub fn to_r_error(err: impl std::error::Error) -> Error {
     err.to_string().into()
+}
+
+impl Default for DirectedGraphBuilder {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 #[extendr]
