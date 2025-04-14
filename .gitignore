@@ -61,3 +61,5 @@ src/rust/vendor
 /.quarto/
 README.html
 orbweaver.Rproj
+src/Makevars
+src/Makevars.win

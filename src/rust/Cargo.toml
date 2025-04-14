@@ -9,7 +9,7 @@ name = 'orbweaver_r'
 
 [dependencies]
 orbweaver = { version = "0.18.2" }
-extendr-api = { version = "0.7", features = ["serde", "result_condition"] }
+extendr-api = { version = "0.8", features = ["serde", "result_condition"] }
 
 # This will help us filter the platforms
 # we support to make the final bundle size

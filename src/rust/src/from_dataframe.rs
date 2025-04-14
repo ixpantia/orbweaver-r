@@ -1,4 +1,4 @@
-use super::{DirectedGraph, DirectedGraphBuilder};
+use super::DirectedGraphBuilder;
 use extendr_api::prelude::*;
 
 #[extendr]

@@ -35,3 +35,5 @@
 ^orbweaver\.Rproj$
 ^Taskfile\.yml$
 ^vignettes/articles$
+^src/Makevars$
+^src/Makevars\.win$

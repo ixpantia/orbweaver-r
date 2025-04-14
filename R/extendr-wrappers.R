@@ -142,6 +142,8 @@ NodeVec$as_character <- function() .Call(wrap__NodeVec__as_character, self)
 
 NodeVec$len <- function() .Call(wrap__NodeVec__len, self)
 
+NodeVec$is_empty <- function() .Call(wrap__NodeVec__is_empty, self)
+
 #' @export
 `$.NodeVec` <- function (self, name) { func <- NodeVec[[name]]; environment(func) <- environment(); func }
 
