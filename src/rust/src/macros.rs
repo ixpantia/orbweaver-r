@@ -152,6 +152,24 @@ macro_rules! impl_directed_graph {
 
                 list!(from = from, to = to)
             }
+
+            fn get_leaves_as_df(&self, nodes: RNodesIn) -> Result<Robj> {
+                let mut parent = Vec::new();
+                let mut leaves = Vec::new();
+                for node in nodes.iter() {
+                    if let Ok(node_leaves) = self.as_inner().get_leaves_under([node]) {
+                        if node_leaves.is_empty() {
+                            parent.push(Rstr::from_string(node));
+                            leaves.push(Rstr::from_string(node));
+                            continue;
+                        }
+                        let len = node_leaves.len();
+                        parent.extend(std::iter::repeat(Rstr::from_string(node)).take(len));
+                        leaves.extend(node_leaves.iter().map(Rstr::from_string));
+                    }
+                }
+                Ok(data_frame!(parent = parent, leaves = leaves))
+            }
         }
 
         impl $ty {

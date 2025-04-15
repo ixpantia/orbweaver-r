@@ -173,6 +173,7 @@ pub trait RImplDirectedGraph: Sized {
     fn nodes(&self) -> NodeVec;
     fn length(&self) -> i32;
     fn as_data_frame(&self) -> List;
+    fn get_leaves_as_df(&self, nodes: RNodesIn) -> Result<Robj>;
 }
 
 impl_directed_graph!(DirectedAcyclicGraph, ow::DirectedAcyclicGraph);
