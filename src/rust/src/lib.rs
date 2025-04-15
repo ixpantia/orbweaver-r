@@ -1,5 +1,5 @@
 use extendr_api::prelude::*;
-use orbweaver::prelude as ow;
+pub use ow::prelude as ow;
 use std::io::{BufReader, BufWriter};
 
 pub mod from_dataframe;

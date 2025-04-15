@@ -1,7 +1,7 @@
 TARGET_DIR = ./rust/target
 LIBDIR = $(TARGET_DIR)/@LIBDIR@
 STATLIB = $(LIBDIR)/liborbweaver.a
-PKG_LIBS = -L$(LIBDIR) -lorbweaver_r
+PKG_LIBS = -L$(LIBDIR) -lorbweaver
 
 all: $(SHLIB) rust_clean
 
