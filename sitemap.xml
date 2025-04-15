@@ -18,6 +18,7 @@
 <url><loc>/reference/find_path_one_to_many.html</loc></url>
 <url><loc>/reference/get_all_leaves.html</loc></url>
 <url><loc>/reference/get_all_roots.html</loc></url>
+<url><loc>/reference/get_leaves_as_df.html</loc></url>
 <url><loc>/reference/get_leaves_under.html</loc></url>
 <url><loc>/reference/get_roots_over.html</loc></url>
 <url><loc>/reference/graph_builder.html</loc></url>
