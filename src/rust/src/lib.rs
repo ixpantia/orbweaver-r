@@ -29,19 +29,6 @@ impl RNodesIn {
     }
 }
 
-impl TryFrom<Robj> for RNodesIn {
-    type Error = &'static str;
-    fn try_from(value: Robj) -> std::prelude::v1::Result<Self, Self::Error> {
-        if let Ok(node_vec) = <&NodeVec>::try_from(value.clone()) {
-            return Ok(RNodesIn::NodeVec(node_vec.0.clone()));
-        }
-        if let Ok(strings) = Strings::try_from(value) {
-            return Ok(RNodesIn::Strings(strings));
-        }
-        Err("The nodes must be a NodeVec or a character vector")
-    }
-}
-
 pub struct RNodesInIter<'a> {
     vars: &'a RNodesIn,
     i: usize,
@@ -115,7 +102,7 @@ impl DirectedGraphBuilder {
     pub fn add_edge(&mut self, from: &str, to: &str) {
         self.0.add_edge(from, to);
     }
-    pub fn add_path(&mut self, path: Strings) -> Result<()> {
+    pub fn add_path(&mut self, path: Strings) -> extendr_api::error::Result<()> {
         self.0.add_path(path.iter()).map_err(|e| e.to_string())?;
         Ok(())
     }
@@ -126,7 +113,7 @@ impl DirectedGraphBuilder {
         DirectedGraph(new_builder.0.build_directed())
     }
     /// This will empty the builder
-    pub fn build_acyclic(&mut self) -> Result<DirectedAcyclicGraph> {
+    pub fn build_acyclic(&mut self) -> extendr_api::error::Result<DirectedAcyclicGraph> {
         let mut new_builder = Self::new();
         std::mem::swap(self, &mut new_builder);
         Ok(DirectedAcyclicGraph(
@@ -151,29 +138,29 @@ impl DirectedGraphBuilder {
 }
 
 pub trait RImplDirectedGraph: Sized {
-    fn find_path(&self, from: &str, to: &str) -> Result<NodeVec>;
-    fn find_path_one_to_many(&self, from: &str, to: Strings) -> Result<List>;
-    fn children(&self, nodes: RNodesIn) -> Result<NodeVec>;
-    fn parents(&self, nodes: RNodesIn) -> Result<NodeVec>;
-    fn has_parents(&self, nodes: RNodesIn) -> Result<Vec<bool>>;
-    fn has_children(&self, nodes: RNodesIn) -> Result<Vec<bool>>;
-    fn least_common_parents(&self, selected: RNodesIn) -> Result<NodeVec>;
+    fn find_path(&self, from: &str, to: &str) -> extendr_api::error::Result<NodeVec>;
+    fn find_path_one_to_many(&self, from: &str, to: Strings) -> extendr_api::error::Result<List>;
+    fn children(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
+    fn parents(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
+    fn has_parents(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Vec<bool>>;
+    fn has_children(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Vec<bool>>;
+    fn least_common_parents(&self, selected: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
     fn get_all_leaves(&self) -> NodeVec;
-    fn get_leaves_under(&self, nodes: RNodesIn) -> Result<NodeVec>;
+    fn get_leaves_under(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
     fn get_all_roots(&self) -> NodeVec;
-    fn get_roots_over(&self, node_ids: RNodesIn) -> Result<NodeVec>;
-    fn subset_multi(&self, node_id: RNodesIn) -> Result<Self>;
-    fn subset_multi_with_limit(&self, node_id: RNodesIn, limit: i32) -> Result<Self>;
+    fn get_roots_over(&self, node_ids: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
+    fn subset_multi(&self, node_id: &RNodesIn) -> extendr_api::error::Result<Self>;
+    fn subset_multi_with_limit(&self, node_id: &RNodesIn, limit: i32) -> extendr_api::error::Result<Self>;
     fn print(&self) -> String;
-    fn find_all_paths(&self, from: &str, to: &str) -> Result<List>;
-    fn to_bin_disk(&self, path: &str) -> Result<()>;
-    fn to_bin_mem(&self) -> Result<Vec<u8>>;
-    fn from_bin_disk(path: &str) -> Result<Self>;
-    fn from_bin_mem(bin: &[u8]) -> Result<Self>;
+    fn find_all_paths(&self, from: &str, to: &str) -> extendr_api::error::Result<List>;
+    fn to_bin_disk(&self, path: &str) -> extendr_api::error::Result<()>;
+    fn to_bin_mem(&self) -> extendr_api::error::Result<Vec<u8>>;
+    fn from_bin_disk(path: &str) -> extendr_api::error::Result<Self>;
+    fn from_bin_mem(bin: &[u8]) -> extendr_api::error::Result<Self>;
     fn nodes(&self) -> NodeVec;
     fn length(&self) -> i32;
     fn as_data_frame(&self) -> List;
-    fn get_leaves_as_df(&self, nodes: RNodesIn) -> Result<Robj>;
+    fn get_leaves_as_df(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Robj>;
 }
 
 impl_directed_graph!(DirectedAcyclicGraph, ow::DirectedAcyclicGraph);

@@ -6,7 +6,7 @@ pub fn rs_populate_edges_builder(
     graph: &mut DirectedGraphBuilder,
     parent_iter: Robj,
     child_iter: Robj,
-) -> Result<()> {
+) -> extendr_api::error::Result<()> {
     let parent_iter = StrIter::try_from(&parent_iter)?;
     let child_iter = StrIter::try_from(&child_iter)?;
 
