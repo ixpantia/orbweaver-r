@@ -29,6 +29,19 @@ impl RNodesIn {
     }
 }
 
+impl TryFrom<&Robj> for RNodesIn {
+    type Error = extendr_api::Error;
+    fn try_from(value: &Robj) -> extendr_api::error::Result<Self> {
+        if let Ok(node_vec) = <&NodeVec>::try_from(value) {
+            return Ok(RNodesIn::NodeVec(node_vec.0.clone()));
+        }
+        if let Ok(strings) = Strings::try_from(value) {
+            return Ok(RNodesIn::Strings(strings));
+        }
+        Err("The nodes must be a NodeVec or a character vector".into())
+    }
+}
+
 pub struct RNodesInIter<'a> {
     vars: &'a RNodesIn,
     i: usize,
@@ -140,17 +153,17 @@ impl DirectedGraphBuilder {
 pub trait RImplDirectedGraph: Sized {
     fn find_path(&self, from: &str, to: &str) -> extendr_api::error::Result<NodeVec>;
     fn find_path_one_to_many(&self, from: &str, to: Strings) -> extendr_api::error::Result<List>;
-    fn children(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
-    fn parents(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
-    fn has_parents(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Vec<bool>>;
-    fn has_children(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Vec<bool>>;
-    fn least_common_parents(&self, selected: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
+    fn children(&self, nodes: RNodesIn) -> extendr_api::error::Result<NodeVec>;
+    fn parents(&self, nodes: RNodesIn) -> extendr_api::error::Result<NodeVec>;
+    fn has_parents(&self, nodes: RNodesIn) -> extendr_api::error::Result<Vec<bool>>;
+    fn has_children(&self, nodes: RNodesIn) -> extendr_api::error::Result<Vec<bool>>;
+    fn least_common_parents(&self, selected: RNodesIn) -> extendr_api::error::Result<NodeVec>;
     fn get_all_leaves(&self) -> NodeVec;
-    fn get_leaves_under(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
+    fn get_leaves_under(&self, nodes: RNodesIn) -> extendr_api::error::Result<NodeVec>;
     fn get_all_roots(&self) -> NodeVec;
-    fn get_roots_over(&self, node_ids: &RNodesIn) -> extendr_api::error::Result<NodeVec>;
-    fn subset_multi(&self, node_id: &RNodesIn) -> extendr_api::error::Result<Self>;
-    fn subset_multi_with_limit(&self, node_id: &RNodesIn, limit: i32) -> extendr_api::error::Result<Self>;
+    fn get_roots_over(&self, node_ids: RNodesIn) -> extendr_api::error::Result<NodeVec>;
+    fn subset_multi(&self, node_id: RNodesIn) -> extendr_api::error::Result<Self>;
+    fn subset_multi_with_limit(&self, node_id: RNodesIn, limit: i32) -> extendr_api::error::Result<Self>;
     fn print(&self) -> String;
     fn find_all_paths(&self, from: &str, to: &str) -> extendr_api::error::Result<List>;
     fn to_bin_disk(&self, path: &str) -> extendr_api::error::Result<()>;
@@ -160,7 +173,7 @@ pub trait RImplDirectedGraph: Sized {
     fn nodes(&self) -> NodeVec;
     fn length(&self) -> i32;
     fn as_data_frame(&self) -> List;
-    fn get_leaves_as_df(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Robj>;
+    fn get_leaves_as_df(&self, nodes: RNodesIn) -> extendr_api::error::Result<Robj>;
 }
 
 impl_directed_graph!(DirectedAcyclicGraph, ow::DirectedAcyclicGraph);

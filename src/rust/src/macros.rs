@@ -6,25 +6,25 @@ macro_rules! impl_directed_graph {
             fn find_path(&self, from: &str, to: &str) -> extendr_api::error::Result<NodeVec> {
                 self.0.find_path(from, to).map_err(to_r_error).map(NodeVec)
             }
-            fn children(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec> {
+            fn children(&self, nodes: RNodesIn) -> extendr_api::error::Result<NodeVec> {
                 self.0
                     .children(nodes.iter())
                     .map(NodeVec)
                     .map_err(to_r_error)
             }
-            fn parents(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec> {
+            fn parents(&self, nodes: RNodesIn) -> extendr_api::error::Result<NodeVec> {
                 self.0
                     .parents(nodes.iter())
                     .map_err(to_r_error)
                     .map(NodeVec)
             }
-            fn has_parents(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Vec<bool>> {
+            fn has_parents(&self, nodes: RNodesIn) -> extendr_api::error::Result<Vec<bool>> {
                 self.0.has_parents(nodes.iter()).map_err(to_r_error)
             }
-            fn has_children(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Vec<bool>> {
+            fn has_children(&self, nodes: RNodesIn) -> extendr_api::error::Result<Vec<bool>> {
                 self.0.has_children(nodes.iter()).map_err(to_r_error)
             }
-            fn least_common_parents(&self, selected: &RNodesIn) -> extendr_api::error::Result<NodeVec> {
+            fn least_common_parents(&self, selected: RNodesIn) -> extendr_api::error::Result<NodeVec> {
                 self.0
                     .least_common_parents(selected.iter())
                     .map_err(to_r_error)
@@ -33,7 +33,7 @@ macro_rules! impl_directed_graph {
             fn get_all_leaves(&self) -> NodeVec {
                 self.0.get_all_leaves().into()
             }
-            fn get_leaves_under(&self, nodes: &RNodesIn) -> extendr_api::error::Result<NodeVec> {
+            fn get_leaves_under(&self, nodes: RNodesIn) -> extendr_api::error::Result<NodeVec> {
                 self.0
                     .get_leaves_under(nodes.iter())
                     .map_err(to_r_error)
@@ -42,18 +42,18 @@ macro_rules! impl_directed_graph {
             fn get_all_roots(&self) -> NodeVec {
                 self.0.get_all_roots().into()
             }
-            fn get_roots_over(&self, node_ids: &RNodesIn) -> extendr_api::error::Result<NodeVec> {
+            fn get_roots_over(&self, node_ids: RNodesIn) -> extendr_api::error::Result<NodeVec> {
                 self.0
                     .get_roots_over(node_ids.iter())
                     .map_err(to_r_error)
                     .map(NodeVec)
             }
-            fn subset_multi(&self, node_ids: &RNodesIn) -> extendr_api::error::Result<Self> {
+            fn subset_multi(&self, node_ids: RNodesIn) -> extendr_api::error::Result<Self> {
                 Ok(Self(
                     self.0.subset_multi(node_ids.iter()).map_err(to_r_error)?,
                 ))
             }
-            fn subset_multi_with_limit(&self, node_ids: &RNodesIn, limit: i32) -> extendr_api::error::Result<Self> {
+            fn subset_multi_with_limit(&self, node_ids: RNodesIn, limit: i32) -> extendr_api::error::Result<Self> {
                 if limit <= 0 {
                     return Err("Limit cannot be negative".into());
                 }
@@ -153,7 +153,7 @@ macro_rules! impl_directed_graph {
                 list!(from = from, to = to)
             }
 
-            fn get_leaves_as_df(&self, nodes: &RNodesIn) -> extendr_api::error::Result<Robj> {
+            fn get_leaves_as_df(&self, nodes: RNodesIn) -> extendr_api::error::Result<Robj> {
                 let mut parent = Vec::new();
                 let mut leaves = Vec::new();
                 for node in nodes.iter() {
