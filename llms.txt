@@ -1,0 +1,185 @@
+# orbweaver ![](https://storage.googleapis.com/ix-paquetes-internos/logo-orbweaver.png)
+
+## Overview
+
+A fast R library for working with Nodes in a graph.
+
+## Features
+
+- Find shortest paths between nodes in a graph
+- Find the common parents between selected nodes
+- Directed Graph
+- Directed Acyclic Graph
+- It is quite fast
+
+## Why not igraph?
+
+[igraph](https://igraph.org/) is an amazing network analysis package.
+igraph is much more mature and orbweaver focuses on extreme performance
+and low latency operations. If you need super high performance and do
+not require weighted graphs, orbweaver may be for you.
+
+![igraph vs orbweaver benchmark](reference/figures/benchmark.png)
+
+igraph vs orbweaver benchmark
+
+> We may add weighted graph in the future but for not it is not in the
+> short-term road map.
+
+## Installation
+
+### Rust Toolchain
+
+Before installing this package, you will need to install the Rust
+toolchain.
+
+#### Mac or Linux
+
+If you are on Mac or Linux, you can do this by running the following
+command in your terminal:
+
+``` bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+#### Windows
+
+If you are on Windows, you can download the installer from
+[here](https://www.rust-lang.org/tools/install).
+
+In order to compile this package manually, you will need the **GNU ABI**
+used by the **GCC toolchain**. This is not the default on Windows, so
+you will need to install the toolchain manually. You can do this by
+running the following command in your terminal:
+
+``` bash
+rustup toolchain install stable-gnu
+```
+
+If you are on Windows you may need to install `Rtools` as well. You can
+download the installer from
+[here](https://cran.r-project.org/bin/windows/Rtools/).
+
+### R Package
+
+You can install orbweaver from CRAN with:
+
+``` r
+
+install.packages("orbweaver")
+```
+
+You can install orbweaver from GitHub with:
+
+``` r
+
+# install.packages("remotes")
+remotes::install_github("ixpantia/orbweaver-r")
+```
+
+## Example
+
+``` r
+
+library(orbweaver)
+
+edges <- data.frame(
+  parent = c("A", "B", "C", "C", "F"),
+  child = c("B", "C", "D", "E", "D")
+)
+
+graph <- graph_builder() |>
+  populate_edges(edges, "parent", "child") |>
+  build_directed()
+
+graph
+#> # of nodes: 6
+#> # of edges: 5
+#> # of roots: 2
+#> # of leaves: 2
+#> 
+#> |     Parent      |      Child      |
+#> | --------------- | --------------- |
+#> | A               | B               |
+#> | B               | C               |
+#> | C               | E               |
+#> | C               | D               |
+#> | F               | D               |
+
+graph |> find_all_paths(from = "A", to = "D")
+#> [[1]]
+#> # of nodes: 4
+#> |           Nodes           |
+#> |             A             |
+#> |             B             |
+#> |             C             |
+#> |             D             |
+```
+
+# Package index
+
+## Build
+
+- [`add_edge()`](add_edge.md) : Add an edge to a graph builder
+
+- [`add_path()`](add_path.md) : Add a path to a graph
+
+- [`build_acyclic()`](build_acyclic.md) : Build a DirectedAcyclicGraph
+  from a builder
+
+- [`build_directed()`](build_directed.md) : Build a DirectedGraph from a
+  builder
+
+- [`graph_builder()`](graph_builder.md) : A new builder for a graph
+  based on the type
+
+- [`populate_edges()`](populate_edges.md) :
+
+  Populates the edges of a graph from a `data.frame`
+
+## i/o
+
+- [`graph_from_bin()`](graph_from_bin.md) : Read the graph from a binary
+  blob
+- [`graph_to_bin()`](graph_to_bin.md) : Save the graph into a binary
+  blob
+
+## Analyze
+
+- [`find_all_paths()`](find_all_paths.md) : Find all paths between two
+  nodes
+- [`find_path()`](find_path.md) : Find a path between two nodes
+- [`find_path_one_to_many()`](find_path_one_to_many.md) : Find the a
+  valid path from one node to many
+- [`get_all_leaves()`](get_all_leaves.md) : Get all the leaf nodes of a
+  graph
+- [`get_all_roots()`](get_all_roots.md) : Get the all the root nodes of
+  a graph
+- [`get_leaves_under()`](get_leaves_under.md) : Get the leaf nodes of a
+  graph under some nodes
+- [`get_roots_over()`](get_roots_over.md) : Get the root nodes of a
+  graph over some nodes
+- [`least_common_parents()`](least_common_parents.md) : Find the least
+  common parents in a graph
+
+## Other
+
+- [`children()`](children.md) : Get the children on a node
+- [`get_leaves_as_df()`](get_leaves_as_df.md) : Get leaves as a data
+  frame
+- [`graph_from_bin()`](graph_from_bin.md) : Read the graph from a binary
+  blob
+- [`graph_to_bin()`](graph_to_bin.md) : Save the graph into a binary
+  blob
+- [`has_children()`](has_children.md) : Checks if a node in a graph has
+  children
+- [`has_parents()`](has_parents.md) : Checks if a node in a graph has
+  parents
+- [`nodes()`](nodes.md) : Get the nodes in the graph
+- [`parents()`](parents.md) : Get the parents on a node
+
+# Articles
+
+### All vignettes
+
+- [orbweaver](orbweaver.md):
